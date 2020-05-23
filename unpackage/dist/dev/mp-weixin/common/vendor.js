@@ -1553,9 +1553,9 @@ uni$1;exports.default = _default;
 /***/ }),
 
 /***/ 135:
-/*!********************************************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/components/input-box/verification.js ***!
-  \********************************************************************/
+/*!******************************************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/components/input-box/verification.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1767,9 +1767,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 15:
-/*!****************************************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/components/luch-request/index.js ***!
-  \****************************************************************/
+/*!**************************************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/components/luch-request/index.js ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1867,9 +1867,9 @@ http.interceptor.response(function (response) {/* 请求之后拦截器 */
 /***/ }),
 
 /***/ 16:
-/*!******************************************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/components/luch-request/request.js ***!
-  \******************************************************************/
+/*!****************************************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/components/luch-request/request.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9072,9 +9072,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 4:
-/*!******************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/pages.json ***!
-  \******************************************/
+/*!****************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/pages.json ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9982,21 +9982,21 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ }),
 
 /***/ 7:
-/*!***********************************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/pages.json?{"type":"style"} ***!
-  \***********************************************************/
+/*!*********************************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/pages.json?{"type":"style"} ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/knowUs/index": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/member/index": { "navigationBarTitleText": "会员购", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" } }, "pages/dealer/index": { "navigationBarTitleText": "经销商", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" } }, "pages/dealerLogin/dealerLogin": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseDetails/caseDetails": { "navigationBarTitleText": "案例", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseExclusive/caseExclusive": { "navigationBarTitleText": "案例分享", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/courseDetails/courseDetails": { "navigationBarTitleText": "课程详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/collegeOfEducation/collegeOfEducation": { "navigationBarTitleText": "教育学院", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/spotNews/spotNews": { "navigationBarTitleText": "最新消息", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesDealer/consultingFeedback/consultingFeedback": { "navigationBarTitleText": "资讯反馈", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/knowledgeTest/knowledgeTest": { "navigationBarTitleText": "知识测试", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/quiz/quiz": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/knowUs/index": { "navigationBarTitleText": "", "navigationStyle": "custom" }, "pages/member/index": { "navigationBarTitleText": "会员购", "navigationStyle": "custom" }, "pages/dealer/index": { "navigationBarTitleText": "经销商", "navigationStyle": "custom" }, "pages/dealerLogin/dealerLogin": { "navigationBarTitleText": "" }, "pagesDealer/caseDetails/caseDetails": { "navigationBarTitleText": "案例" }, "pagesDealer/caseExclusive/caseExclusive": { "navigationBarTitleText": "案例分享" }, "pagesDealer/courseDetails/courseDetails": { "navigationBarTitleText": "课程详情" }, "pagesDealer/collegeOfEducation/collegeOfEducation": { "navigationBarTitleText": "教育学院" }, "pagesDealer/spotNews/spotNews": { "navigationBarTitleText": "最新消息" }, "pagesDealer/consultingFeedback/consultingFeedback": { "navigationBarTitleText": "资讯反馈" }, "pagesDealer/knowledgeTest/knowledgeTest": { "navigationBarTitleText": "知识测试" }, "pagesDealer/quiz/quiz": { "navigationBarTitleText": "" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!**********************************************************!*\
-  !*** F:/微信小程序项目/test_uni-app/pages.json?{"type":"stat"} ***!
-  \**********************************************************/
+/*!********************************************************************!*\
+  !*** F:/电商/vue-project/uni-app-Panchen/pages.json?{"type":"stat"} ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
