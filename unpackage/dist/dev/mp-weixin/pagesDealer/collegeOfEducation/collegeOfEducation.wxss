@@ -1,0 +1,27 @@
+.collegeOfEducation.data-v-5ce4c78d {
+  width: 95%;
+  margin: 0 auto;
+}
+.collegeOfEducation .recommendedCourse.data-v-5ce4c78d {
+  font-size: 30rpx;
+  line-height: 70rpx;
+  border-bottom: 1rpx solid #ededed;
+  margin-top: 20rpx;
+}
+.collegeOfEducation .recommendedCourseName.data-v-5ce4c78d {
+  height: 170rpx;
+  border-bottom: 1rpx solid #ededed;
+}
+.collegeOfEducation .recommendedCourseName .recommendedCourseTitle.data-v-5ce4c78d {
+  display: inline-block;
+}
+.collegeOfEducation .recommendedCourseName .recommendedCourseImg.data-v-5ce4c78d {
+  float: right;
+  display: inline-block;
+  margin: 19rpx;
+}
+.collegeOfEducation .recommendedCourseName .recommendedCourseImg image.data-v-5ce4c78d {
+  width: 208rpx;
+  height: 120rpx;
+}
+

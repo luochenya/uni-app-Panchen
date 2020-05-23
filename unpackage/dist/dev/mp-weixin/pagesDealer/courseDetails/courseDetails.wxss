@@ -1,0 +1,19 @@
+.myVideo.data-v-d922bbc6 {
+  width: 90%;
+  height: 423rpx;
+  margin: 0 5%;
+}
+.courseTitle.data-v-d922bbc6 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 38rpx;
+  line-height: 100rpx;
+}
+.courseContent.data-v-d922bbc6 {
+  text-indent: 2em;
+  line-height: 58rpx;
+  font-size: 30rpx;
+  margin: 0 4%;
+  color: #999999;
+}
+

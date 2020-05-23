@@ -1,0 +1,109 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/knowUs/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle":"custom"
+			}
+		}
+        ,{
+            "path" : "pages/member/index",
+            "style" : {
+				"navigationBarTitleText": "会员购",
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/dealer/index",
+            "style" : {
+				"navigationBarTitleText": "经销商",
+				"navigationStyle":"custom"
+			}
+        }
+        ,{
+            "path" : "pages/dealerLogin/dealerLogin",
+            "style" : {
+				"navigationBarTitleText": ""
+			}
+        }
+    ],
+	"subPackages": [{
+		"root": "pagesDealer",
+		"pages": [{
+				"path":"caseDetails/caseDetails",
+				"style": {
+					"navigationBarTitleText":"案例"
+				}
+			},{
+				"path":"caseExclusive/caseExclusive",
+				"style": {
+					"navigationBarTitleText":"案例分享"
+				}
+			},{
+				"path" : "courseDetails/courseDetails",
+				"style" : {
+					"navigationBarTitleText": "课程详情"
+				}
+			},{
+				"path" : "collegeOfEducation/collegeOfEducation",
+				"style" : {
+					"navigationBarTitleText": "教育学院"
+				}
+			},{
+				"path" : "spotNews/spotNews",
+				"style" : {
+					"navigationBarTitleText": "最新消息"
+				}
+			},{
+				"path" : "consultingFeedback/consultingFeedback",
+				"style" : {
+					"navigationBarTitleText": "资讯反馈"
+				}
+			},{
+				"path" : "knowledgeTest/knowledgeTest",
+				"style" : {
+					"navigationBarTitleText": "知识测试"
+				}
+			},{
+				"path" : "quiz/quiz",
+				"style" : {
+					"navigationBarTitleText": ""
+				}
+            }]
+	}],
+	"preloadRule": {
+		"pages/dealer/index": {
+			"network":"all",
+			"packages":["pagesDealer"]
+		}
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#3cc51f",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+			"pagePath": "pages/knowUs/index",
+			"iconPath": "static/tabbarImg/tabbarA.png",
+			"selectedIconPath": "static/tabbarImg/tabbarAa.png",
+			"text": "认识我们"
+		}, {
+			"pagePath": "pages/dealer/index",
+			"iconPath": "static/tabbarImg/tabbarB.png",
+			"selectedIconPath": "static/tabbarImg/tabbarBb.png",
+			"text": "经销商"
+		}, {
+			"pagePath": "pages/member/index",
+			"iconPath": "static/tabbarImg/tabbarC.png",
+			"selectedIconPath": "static/tabbarImg/tabbarBb.png",
+			"text": "会员"
+		}]
+	}
+}

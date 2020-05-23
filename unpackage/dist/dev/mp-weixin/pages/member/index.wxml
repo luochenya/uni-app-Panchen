@@ -1,0 +1,1 @@
+<view><top-navigation-bar vue-id="00d1cfa0-1" bind:__l="__l"></top-navigation-bar><view class="content"><image class="logo" src="/static/logo.png"></image><view class="text-area"><text class="title">{{title}}</text></view></view></view>

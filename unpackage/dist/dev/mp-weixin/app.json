@@ -1,0 +1,70 @@
+{
+  "pages": [
+    "pages/knowUs/index",
+    "pages/member/index",
+    "pages/dealer/index",
+    "pages/dealerLogin/dealerLogin"
+  ],
+  "subPackages": [
+    {
+      "root": "pagesDealer",
+      "pages": [
+        "caseDetails/caseDetails",
+        "caseExclusive/caseExclusive",
+        "courseDetails/courseDetails",
+        "collegeOfEducation/collegeOfEducation",
+        "spotNews/spotNews",
+        "consultingFeedback/consultingFeedback",
+        "knowledgeTest/knowledgeTest",
+        "quiz/quiz"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/knowUs/index",
+        "iconPath": "static/tabbarImg/tabbarA.png",
+        "selectedIconPath": "static/tabbarImg/tabbarAa.png",
+        "text": "认识我们"
+      },
+      {
+        "pagePath": "pages/dealer/index",
+        "iconPath": "static/tabbarImg/tabbarB.png",
+        "selectedIconPath": "static/tabbarImg/tabbarBb.png",
+        "text": "经销商"
+      },
+      {
+        "pagePath": "pages/member/index",
+        "iconPath": "static/tabbarImg/tabbarC.png",
+        "selectedIconPath": "static/tabbarImg/tabbarBb.png",
+        "text": "会员"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/dealer/index": {
+      "network": "all",
+      "packages": [
+        "pagesDealer"
+      ]
+    }
+  },
+  "permission": {},
+  "usingComponents": {
+    "mpopup": "/components/xuan-popup/xuan-popup",
+    "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
+    "input-box": "/components/input-box/input-box"
+  },
+  "sitemapLocation": "sitemap78.json"
+}

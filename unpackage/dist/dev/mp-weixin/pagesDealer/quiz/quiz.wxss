@@ -1,0 +1,42 @@
+.quizStyle {
+  padding-top: 50rpx;
+  padding-left: 34rpx;
+  border-bottom: 2rpx solid #ececec;
+}
+.quizStyle .quizStyleTopic {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+}
+.quizStyle .quizLabelStyle {
+  margin-left: 68rpx;
+  display: block;
+  height: 72rpx;
+}
+.quizStyle .quizLabelStyle .quizRadioStyle {
+  display: inline-block;
+  color: #999999;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  font-size: 28rpx;
+}
+.quizStyle .quizLabelStyle .quizContentStyle {
+  display: inline-block;
+  color: #999999;
+  font-size: 26rpx;
+}
+.quizStyle .quizLabelStyle .quizContentStyles {
+  display: inline-block;
+  color: #88c075;
+  font-size: 26rpx;
+}
+.quizStyleButton {
+  margin: 64rpx auto;
+  width: 320rpx;
+  height: 88rpx;
+  color: #FFFFFF;
+  line-height: 88rpx;
+  font-size: 28rpx;
+  border-radius: 88rpx;
+}
+
