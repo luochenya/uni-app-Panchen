@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "建立个人健康管理师",
+  "usingComponents": {
+    "uni-calendar": "/components/uni-calendar/uni-calendar"
+  }
+}

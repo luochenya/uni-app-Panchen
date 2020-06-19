@@ -1,0 +1,53 @@
+<template>
+	<view class="KnowUsInternationalNewss">
+		<image class="KnowUsInternationalNewss_image" src="../static/image/KnowUsInternationalNewss.png" mode=""></image>
+		<text class="KnowUsInternationalNewss_title">{{title}}</text>
+		<text class="KnowUsInternationalNewss_content">
+			在臨床治療上，確實有很多肌少症、肌力下降的患者，是因為糖尿病等慢性病所導致，而這些慢性病患者也有很高比例已經罹患肌少症，因此國內醫生也認為，這個概念很值得參考，只不過，國內要建立自己的標準握力值切點，才能進一步預測糖尿病風險。 近年來，醫療界也開始注意到握力的重要性。握力可能反應一個人的體能狀況、運動習慣、全身肌肉力量，通常握力愈強，全身肌肉量也愈多，肌肉力量也愈強，算是滿準確的指標，用來判斷健康很有參考價值。尤其肌肉量不足的年輕人，如果可以透過握力早期發現，並且把肌力運動加入訓練中，可以降低日後產生肌少症等疾病的風險。
+			試試硬舉和吊單槓吧！這2種肌力訓練對於握力和肌力都有幫助。但還是建議運動新手最好尋求專業指導，姿勢正確才不會造成運動傷害。
+		</text>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				title: ""
+			};
+		},
+		onLoad:function(option){
+			this.title = option.title
+		}
+	}
+</script>
+
+<style lang="less">
+.KnowUsInternationalNewss {
+	padding: 0 4.27%;
+	.KnowUsInternationalNewss_image {
+		width: 100%;
+		height: 350rpx;
+	}
+	.KnowUsInternationalNewss_title {
+		display: block;
+		margin: 48rpx 0 18rpx;
+		text-align: center;
+		font-size:36rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:bold;
+		color:rgba(19,31,43,1);
+		line-height:58rpx;
+	}
+	.KnowUsInternationalNewss_content {
+		display: block;
+		padding-bottom: 48rpx;
+		text-indent: 2em;
+		font-size:28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(153,153,153,1);
+		line-height:62rpx;
+	}
+}
+</style>

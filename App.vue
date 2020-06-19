@@ -13,6 +13,9 @@
 			uni.removeStorage({
 				key: "userInfo"
 			})
+			uni.removeStorage({
+				key: "memberInfo"
+			})
 		},
 		onError: function() {
 			console.debug()

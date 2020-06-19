@@ -2,17 +2,31 @@
 	<view>
 		<top-navigation-bar></top-navigation-bar>
 		<view class="dealer">
-			<view class="">
-				<image style="width: 100%;height: 300rpx;" src="../../static/dealerImg/dealerA.png" mode=""></image>
+			<view class="dealer_image">
+				<image src="../../static/dealerImg/dealerA.png" mode=""></image>
 			</view>
-			<view class="collegeOfEducation">
-				<image @click="skipCollegeOfEducation()" style="width: 65%;height: 200rpx;margin-right: 5%;" src="../../static/dealerImg/dealerB.png" mode=""></image>
-				<image @click="skipSpotNews()" style="width: 30%;height: 200rpx;" src="../../static/dealerImg/dealerC.png" mode=""></image>
-			</view>
-			<view class="collegeOfEducation">
-				<image @click="skipCaseExclusive()" style="width: 30%;height: 200rpx;" src="../../static/dealerImg/dealerD.png" mode=""></image>
-				<image @click="skipConsultingFeedback()" style="width: 30%;height: 200rpx;margin: 0 5%;" src="../../static/dealerImg/dealerE.png" mode=""></image>
-				<image @click="skipKnowledgeTest()" style="width: 30%;height: 200rpx;" src="../../static/dealerImg/dealerF.png" mode=""></image>
+			<view class="dealer_box">
+				<view class="dealer_box_view1" @click="skipCollegeOfEducation()">
+					<text class="dealer_box_view1_title">教育学院</text>
+					<text class="dealer_box_view1_content">顾客拓展奖励专项培训···</text>
+					<view class="dealer_box_view1_button">查看详情</view>
+				</view>
+				<view class="dealer_box_view2" @click="skipSpotNews()">
+					<text class="dealer_box_view2_title">最新消息</text>
+					<image class="dealer_box_view2_image" src="../../static/dealerImg/dealerC.png" mode=""></image>
+				</view>
+				<view class="dealer_box_view3" @click="skipCaseExclusive()">
+					<text class="dealer_box_view3_title">案例分享</text>
+					<image class="dealer_box_view3_image" src="../../static/dealerImg/dealerD.png" mode=""></image>
+				</view>
+				<view class="dealer_box_view4" @click="skipConsultingFeedback()">
+					<text class="dealer_box_view4_title">资讯反馈</text>
+					<image class="dealer_box_view4_image" src="../../static/dealerImg/dealerE.png" mode=""></image>
+				</view>
+				<view class="dealer_box_view5" @click="skipKnowledgeTest()">
+					<text class="dealer_box_view5_title">知识测验</text>
+					<image class="dealer_box_view5_image" src="../../static/dealerImg/dealerF.png" mode=""></image>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -85,10 +99,138 @@
 
 <style lang="less" scoped>
 .dealer {
-	width: 90%;
-	margin: 0 auto;
-	.collegeOfEducation {
-		margin: 30rpx 0;
+	padding: 0 4.27%;
+	.dealer_image {
+		width: 100%;
+		height: 344rpx;
+		margin-bottom: 32rpx;
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.dealer_box {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		.dealer_box_view1 {
+			padding: 32rpx;
+			width: 448rpx;
+			height: 220rpx;
+			border-radius:4rpx;
+			background: url(../../static/dealerImg/dealerB.png);
+			.dealer_box_view1_title {
+				display: block;
+				font-size:32rpx;
+				font-family:PingFangSC-Medium,PingFang SC;
+				font-weight:bold;
+				color:rgba(255,255,255,1);
+				line-height:48rpx;
+			}
+			.dealer_box_view1_content {
+				height:32rpx;
+				font-size:22rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(255,255,255,1);
+				line-height:32rpx;
+			}
+			.dealer_box_view1_button {
+				margin-top: 30rpx;
+				width:100rpx;
+				height:32rpx;
+				text-align: center;
+				background:rgba(255,255,255,1);
+				font-size:20rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(251,113,30,1);
+				line-height:32rpx;
+			}
+		}
+		.dealer_box_view2 {
+			width: 208rpx;
+			height: 220rpx;
+			background:rgba(104,183,77,0.19);
+			border-radius:4rpx;
+			text-align: center;
+			.dealer_box_view2_title {
+				display: block;
+				margin-top: 30rpx;
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(104,183,77,1);
+				line-height:54rpx;
+			}
+			.dealer_box_view2_image {
+				width: 82rpx;
+				height: 82rpx;
+			}
+		}
+		.dealer_box_view3 {
+			margin-top: 32rpx;
+			width: 208rpx;
+			height: 220rpx;
+			background:rgba(255,192,63,0.19);
+			border-radius:4rpx;
+			text-align: center;
+			.dealer_box_view3_title {
+				display: block;
+				margin-top: 30rpx;
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(255,192,63,1);
+				line-height:54rpx;
+			}
+			.dealer_box_view3_image {
+				width: 82rpx;
+				height: 82rpx;
+			}
+		}
+		.dealer_box_view4 {
+			margin-top: 32rpx;
+			width: 208rpx;
+			height: 220rpx;
+			background:rgba(252,147,64,0.19);
+			border-radius:4rpx;
+			text-align: center;
+			.dealer_box_view4_title {
+				display: block;
+				margin-top: 30rpx;
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(252,147,64,1);
+				line-height:54rpx;
+			}
+			.dealer_box_view4_image {
+				width: 82rpx;
+				height: 82rpx;
+			}
+		}
+		.dealer_box_view5 {
+			margin-top: 32rpx;
+			width: 208rpx;
+			height: 220rpx;
+			background:rgba(79,157,235,0.19);
+			border-radius:4rpx;
+			text-align: center;
+			.dealer_box_view5_title {
+				display: block;
+				margin-top: 30rpx;
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(79,157,235,1);
+				line-height:54rpx;
+			}
+			.dealer_box_view5_image {
+				width: 82rpx;
+				height: 82rpx;
+			}
+		}
 	}
 }
 </style>

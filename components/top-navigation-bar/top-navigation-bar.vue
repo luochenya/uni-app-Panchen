@@ -25,7 +25,7 @@
 <style lang="less" scoped>
 
 .status_bar {  
-    height: var(--status-bar-height);  
+    height: var(--status-bar-height);
     width: 100%;  
     background-color: #FFFFFF;  
 }  
@@ -52,9 +52,9 @@
 		display: flex;
 		align-items: center;
 		image {
-			width: 161rpx;
-			height: 60rpx;
-			margin-left: 34rpx;
+			width: 70rpx;
+			height: 66rpx;
+			margin-left: 32rpx;
 		}
 	}
 }

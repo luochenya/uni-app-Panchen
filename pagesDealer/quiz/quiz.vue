@@ -1,20 +1,24 @@
 <template>
-	<view>
-		<view class="quizStyle" v-for="(item, index) in quizList" :key="index">
-			<view class="quizStyleTopic">
-				<text><text style="margin-right: 20rpx;">{{index < 9 ? '0' + (index + 1) : (index +1)}}</text>{{item.question}}</text>
+	<view class="quiz">
+		<view class="quiz_box" v-for="(item, index) in quizList" :key="index">
+			<view class="quiz_box_title">
+				<text class="quiz_box_title_title">
+					<text class="quiz_box_title_titles">{{index < 9 ? '0' + (index + 1) : (index +1)}}</text>
+					{{item.question}}
+				</text>
 			</view>
 			<radio-group @change="radioChange" :id="index">
-				<label class="quizLabelStyle" v-for="(items, indexs) in item.answer_content" :key="items">
-					<view class="quizRadioStyle">
+				<label class="quiz_box_cintent" v-for="(items, indexs) in item.answer_content" :key="items">
+					<view class="quiz_box_cintent_radio">
 						<radio color="#88c075" :value="items" :checked="items == item.answer" />
 					</view>
-					<view v-if="items == item.answer" class="quizContentStyles">{{items}}</view>
-					<view v-else class="quizContentStyle">{{items}}</view>
+					<text class="quiz_box_cintent_text" v-if="items == item.answer">{{items}}</text>
+					<text class="quiz_box_cintent_texts" v-else>{{items}}</text>
 				</label>
 			</radio-group>
 		</view>
-		<button @click="submit()" class="quizStyleButton" type="primary">我答完了</button>
+			
+		<button class="quiz_button" @click="submit()" type="primary">我答完了</button>
 	</view>
 </template>
 
@@ -93,44 +97,68 @@
 </script>
 
 <style lang="less">
-.quizStyle {
-	padding-top: 50rpx;
-	padding-left: 34rpx;
-	border-bottom: 2rpx solid #ececec;
-	.quizStyleTopic {
-		font-size: 30rpx;
-		font-weight: bold;
-		margin-bottom: 30rpx;
+.quiz {
+	.quiz_box {
+		padding-bottom: 18rpx;
+		padding-top: 32rpx;
+		border-bottom: 2rpx solid #D8D8D8;
+		.quiz_box_title {
+			width: 100%;
+			padding: 0 4.27%;
+			.quiz_box_title_title {
+				font-size:30rpx;
+				font-family:PingFangSC-Medium,PingFang SC;
+				font-weight:bold;
+				color:rgba(51,51,51,1);
+				line-height:64rpx;
+				.quiz_box_title_titles {
+					display: inline-block;
+					width: 70rpx;
+					font-size:36rpx;
+					font-family:DIN-Black,DIN;
+					font-weight:900;
+					color:rgba(51,51,51,1);
+					line-height:64rpx;
+				}
+			}
+		}
+		.quiz_box_cintent {
+			padding: 12rpx 4.27%;
+			margin-left: 60rpx;
+			display: block;
+			.quiz_box_cintent_radio {
+				display: inline-block;
+				transform:scale(0.7);
+				font-size: 28rpx;
+			}
+			.quiz_box_cintent_text {
+				font-size:28rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(104,183,77,1);
+				line-height:48rpx;
+			}
+			.quiz_box_cintent_texts {
+				font-size:28rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(153,153,153,1);
+				line-height:48rpx;
+			}
+		}
 	}
-	.quizLabelStyle {
-		margin-left: 68rpx;
-		display: block;
-		height: 72rpx;
-		.quizRadioStyle {
-			display: inline-block;
-			color: #999999;
-			transform:scale(0.7);
-			font-size: 28rpx;
-		}
-		.quizContentStyle {
-			display: inline-block;
-			color: #999999;
-			font-size: 26rpx;
-		}
-		.quizContentStyles {
-			display: inline-block;
-			color: #88c075;
-			font-size: 26rpx;
-		}
+	.quiz_button {
+		margin-top: 64rpx;
+		margin-bottom: 160rpx;
+		width:320rpx;
+		height:88rpx;
+		background:rgba(104,183,77,1);
+		border-radius:54rpx;
+		font-size:30rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:bold;
+		color:rgba(255,255,255,1);
+		line-height:88rpx;
 	}
-}
-.quizStyleButton {
-	margin: 64rpx auto;
-	width: 320rpx;
-	height: 88rpx;
-	color: #FFFFFF;
-	line-height: 88rpx;
-	font-size: 28rpx;
-	border-radius: 88rpx;
 }
 </style>

@@ -1,0 +1,42 @@
+.KnowsUsHonor {
+  padding: 0 4.27%;
+}
+.KnowsUsHonor .KnowsUsHonor_box:last-child {
+  border-bottom: none;
+}
+.KnowsUsHonor .KnowsUsHonor_box {
+  padding: 32rpx 0;
+  width: 100%;
+  border-bottom: 2rpx solid #D8D8D8;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.KnowsUsHonor .KnowsUsHonor_box .KnowsUsHonor_box_left {
+  display: block;
+  width: 180rpx;
+  height: 180rpx;
+}
+.KnowsUsHonor .KnowsUsHonor_box .KnowsUsHonor_box_right {
+  width: 510rpx;
+  padding-left: 32rpx;
+  padding-right: 16rpx;
+}
+.KnowsUsHonor .KnowsUsHonor_box .KnowsUsHonor_box_right .KnowsUsHonor_box_right_title {
+  display: block;
+  margin-bottom: 26rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: bold;
+  color: #131f2b;
+  line-height: 44rpx;
+  letter-spacing: 2rpx;
+}
+.KnowsUsHonor .KnowsUsHonor_box .KnowsUsHonor_box_right .KnowsUsHonor_box_right_content {
+  font-size: 28rpx;
+  font-family: PingFangSC-Light, PingFang SC;
+  font-weight: 300;
+  color: #828282;
+  line-height: 46rpx;
+}
+

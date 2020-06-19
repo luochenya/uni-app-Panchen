@@ -1,17 +1,13 @@
 <template>
 	<view class="collegeOfEducation">
-		<view class="">
-			<image style="width: 100%;height: 300rpx;" src="../static/collegeOfEducationImg/collegeOfEducation.png" mode=""></image>
-		</view>
-		<view class="recommendedCourse">推荐课程</view>
-		<view class="recommendedCourseName" @click="skipCourseDetails(item.id)" v-for="(item, index) in recommendedCourse" :key="index">
-			<view class="recommendedCourseTitle">
-				<view style="line-height: 90rpx;color: #131f2b;font-size: 34rpx;">{{item.title}}</view>
-				<view style="line-height: 80rpx;color: #8f8f8f;font-size: 26rpx;">{{item.created_at}}</view>
+		<image class="collegeOfEducation_image" src="../static/image/collegeOfEducation.png" mode=""></image>
+		<view class="collegeOfEducation_title">推荐课程</view>
+		<view class="collegeOfEducation_box" @click="skipCourseDetails(item.id)" v-for="(item, index) in recommendedCourse" :key="index">
+			<view class="collegeOfEducation_box_content">
+				<view class="collegeOfEducation_box_content_title">{{item.title}}</view>
+				<view class="collegeOfEducation_box_content_times">{{item.created_at}}</view>
 			</view>
-			<view class="recommendedCourseImg">
-				<image :src="imgUrl + item.imgs" mode=""></image>
-			</view>
+			<image class="collegeOfEducation_box_image" :src="imgUrl + item.imgs" mode=""></image>
 		</view>
 	</view>
 </template>
@@ -64,29 +60,70 @@
 
 <style lang="less" scoped>
 .collegeOfEducation {
-	width: 95%;
-	margin: 0 auto;
-	.recommendedCourse {
-		font-size: 30rpx;
-		line-height: 70rpx;
-		border-bottom: 1rpx solid #ededed;
-		margin-top: 20rpx;
+	padding: 0 4.27%;
+	.collegeOfEducation_image {
+		width: 100%;
+		height: 262rpx;
 	}
-	.recommendedCourseName {
-		height: 170rpx;
-		border-bottom: 1rpx solid #ededed;
-		.recommendedCourseTitle {
-			display: inline-block;
-		}
-		.recommendedCourseImg {
-			float: right;
-			display: inline-block;
-			margin: 19rpx;
-			image {
-				width: 208rpx;
-				height: 120rpx;
+	.collegeOfEducation_title {
+		display: block;
+		margin-top: 20rpx;
+		padding-bottom: 16rpx;
+		font-size:32rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(19,31,43,1);
+		line-height:48rpx;
+		border-bottom: 2rpx solid #D8D8D8;
+	}
+	.collegeOfEducation_box {
+		padding: 32rpx 0;
+		display: flex;
+		justify-content: space-between;
+		border-bottom: 2rpx solid #D8D8D8;
+		.collegeOfEducation_box_content {
+			width: 446rpx;
+			height: 130rpx;
+			.collegeOfEducation_box_content_title {
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(19,31,43,1);
+				line-height:54rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+			.collegeOfEducation_box_content_times {
+				display: block;
+				margin-top: 40rpx;
+				font-size:22rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(130,130,130,1);
+				line-height:32rpx;
 			}
 		}
+		.collegeOfEducation_box_image {
+			width: 208rpx;
+			height: 130rpx;
+		}
+		// height: 170rpx;
+		// border-bottom: 1rpx solid #ededed;
+		// .recommendedCourseTitle {
+		// 	display: inline-block;
+		// }
+		// .recommendedCourseImg {
+		// 	float: right;
+		// 	display: inline-block;
+		// 	margin: 19rpx;
+		// 	image {
+		// 		width: 208rpx;
+		// 		height: 120rpx;
+		// 	}
+		// }
 	}
 }
 </style>

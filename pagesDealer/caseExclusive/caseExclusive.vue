@@ -1,16 +1,18 @@
 <template>
 	<view class="caseExclusive">
-		<view class="">
-			<image style="width: 100%;height: 300rpx" src="../static/caseExclusive/caseExclusive.png" mode=""></image>
+		<view class="caseExclusive_iamge">
+			<image src="../static/image/caseExclusive.png" mode=""></image>
 		</view>
-		<view class="caseExclusiveRecommend">推荐案例</view>
-		<view class="caseExclusiveParticulars" @click="spikCaseDetails(item)" v-for="(item, index) in caseExclusive" :key="index">
-			<view class="caseExclusiveImg">
-				<image :src="imgUrl + item.imgs" mode=""></image>
-			</view>
-			<view class="caseExclusiveContent">
-				<view class="caseExclusiveContentTitle">{{item.title}}</view>
-				<view class="caseExclusiveContentSignature">{{item.content}}</view>
+		<view class="caseExclusive_title">推荐案例</view>
+		<view class="caseExclusive_box">
+			<view class="caseExclusive_box_content" @click="spikCaseDetails(item)" v-for="(item, index) in caseExclusive" :key="index">
+				<view class="caseExclusive_box_content_image">
+					<image :src="imgUrl + item.imgs" mode=""></image>
+				</view>
+				<view class="caseExclusive_box_content_content">
+					<view class="caseExclusive_box_content_content_title">{{item.title}}</view>
+					<view class="caseExclusive_box_content_content_content">- {{item.content}}</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -64,8 +66,65 @@
 
 <style lang="less" scoped>
 .caseExclusive {
-	width: 95%;
-	margin: 0 auto;
+	.caseExclusive_iamge {
+		padding: 0 4.27%;
+		width: 100%;
+		height: 262rpx;
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.caseExclusive_title {
+		display: block;
+		padding: 32rpx 4.27% 16rpx;
+		font-size:32rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(19,31,43,1);
+		line-height:48rpx;
+		border-bottom: 2rpx solid #D8D8D8;
+	}
+	.caseExclusive_box {
+		padding: 4.27%;
+		.caseExclusive_box_content {
+			padding: 32rpx;
+			display: flex;
+			justify-content: space-between;
+			justify-items: center;
+			align-items: center;
+			box-shadow:4rpx 14rpx 14rpx -10rpx rgba(239,239,239,0.52);
+			border-radius:8rpx;
+			.caseExclusive_box_content_image {
+				width: 146rpx;
+				height: 200rpx;
+				margin-right: 16rpx;
+				image {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.caseExclusive_box_content_content {
+				width: 458rpx;
+				.caseExclusive_box_content_content_title {
+					display: block;
+					width: 100%;
+					font-size:30rpx;
+					font-family:PingFangSC-Regular,PingFang SC;
+					font-weight:400;
+					color:rgba(51,51,51,1);
+					line-height:44rpx;
+				}
+				.caseExclusive_box_content_content_content {
+					font-size:24rpx;
+					font-family:PingFangSC-Regular,PingFang SC;
+					font-weight:400;
+					color:rgba(130,130,130,1);
+					line-height:48rpx;
+				}
+			}
+		}
+	}
 }
 .caseExclusiveRecommend {
 	font-size: 30rpx;

@@ -32,8 +32,8 @@
           align-items: center;
 }
 .tabNavBar .tabNavBars image.data-v-4a0ca5c0 {
-  width: 161rpx;
-  height: 60rpx;
-  margin-left: 34rpx;
+  width: 70rpx;
+  height: 66rpx;
+  margin-left: 32rpx;
 }
 

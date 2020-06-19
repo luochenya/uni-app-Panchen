@@ -3,7 +3,8 @@
     "pages/knowUs/index",
     "pages/member/index",
     "pages/dealer/index",
-    "pages/dealerLogin/dealerLogin"
+    "pages/dealerLogin/dealerLogin",
+    "pages/memberLogin/memberLogin"
   ],
   "subPackages": [
     {
@@ -17,6 +18,34 @@
         "consultingFeedback/consultingFeedback",
         "knowledgeTest/knowledgeTest",
         "quiz/quiz"
+      ]
+    },
+    {
+      "root": "pagesMember",
+      "pages": [
+        "MemberCentre/MemberCentre",
+        "MemberLatestNews/MemberLatestNews",
+        "MemberLatestNewsContent/MemberLatestNewsContent",
+        "MemberGuardianCard/MemberGuardianCard",
+        "MemberGuardianCardsDetails/MemberGuardianCardsDetails",
+        "MemberNutritiousFood/MemberNutritiousFood",
+        "MemberCommonProblem/MemberCommonProblem",
+        "MemberGoodLuckPlan/MemberGoodLuckPlan",
+        "MemberDeepButler/MemberDeepButler",
+        "MemberCreateManager/MemberCreateManager"
+      ]
+    },
+    {
+      "root": "pagesKnowUs",
+      "pages": [
+        "KnowUsCompany/KnowUsCompany",
+        "KnowUsHealthConcept/KnowUsHealthConcept",
+        "KnowUsCelebritySays/KnowUsCelebritySays",
+        "KnowsUsHonor/KnowsUsHonor",
+        "KnowUsGoodLuckPlan/KnowUsGoodLuckPlan",
+        "KnowUsCommonProblem/KnowUsCommonProblem",
+        "KnowUsInternationalNews/KnowUsInternationalNews",
+        "KnowUsInternationalNewss/KnowUsInternationalNewss"
       ]
     }
   ],
@@ -47,7 +76,7 @@
       {
         "pagePath": "pages/member/index",
         "iconPath": "static/tabbarImg/tabbarC.png",
-        "selectedIconPath": "static/tabbarImg/tabbarBb.png",
+        "selectedIconPath": "static/tabbarImg/tabbarCc.png",
         "text": "会员"
       }
     ]
@@ -57,6 +86,18 @@
       "network": "all",
       "packages": [
         "pagesDealer"
+      ]
+    },
+    "pages/member/index": {
+      "network": "all",
+      "packages": [
+        "pagesMember"
+      ]
+    },
+    "pages/knowUs/index": {
+      "network": "all",
+      "packages": [
+        "pagesKnowUs"
       ]
     }
   },

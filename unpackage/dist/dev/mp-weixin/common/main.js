@@ -15,7 +15,7 @@ var _index = __webpack_require__(/*! @/components/luch-request/index.js */ 15);f
 _vue.default.prototype.$http = _index.http;
 _vue.default.prototype.$text = _index.text;
 // 弹窗
-var mpopup = function mpopup() {return __webpack_require__.e(/*! import() | components/xuan-popup/xuan-popup */ "components/xuan-popup/xuan-popup").then(__webpack_require__.bind(null, /*! @/components/xuan-popup/xuan-popup.vue */ 116));};var uniSwiperDot = function uniSwiperDot() {return __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 123));};var inputBox = function inputBox() {return Promise.all(/*! import() | components/input-box/input-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/input-box/input-box")]).then(__webpack_require__.bind(null, /*! @/components/input-box/input-box */ 130));};
+var mpopup = function mpopup() {return __webpack_require__.e(/*! import() | components/xuan-popup/xuan-popup */ "components/xuan-popup/xuan-popup").then(__webpack_require__.bind(null, /*! @/components/xuan-popup/xuan-popup.vue */ 268));};var uniSwiperDot = function uniSwiperDot() {return __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 275));};var inputBox = function inputBox() {return Promise.all(/*! import() | components/input-box/input-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/input-box/input-box")]).then(__webpack_require__.bind(null, /*! @/components/input-box/input-box */ 282));};
 
 
 
@@ -125,6 +125,9 @@ __webpack_require__.r(__webpack_exports__);
 
     uni.removeStorage({
       key: "userInfo" });
+
+    uni.removeStorage({
+      key: "memberInfo" });
 
   },
   onError: function onError() {

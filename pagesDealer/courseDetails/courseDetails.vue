@@ -1,13 +1,9 @@
 <template>
-	<view>
-		<video v-if="courseList.type == 2" :src="imgUrl + courseList.url" class="myVideo" @error="videoErrorCallback" :danmu-list="danmuList" enable-danmu danmu-btn controls></video>
-		<image v-if="courseList.type == 1" :src="imgUrl + courseList.imgs" class="myVideo" mode=""></image>
-		<view class="courseTitle">
-			{{courseList.title}}
-		</view>
-		<view class="courseContent">
-			{{courseList.content}}
-		</view>
+	<view class="courseDetails">
+		<video class="courseDetails_image" v-if="courseList.type == 2" :src="imgUrl + courseList.url" @error="videoErrorCallback" :danmu-list="danmuList" enable-danmu danmu-btn controls></video>
+		<image class="courseDetails_image" v-if="courseList.type == 1" :src="imgUrl + courseList.imgs" mode=""></image>
+		<text class="courseDetails_title">{{courseList.title}}</text>
+		<text class="courseDetails_content">{{courseList.content}}</text>
 	</view>
 </template>
 
@@ -54,22 +50,31 @@
 </script>
 
 <style lang="less" scoped>
-.myVideo {
-	width: 90%;
-	height: 423rpx;
-	margin: 0 5%;
-}
-.courseTitle {
-	text-align: center;
-	font-weight: bold;
-	font-size: 38rpx;
-	line-height: 100rpx;
-}
-.courseContent {
-	text-indent: 2em;
-	line-height: 58rpx;
-	font-size: 30rpx;
-	margin: 0 4%;
-	color: #999999;
+.courseDetails {
+	padding: 0 4.27%;
+	.courseDetails_image {
+		width: 100%;
+		height: 352rpx;
+	}
+	.courseDetails_title {
+		display: block;
+		text-align: center;
+		padding: 48rpx 32rpx 18rpx;
+		font-size:36rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:bold;
+		color:rgba(19,31,43,1);
+		line-height:58rpx;
+	}
+	.courseDetails_content {
+		display: block;
+		padding: 0 32rpx;
+		text-indent: 2em;
+		font-size:28rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(153,153,153,1);
+		line-height:62rpx;
+	}
 }
 </style>

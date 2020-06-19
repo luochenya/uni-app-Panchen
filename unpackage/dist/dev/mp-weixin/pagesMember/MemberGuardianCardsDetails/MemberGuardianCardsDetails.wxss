@@ -1,0 +1,8 @@
+.MemberGuardianCardsDetails {
+  padding: 60rpx 4.27%;
+}
+.MemberGuardianCardsDetails .MemberGuardianCardsDetails_image {
+  width: 100%;
+  height: 838rpx;
+}
+

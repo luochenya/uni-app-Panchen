@@ -1,19 +1,28 @@
-.myVideo.data-v-a1140c5a {
-  width: 90%;
-  height: 423rpx;
-  margin: 0 5%;
+.courseDetails.data-v-a1140c5a {
+  padding: 0 4.27%;
 }
-.courseTitle.data-v-a1140c5a {
+.courseDetails .courseDetails_image.data-v-a1140c5a {
+  width: 100%;
+  height: 352rpx;
+}
+.courseDetails .courseDetails_title.data-v-a1140c5a {
+  display: block;
   text-align: center;
+  padding: 48rpx 32rpx 18rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: bold;
-  font-size: 38rpx;
-  line-height: 100rpx;
-}
-.courseContent.data-v-a1140c5a {
-  text-indent: 2em;
+  color: #131f2b;
   line-height: 58rpx;
-  font-size: 30rpx;
-  margin: 0 4%;
+}
+.courseDetails .courseDetails_content.data-v-a1140c5a {
+  display: block;
+  padding: 0 32rpx;
+  text-indent: 2em;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
   color: #999999;
+  line-height: 62rpx;
 }
 

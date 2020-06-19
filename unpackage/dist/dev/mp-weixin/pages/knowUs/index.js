@@ -97,9 +97,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "top-navigation-bar": () =>
-    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 138)),
+    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290)),
   "uni-swiper-dot": () =>
-    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 123))
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 275))
 }
 var render = function() {
   var _vm = this
@@ -138,7 +138,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 138));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290));};var _default =
 
 
 
@@ -190,50 +190,39 @@ __webpack_require__.r(__webpack_exports__);
       imgUrl: this.$imgUrl,
       info: [],
       company: [{
-        text: '关于公司',
+        text: '咱们',
         imgUrl: '../../static/knowUsImg/rollA.png' },
       {
-        text: '理念',
+        text: '想做的事',
         imgUrl: '../../static/knowUsImg/rollB.png' },
       {
-        text: '名人语录',
+        text: '名人说',
         imgUrl: '../../static/knowUsImg/rollC.png' },
       {
         text: '荣誉',
         imgUrl: '../../static/knowUsImg/rollD.png' },
       {
-        text: '标题',
+        text: '健康报',
         imgUrl: '../../static/knowUsImg/rollE.png' },
       {
-        text: '内容',
-        imgUrl: '../../static/knowUsImg/rollA.png' }],
+        text: '问与答',
+        imgUrl: '../../static/knowUsImg/rollF.png' }],
 
       novelty: [{
         text: '保健专场',
-        imgUrl: '../../static/knowUsImg/noveltyA.png' },
+        imgUrl: '../../static/knowUsImg/NewThings1.png' },
       {
         text: '进口大牌',
-        imgUrl: '../../static/knowUsImg/noveltyB.png' },
+        imgUrl: '../../static/knowUsImg/NewThings2.png' },
       {
-        text: '强身健体',
-        imgUrl: '../../static/knowUsImg/noveltyA.png' },
-      {
-        text: '保健专场',
-        imgUrl: '../../static/knowUsImg/noveltyB.png' },
-      {
-        text: '进口大牌',
-        imgUrl: '../../static/knowUsImg/noveltyA.png' },
-      {
-        text: '强身健体',
-        imgUrl: '../../static/knowUsImg/noveltyB.png' }],
+        text: '199元任选3件',
+        imgUrl: '../../static/knowUsImg/NewThings3.png' }],
 
       partner: [
       { imgUrl: '../../static/knowUsImg/brandA.png' },
       { imgUrl: '../../static/knowUsImg/brandB.png' },
       { imgUrl: '../../static/knowUsImg/brandC.png' },
-      { imgUrl: '../../static/knowUsImg/brandA.png' },
-      { imgUrl: '../../static/knowUsImg/brandB.png' },
-      { imgUrl: '../../static/knowUsImg/brandC.png' }],
+      { imgUrl: '../../static/knowUsImg/brandD.png' }],
 
       current: 0,
       mode: 'default' };
@@ -243,6 +232,38 @@ __webpack_require__.r(__webpack_exports__);
     this.gettingData();
   },
   methods: {
+    toKnowUsGoodLuckPlan: function toKnowUsGoodLuckPlan() {
+      uni.navigateTo({
+        url: '../../pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan' });
+
+    },
+    skipClick: function skipClick(text) {
+      if (text == "咱们") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowUsCompany/KnowUsCompany' });
+
+      } else if (text == "健康报") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept' });
+
+      } else if (text == "名人说") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowUsCelebritySays/KnowUsCelebritySays' });
+
+      } else if (text == "荣誉") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowsUsHonor/KnowsUsHonor' });
+
+      } else if (text == "问与答") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowUsCommonProblem/KnowUsCommonProblem' });
+
+      } else if (text == "想做的事") {
+        uni.navigateTo({
+          url: '../../pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews' });
+
+      }
+    },
     gettingData: function gettingData() {var _this = this;
       // 加载动画
       uni.showLoading({

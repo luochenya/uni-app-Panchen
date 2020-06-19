@@ -1,6 +1,67 @@
-.caseExclusive.data-v-3e9df9e1 {
-  width: 95%;
-  margin: 0 auto;
+.caseExclusive .caseExclusive_iamge.data-v-3e9df9e1 {
+  padding: 0 4.27%;
+  width: 100%;
+  height: 262rpx;
+}
+.caseExclusive .caseExclusive_iamge image.data-v-3e9df9e1 {
+  width: 100%;
+  height: 100%;
+}
+.caseExclusive .caseExclusive_title.data-v-3e9df9e1 {
+  display: block;
+  padding: 32rpx 4.27% 16rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #131f2b;
+  line-height: 48rpx;
+  border-bottom: 2rpx solid #D8D8D8;
+}
+.caseExclusive .caseExclusive_box.data-v-3e9df9e1 {
+  padding: 4.27%;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content.data-v-3e9df9e1 {
+  padding: 32rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  justify-items: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  box-shadow: 4rpx 14rpx 14rpx -10rpx rgba(239, 239, 239, 0.52);
+  border-radius: 8rpx;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content .caseExclusive_box_content_image.data-v-3e9df9e1 {
+  width: 146rpx;
+  height: 200rpx;
+  margin-right: 16rpx;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content .caseExclusive_box_content_image image.data-v-3e9df9e1 {
+  width: 100%;
+  height: 100%;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content .caseExclusive_box_content_content.data-v-3e9df9e1 {
+  width: 458rpx;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content .caseExclusive_box_content_content .caseExclusive_box_content_content_title.data-v-3e9df9e1 {
+  display: block;
+  width: 100%;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #333333;
+  line-height: 44rpx;
+}
+.caseExclusive .caseExclusive_box .caseExclusive_box_content .caseExclusive_box_content_content .caseExclusive_box_content_content_content.data-v-3e9df9e1 {
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #828282;
+  line-height: 48rpx;
 }
 .caseExclusiveRecommend.data-v-3e9df9e1 {
   font-size: 30rpx;

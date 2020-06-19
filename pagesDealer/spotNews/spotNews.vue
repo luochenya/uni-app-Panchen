@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="spotNews">
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="info" :current="current" field="content">
 			<swiper @change="change" autoplay="true" circular="true">
@@ -10,9 +10,9 @@
 				</swiper-item>
 			</swiper>
 		</uni-swiper-dot>
-		<view class="spotNewsStyle" v-for="(item, index) in spotNewsList" :key="index">
-			<text class="spotNewsStyleTitle">{{item.content}}</text>
-			<text class="spotNewsStyleTime">{{item.created_at}}</text>
+		<view class="spotNews_box" v-for="(item, index) in spotNewsList" :key="index">
+			<text class="spotNews_box_title">{{item.content}}</text>
+			<text class="spotNews_box_content">{{item.created_at}}</text>
 		</view>
 	</view>
 </template>
@@ -22,11 +22,11 @@
 		data() {
 			return {
 				info: [{
-					imgUrl: '../static/spotNewsImg/spotNewsImgA.png'
+					imgUrl: '../static/image/spotNewsbanner.png'
 				}, {
-					imgUrl: '../static/spotNewsImg/spotNewsImgB.png'
+					imgUrl: '../static/image/spotNewsbanner.png'
 				}, {
-					imgUrl: '../static/spotNewsImg/spotNewsImgC.png'
+					imgUrl: '../static/image/spotNewsbanner.png'
 				}],
 				spotNewsList: [],
 				current: 0,
@@ -68,32 +68,43 @@
 </script>
 
 <style lang="less" scoped>
-.spotNewsImg {
-	width: 686rpx;
-	height: 290rpx;
-	margin: 16rpx auto;
-	image {
+.spotNews {
+	padding: 0 4.27%;
+	.spotNewsImg {
 		width: 100%;
-		height: 100%;
+		height: 262rpx;
+		image {
+			width: 100%;
+			height: 100%;
+		}
 	}
-}
-.spotNewsStyle {
-	height: 218rpx;
-	width: 686rpx;
-	margin: 0 auto;
-	border-bottom: 2px solid #ececec;
-	.spotNewsStyleTitle {
-		font-size: 28rpx;
-		line-height: 54rpx;
-		height: 108rpx;
-		color: #131f2b;
-		display: block;
-		padding: 40rpx 0 20rpx;
-	}
-	.spotNewsStyleTime {
-		color: #828282;
-		font-size: 20rpx;
-		display: block;
+	.spotNews_box {
+		padding: 20rpx 0;
+		width: 100%;
+		height: 220rpx;
+		border-bottom: 4rpx solid #D8D8D8;
+		.spotNews_box_title {
+			display: block;
+			margin-bottom: 20rpx;
+			height: 100rpx;
+			font-size:30rpx;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(19,31,43,1);
+			line-height:48rpx;
+		}
+		.spotNews_box_content {
+			font-size:22rpx;
+			font-family:PingFangSC-Regular,PingFang SC;
+			font-weight:400;
+			color:rgba(130,130,130,1);
+			line-height:40rpx;
+		}
 	}
 }
 </style>

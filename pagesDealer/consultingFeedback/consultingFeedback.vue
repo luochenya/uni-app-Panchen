@@ -1,10 +1,10 @@
 <template>
-	<view>
+	<view class="consultingFeedback">
 		<form @submit="submit()">
-			<textarea class="textareaStyle" @input='bindTextAreaBlur' show-confirm-bar="false" :value="consultingFeedbackContent" maxlength="500" placeholder="请输入您的问题"/>
+			<textarea class="consultingFeedback_textarea" @input='bindTextAreaBlur' show-confirm-bar="false" :value="consultingFeedbackContent" maxlength="500" placeholder="请输入您的问题"/>
 		</form>
-		<text class="textareaStyleHint">请留下您反馈的内容，限字数500字</text>
-		<button @click="submit()" type="primary" class="textareaStyleButton">提交反馈</button>
+		<text class="consultingFeedback_title">请留下您反馈的内容，限字数500字</text>
+		<button @click="submit()" type="primary" class="consultingFeedback_button">提交反馈</button>
 	</view>
 </template>
 
@@ -72,28 +72,37 @@
 </script>
 
 <style lang="less">
-.textareaStyle {
-	margin: 0 auto;
-	width: 622rpx;
-	height: 500rpx;
-	border: 1rpx solid #d5d5d5;
-	padding: 36rpx 32rpx;
-}
-.textareaStyleHint {
-	text-align: center;
-	width: 100%;
-	display: block;
-	color: #828282;
-	font-size: 20rpx;
-	line-height: 66rpx;
-}
-.textareaStyleButton {
-	width: 320rpx;
-	height: 90rpx;
-	text-align: center;
-	color: #FFFFFF;
-	line-height: 90rpx;
-	border-radius: 90rpx;
-	margin-top: 30rpx;
+.consultingFeedback {
+	padding: 0 4.27%;
+	.consultingFeedback_textarea {
+		padding: 24rpx 32rpx;
+		width: 100%;
+		height:560rpx;
+		background:rgba(255,255,255,1);
+		box-shadow:0px 20rpx 202rpx -126rpx rgba(19,31,43,0.67);
+		border:2rpx solid rgba(130,130,130,0.33);
+	}
+	.consultingFeedback_title {
+		display: block;
+		text-align: center;
+		margin-top: 8rpx;
+		margin-bottom: 64rpx;
+		font-size:20rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(130,130,130,1);
+		line-height:48rpx;
+	}
+	.consultingFeedback_button {
+		width:320rpx;
+		height:88rpx;
+		background:rgba(104,183,77,1);
+		border-radius:54rpx;
+		font-size:30rpx;
+		font-family:PingFangSC-Medium,PingFang SC;
+		font-weight:bold;
+		color:rgba(255,255,255,1);
+		line-height:88rpx;
+	}
 }
 </style>

@@ -1,42 +1,64 @@
-.quizStyle {
-  padding-top: 50rpx;
-  padding-left: 34rpx;
-  border-bottom: 2rpx solid #ececec;
+.quiz .quiz_box {
+  padding-bottom: 18rpx;
+  padding-top: 32rpx;
+  border-bottom: 2rpx solid #D8D8D8;
 }
-.quizStyle .quizStyleTopic {
+.quiz .quiz_box .quiz_box_title {
+  width: 100%;
+  padding: 0 4.27%;
+}
+.quiz .quiz_box .quiz_box_title .quiz_box_title_title {
   font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
   font-weight: bold;
-  margin-bottom: 30rpx;
+  color: #333333;
+  line-height: 64rpx;
 }
-.quizStyle .quizLabelStyle {
-  margin-left: 68rpx;
-  display: block;
-  height: 72rpx;
-}
-.quizStyle .quizLabelStyle .quizRadioStyle {
+.quiz .quiz_box .quiz_box_title .quiz_box_title_title .quiz_box_title_titles {
   display: inline-block;
-  color: #999999;
+  width: 70rpx;
+  font-size: 36rpx;
+  font-family: DIN-Black, DIN;
+  font-weight: 900;
+  color: #333333;
+  line-height: 64rpx;
+}
+.quiz .quiz_box .quiz_box_cintent {
+  padding: 12rpx 4.27%;
+  margin-left: 60rpx;
+  display: block;
+}
+.quiz .quiz_box .quiz_box_cintent .quiz_box_cintent_radio {
+  display: inline-block;
   -webkit-transform: scale(0.7);
           transform: scale(0.7);
   font-size: 28rpx;
 }
-.quizStyle .quizLabelStyle .quizContentStyle {
-  display: inline-block;
+.quiz .quiz_box .quiz_box_cintent .quiz_box_cintent_text {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #68b74d;
+  line-height: 48rpx;
+}
+.quiz .quiz_box .quiz_box_cintent .quiz_box_cintent_texts {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
   color: #999999;
-  font-size: 26rpx;
+  line-height: 48rpx;
 }
-.quizStyle .quizLabelStyle .quizContentStyles {
-  display: inline-block;
-  color: #88c075;
-  font-size: 26rpx;
-}
-.quizStyleButton {
-  margin: 64rpx auto;
+.quiz .quiz_button {
+  margin-top: 64rpx;
+  margin-bottom: 160rpx;
   width: 320rpx;
   height: 88rpx;
-  color: #FFFFFF;
+  background: #68b74d;
+  border-radius: 54rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: bold;
+  color: #ffffff;
   line-height: 88rpx;
-  font-size: 28rpx;
-  border-radius: 88rpx;
 }
 

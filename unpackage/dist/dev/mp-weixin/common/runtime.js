@@ -104,11 +104,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/input-box/input-box":1,"components/uni-swiper-dot/uni-swiper-dot":1,"components/xuan-popup/xuan-popup":1,"components/top-navigation-bar/top-navigation-bar":1};
+/******/ 		var cssChunks = {"components/input-box/input-box":1,"components/uni-swiper-dot/uni-swiper-dot":1,"components/xuan-popup/xuan-popup":1,"components/top-navigation-bar/top-navigation-bar":1,"components/uni-calendar/uni-calendar":1,"components/uni-calendar/uni-calendar-item":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/input-box/input-box":"components/input-box/input-box","components/uni-swiper-dot/uni-swiper-dot":"components/uni-swiper-dot/uni-swiper-dot","components/xuan-popup/xuan-popup":"components/xuan-popup/xuan-popup","components/top-navigation-bar/top-navigation-bar":"components/top-navigation-bar/top-navigation-bar"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/input-box/input-box":"components/input-box/input-box","components/uni-swiper-dot/uni-swiper-dot":"components/uni-swiper-dot/uni-swiper-dot","components/xuan-popup/xuan-popup":"components/xuan-popup/xuan-popup","components/top-navigation-bar/top-navigation-bar":"components/top-navigation-bar/top-navigation-bar","components/uni-calendar/uni-calendar":"components/uni-calendar/uni-calendar","components/uni-calendar/uni-calendar-item":"components/uni-calendar/uni-calendar-item"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {

@@ -1,27 +1,58 @@
 .collegeOfEducation.data-v-20fb187a {
-  width: 95%;
-  margin: 0 auto;
+  padding: 0 4.27%;
 }
-.collegeOfEducation .recommendedCourse.data-v-20fb187a {
-  font-size: 30rpx;
-  line-height: 70rpx;
-  border-bottom: 1rpx solid #ededed;
+.collegeOfEducation .collegeOfEducation_image.data-v-20fb187a {
+  width: 100%;
+  height: 262rpx;
+}
+.collegeOfEducation .collegeOfEducation_title.data-v-20fb187a {
+  display: block;
   margin-top: 20rpx;
+  padding-bottom: 16rpx;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #131f2b;
+  line-height: 48rpx;
+  border-bottom: 2rpx solid #D8D8D8;
 }
-.collegeOfEducation .recommendedCourseName.data-v-20fb187a {
-  height: 170rpx;
-  border-bottom: 1rpx solid #ededed;
+.collegeOfEducation .collegeOfEducation_box.data-v-20fb187a {
+  padding: 32rpx 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  border-bottom: 2rpx solid #D8D8D8;
 }
-.collegeOfEducation .recommendedCourseName .recommendedCourseTitle.data-v-20fb187a {
-  display: inline-block;
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content.data-v-20fb187a {
+  width: 446rpx;
+  height: 130rpx;
 }
-.collegeOfEducation .recommendedCourseName .recommendedCourseImg.data-v-20fb187a {
-  float: right;
-  display: inline-block;
-  margin: 19rpx;
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_title.data-v-20fb187a {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #131f2b;
+  line-height: 54rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
-.collegeOfEducation .recommendedCourseName .recommendedCourseImg image.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_times.data-v-20fb187a {
+  display: block;
+  margin-top: 40rpx;
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #828282;
+  line-height: 32rpx;
+}
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_image.data-v-20fb187a {
   width: 208rpx;
-  height: 120rpx;
+  height: 130rpx;
 }
 

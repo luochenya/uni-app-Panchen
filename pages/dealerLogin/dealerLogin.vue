@@ -1,24 +1,26 @@
 <template>
-	<view>
-		<view class="loginImgStyle">
-			<image src="../../static/logo.png" mode="scaleToFill"></image>	
+	<view class="dealerLogin">
+		<view class="dealerLogin_image">
+			<image src="../../static/loginImg/dealerLogin.png" mode="scaleToFill"></image>	
 		</view>
-		<view class="loginInputStyle">
+		<view class="dealerLogin_box">
 			<!-- 用户名 -->
-			<view class="loginInputStyleUserName">
-				<input class="inputStyle" v-model="userName" type="text" placeholder="请输入用户名" value="" />
-				<image class="imgStyle" @click="userNameEmpty()" src="../../static/empty.png" mode=""></image>
+			<view class="dealerLogin_box_inputStyle">
+				<image class="dealerLogin_box_inputStyle_show" src="../../static/loginImg/userName.png" mode=""></image>
+				<input class="dealerLogin_box_inputStyle_input" v-model="userName" type="text" placeholder="请输入用户名" value="" />
+				<image class="dealerLogin_box_inputStyle_close" @click="userNameEmpty()" src="../../static/loginImg/empty.png" mode=""></image>
 			</view>
 			<!-- 密码 -->
-			<view class="loginInputStyleUserName">
-				<input v-if="!passWordShow" class="inputStyle" v-model="passWord" type="text" password placeholder="请输入密码" value="" />
-				<image v-if="!passWordShow" class="imgStyles" @click="passWordShowFun()" src="../../static/examine.png" mode=""></image>
+			<view class="dealerLogin_box_inputStyle">
+				<image class="dealerLogin_box_inputStyle_show" src="../../static/loginImg/passWord.png" mode=""></image>
+				<input class="dealerLogin_box_inputStyle_input" v-if="!passWordShow" v-model="passWord" type="text" password placeholder="请输入密码" value="" />
+				<image class="dealerLogin_box_inputStyle_close" v-if="!passWordShow" @click="passWordShowFun()" src="../../static/loginImg/examine.png" mode=""></image>
 				
-				<input v-if="passWordShow" class="inputStyle" v-model="passWord" type="text" placeholder="请输入密码" value="" />
-				<image v-if="passWordShow" class="imgStyles" @click="passWordShowFun()" src="../../static/examineActive.png" mode=""></image>
+				<input class="dealerLogin_box_inputStyle_input" v-if="passWordShow" v-model="passWord" type="text" placeholder="请输入密码" value="" />
+				<image class="dealerLogin_box_inputStyle_close" v-if="passWordShow" @click="passWordShowFun()" src="../../static/loginImg/examineActive.png" mode=""></image>
 			</view>
 		</view>
-		<button class="register" open-type="getUserInfo" @click="onerification">登入</button>
+		<button class="dealerLogin_button" open-type="getUserInfo" @click="onerification">登入</button>
 	</view>
 </template>
 
@@ -108,68 +110,59 @@
 </script>
 
 <style lang="less">
-.input-box-clear {
-	color: #FFFFFF !important;
-	width: 37rpx;
-	height: 37rpx;
-	line-height: 37rpx;
-	text-align: center;
-	background-color: #fb861e;
-	border-radius: 50%;
-}
-.loginImgStyle {
-	width: 358rpx;
-	height: 344rpx;
-	margin: 0 auto;
-	padding-top: 120rpx;
-	padding-bottom: 100rpx;
-	image {
-		width: 358rpx;
-		height: 124rpx;
-	}
-}
-.loginInputStyle {
-	width: 634rpx;
-	margin: 0 auto;
-	.loginInputStyleUserName {
-		position: relative;
-		margin-bottom: 20rpx;
-		.inputStyle {
-			border-bottom: 1px solid #F5F5F5;
-			padding: 0 60rpx 0 40rpx;
-			height: 80rpx;
-			line-height: 80rpx;
-			margin: 0 auto;
-			font-size: 28rpx;
-			color: #4A4A4A;
-			overflow: hidden;
-			white-space: nowrap;
-		}
-		.imgStyle {
-			width: 38rpx !important;
-			height: 38rpx !important;
-			position: absolute;
-			right: 20rpx;
-			top: 20rpx;
-		}
-		.imgStyles {
-			width: 44rpx !important;
-			height: 44rpx !important;
-			position: absolute;
-			right: 20rpx;
-			top: 13rpx;
+.dealerLogin {
+	padding: 70rpx 8%;
+	.dealerLogin_image {
+		width: 400rpx;
+		height: 268rpx;
+		margin: 0 auto 64rpx;
+		image {
+			width: 100%;
+			height: 100%;
 		}
 	}
-}
-.register {
-	width: 634rpx;
-	height: 88rpx;
-	line-height: 88rpx;
-	background-color: #88c057;
-	color: #FFFFFF;
-	text-align: center;
-	margin: 60rpx auto;
-	font-size: 32rpx;
-	border-radius: 88rpx;
+	.dealerLogin_box {
+		width: 100%;
+		.dealerLogin_box_inputStyle {
+			width: 100%;
+			position: relative;
+			.dealerLogin_box_inputStyle_show {
+				width: 48rpx;
+				height: 48rpx;
+				position: absolute;
+				top: 40rpx;
+				left: 8rpx;
+			}
+			.dealerLogin_box_inputStyle_input {
+				border-bottom: 2rpx solid #EBEBEB;
+				padding: 0 80rpx;
+				height:128rpx;
+				font-size:30rpx;
+				font-family:PingFangSC-Regular,PingFang SC;
+				font-weight:400;
+				color:rgba(159,160,162,1);
+				line-height:128rpx;
+			}
+			.dealerLogin_box_inputStyle_close {
+				width: 48rpx;
+				height: 48rpx;
+				position: absolute;
+				top: 40rpx;
+				right: 8rpx;
+			}
+		}
+	}
+	.dealerLogin_button {
+		margin-top: 56rpx;
+		width:100%;
+		height:88rpx;
+		background:rgba(104,183,77,1);
+		border-radius:48rpx;
+		font-size:36rpx;
+		font-family:PingFangSC-Regular,PingFang SC;
+		font-weight:400;
+		color:rgba(255,255,255,1);
+		line-height:88rpx;
+	}
 }
 </style>

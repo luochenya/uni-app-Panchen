@@ -1,0 +1,65 @@
+.dealerLogin {
+  padding: 70rpx 8%;
+}
+.dealerLogin .dealerLogin_image {
+  width: 224rpx;
+  height: 210rpx;
+  margin: 0 auto 64rpx;
+}
+.dealerLogin .dealerLogin_image image {
+  width: 100%;
+  height: 100%;
+}
+.dealerLogin .dealerLogin_box {
+  width: 100%;
+}
+.dealerLogin .dealerLogin_box .dealerLogin_box_inputStyle {
+  width: 100%;
+  position: relative;
+}
+.dealerLogin .dealerLogin_box .dealerLogin_box_inputStyle .dealerLogin_box_inputStyle_show {
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  top: 40rpx;
+  left: 8rpx;
+}
+.dealerLogin .dealerLogin_box .dealerLogin_box_inputStyle .dealerLogin_box_inputStyle_input {
+  border-bottom: 2rpx solid #EBEBEB;
+  padding: 0 80rpx;
+  height: 128rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #9fa0a2;
+  line-height: 128rpx;
+}
+.dealerLogin .dealerLogin_box .dealerLogin_box_inputStyle .dealerLogin_box_inputStyle_close {
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  top: 40rpx;
+  right: 8rpx;
+}
+.dealerLogin .dealerLogin_button {
+  margin-top: 56rpx;
+  width: 100%;
+  height: 88rpx;
+  background: #68b74d;
+  border-radius: 48rpx;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #ffffff;
+  line-height: 88rpx;
+}
+.dealerLogin .dealerLogin_registered {
+  margin-top: 48rpx;
+  text-align: center;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #9fa0a2;
+  line-height: 40rpx;
+}
+
