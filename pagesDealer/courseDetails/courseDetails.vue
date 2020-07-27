@@ -1,6 +1,7 @@
 <template>
 	<view class="courseDetails">
-		<video class="courseDetails_image" v-if="courseList.type == 2" :src="imgUrl + courseList.url" @error="videoErrorCallback" :danmu-list="danmuList" enable-danmu danmu-btn controls></video>
+		<!-- <video class="courseDetails_image" v-if="courseList.type == 2" :src="courseList.url" @error="videoErrorCallback" controls></video> -->
+		<txv-video class="courseDetails_image" v-if="courseList.type == 2" :vid="courseList.url" :playerid="courseList.url"></txv-video>
 		<image class="courseDetails_image" v-if="courseList.type == 1" :src="imgUrl + courseList.imgs" mode=""></image>
 		<text class="courseDetails_title">{{courseList.title}}</text>
 		<text class="courseDetails_content">{{courseList.content}}</text>
@@ -19,6 +20,19 @@
 			this.gettingData(option.id)
 		},
 		methods: {
+			// 视频播放报错
+			videoErrorCallback: function(e) {
+				// uni.showModal({
+				// 	content: e.target.errMsg,
+				// 	showCancel: false
+				// })
+			},
+			// url切割
+			getCaption(obj) {
+				var index = obj.lastIndexOf("vid=");
+				obj = obj.substring(index + 4, obj.length);
+				return obj;
+			},
 			gettingData (id) {
 				 // 加载动画
 				 uni.showLoading({
@@ -34,6 +48,10 @@
 					uni.hideLoading();
 					if (res.data.code == 200) {
 						this.courseList = res.data.data
+						if (res.data.data.type == 2) {
+							this.courseList.url = this.getCaption(res.data.data.url)
+						}
+						console.log(this.courseList)
 					} else {
 						 uni.showToast({
 							icon: 'none',
@@ -69,7 +87,7 @@
 	.courseDetails_content {
 		display: block;
 		padding: 0 32rpx;
-		text-indent: 2em;
+		// text-indent: 2em;
 		font-size:28rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;

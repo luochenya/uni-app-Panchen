@@ -158,8 +158,7 @@ var _default =
   },
   onLoad: function onLoad(option) {
     this.caseDetailsList = JSON.parse(option.items);
-  },
-  methods: {} };exports.default = _default;
+  } };exports.default = _default;
 
 /***/ }),
 

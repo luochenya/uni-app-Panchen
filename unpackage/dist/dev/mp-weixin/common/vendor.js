@@ -754,7 +754,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1681,24 +1681,22 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.test = exports.http = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.member = exports.http = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
-var test = new _request.default();exports.test = test;
-test.setConfig(function (config) {/* 设置全局配置 */
-  config.baseUrl = 'http://www.aaa.cn';
+var member = new _request.default();exports.member = member;
+member.setConfig(function (config) {/* 设置全局配置 */
+  config.baseUrl = 'http://fc.dhkzw.top/api/';
   config.header = _objectSpread({},
-  config.header, {
-    a: 1,
-    b: 2
+  config.header);
 
-    // config.custom = { auth: true }
-  });return config;
+  // config.custom = { auth: true }
+  return config;
 });
 
-test.interceptor.request(function (config, cancel) {/* 请求之前拦截器 */
+member.interceptor.request(function (config, cancel) {/* 请求之前拦截器 */
   config.header = _objectSpread({},
   config.header, {
-    a: 3
+    token: uni.getStorageSync("tokens") ? uni.getStorageSync("tokens") : ''
 
     // if (config.custom.auth) {
     //   config.header.token = 'token'
@@ -1716,11 +1714,26 @@ test.interceptor.request(function (config, cancel) {/* 请求之前拦截器 */
      * @param { Number } statusCode - 请求响应体statusCode（只读）
      * @return { Boolean } 如果为true,则 resolve, 否则 reject
      */
-test.validateStatus = function (statusCode) {
+member.validateStatus = function (statusCode) {
   return statusCode === 200;
 };
 
-test.interceptor.response(function (response) {/* 请求之后拦截器 */
+member.interceptor.response(function (response) {/* 请求之后拦截器 */
+  if (response.data.code == 201 || response.data.code == 202 || response.data.code == 203) {// 服务端返回的状态码等于202（token失效)，清空token并重新登录
+    uni.removeStorage({
+      key: 'memberInfo',
+      success: function success() {
+        // console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+      } });
+
+    uni.removeStorage({
+      key: 'tokens',
+      success: function success() {
+        // console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+      } });
+
+    uni.redirectTo({ url: "../../pages/dealerLogin/dealerLogin" });
+  }
   return response;
 }, function (response) {// 请求错误做点什么
   return response;
@@ -1759,7 +1772,18 @@ http.interceptor.response(function (response) {/* 请求之后拦截器 */
   //   return Promise.reject(response)
   // }
   if (response.data.code == 201 || response.data.code == 202 || response.data.code == 203) {// 服务端返回的状态码等于202（token失效)，清空token并重新登录
-    uni.clearStorageSync();
+    uni.removeStorage({
+      key: 'userInfo',
+      success: function success() {
+        // console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+      } });
+
+    uni.removeStorage({
+      key: 'token',
+      success: function success() {
+        // console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+      } });
+
     uni.redirectTo({ url: "../../pages/dealerLogin/dealerLogin" });
   }
   // if (response.config.custom.verification) { // 演示自定义参数的作用
@@ -8449,7 +8473,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8470,14 +8494,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8553,7 +8577,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -8947,7 +8971,38 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 287:
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 303:
 /*!******************************************************************************!*\
   !*** F:/电商/vue-project/uni-app-Panchen/components/input-box/verification.js ***!
   \******************************************************************************/
@@ -9040,38 +9095,7 @@ verification;exports.default = _default;
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 302:
+/***/ 318:
 /*!*************************************************************************!*\
   !*** F:/电商/vue-project/uni-app-Panchen/components/uni-calendar/util.js ***!
   \*************************************************************************/
@@ -9079,7 +9103,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 303));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 319));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
 
 Calendar = /*#__PURE__*/function () {
   function Calendar()
@@ -9434,7 +9458,7 @@ Calendar;exports.default = _default;
 
 /***/ }),
 
-/***/ 303:
+/***/ 319:
 /*!*****************************************************************************!*\
   !*** F:/电商/vue-project/uni-app-Panchen/components/uni-calendar/calendar.js ***!
   \*****************************************************************************/
@@ -10909,7 +10933,7 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/knowUs/index": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/member/index": { "navigationBarTitleText": "会员购", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/dealer/index": { "navigationBarTitleText": "经销商", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" } }, "pages/dealerLogin/dealerLogin": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/memberLogin/memberLogin": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseDetails/caseDetails": { "navigationBarTitleText": "案例", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseExclusive/caseExclusive": { "navigationBarTitleText": "案例分享", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/courseDetails/courseDetails": { "navigationBarTitleText": "课程详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/collegeOfEducation/collegeOfEducation": { "navigationBarTitleText": "教育学院", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/spotNews/spotNews": { "navigationBarTitleText": "最新消息", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesDealer/consultingFeedback/consultingFeedback": { "navigationBarTitleText": "资讯反馈", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/knowledgeTest/knowledgeTest": { "navigationBarTitleText": "知识测试", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/quiz/quiz": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCentre/MemberCentre": { "navigationBarTitleText": "会员中心", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberLatestNews/MemberLatestNews": { "navigationBarTitleText": "最新消息", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberLatestNewsContent/MemberLatestNewsContent": { "navigationBarTitleText": "消息详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGuardianCard/MemberGuardianCard": { "navigationBarTitleText": "守护卡介绍", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGuardianCardsDetails/MemberGuardianCardsDetails": { "navigationBarTitleText": "守护卡介绍EDM", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberNutritiousFood/MemberNutritiousFood": { "navigationBarTitleText": "营养食品", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCommonProblem/MemberCommonProblem": { "navigationBarTitleText": "常见问题", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan": { "navigationBarTitleText": "会员好运方案", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberDeepButler/MemberDeepButler": { "navigationBarTitleText": "深度管家介绍", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCreateManager/MemberCreateManager": { "navigationBarTitleText": "建立个人健康管理师", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" }, "usingAutoImportComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pagesKnowUs/KnowUsCompany/KnowUsCompany": { "navigationBarTitleText": "关于公司", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept": { "navigationBarTitleText": "健康理念", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsCelebritySays/KnowUsCelebritySays": { "navigationBarTitleText": "名人语录", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowsUsHonor/KnowsUsHonor": { "navigationBarTitleText": "荣誉", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan": { "navigationBarTitleText": "新鲜事", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsCommonProblem/KnowUsCommonProblem": { "navigationBarTitleText": "问与答", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews": { "navigationBarTitleText": "国际新知", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsInternationalNewss/KnowUsInternationalNewss": { "navigationBarTitleText": "国际新知", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/knowUs/index": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/member/index": { "navigationBarTitleText": "会员购", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/dealer/index": { "navigationBarTitleText": "经销商", "navigationStyle": "custom", "usingComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar" }, "usingAutoImportComponents": { "top-navigation-bar": "/components/top-navigation-bar/top-navigation-bar", "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pages/dealerLogin/dealerLogin": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pages/memberLogin/memberLogin": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseDetails/caseDetails": { "navigationBarTitleText": "案例", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/caseExclusive/caseExclusive": { "navigationBarTitleText": "案例分享", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesDealer/courseDetails/courseDetails": { "navigationBarTitleText": "课程详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/collegeOfEducation/collegeOfEducation": { "navigationBarTitleText": "教育学院", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesDealer/spotNews/spotNews": { "navigationBarTitleText": "最新消息", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesDealer/consultingFeedback/consultingFeedback": { "navigationBarTitleText": "资讯反馈", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/knowledgeTest/knowledgeTest": { "navigationBarTitleText": "知识测试", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesDealer/quiz/quiz": { "navigationBarTitleText": "", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCentre/MemberCentre": { "navigationBarTitleText": "会员中心", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberLatestNews/MemberLatestNews": { "navigationBarTitleText": "最新消息", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesMember/MemberLatestNewsContent/MemberLatestNewsContent": { "navigationBarTitleText": "消息详情", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGuardianCard/MemberGuardianCard": { "navigationBarTitleText": "守护卡介绍", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGuardianCardsDetails/MemberGuardianCardsDetails": { "navigationBarTitleText": "守护卡介绍EDM", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberNutritiousFood/MemberNutritiousFood": { "navigationBarTitleText": "营养食品", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCommonProblem/MemberCommonProblem": { "navigationBarTitleText": "常见问题", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan": { "navigationBarTitleText": "会员好运方案", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberDeepButler/MemberDeepButler": { "navigationBarTitleText": "深度管家介绍", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberCreateManager/MemberCreateManager": { "navigationBarTitleText": "建立个人健康管理师", "usingComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" }, "usingAutoImportComponents": { "uni-calendar": "/components/uni-calendar/uni-calendar" } }, "pagesMember/MemberNutritiousFoodDetails/MemberNutritiousFoodDetails": { "navigationBarTitleText": "营养食品介绍EDM", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesMember/MemberRegistered/MemberRegistered": { "navigationBarTitleText": "会员注册", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsCompany/KnowUsCompany": { "navigationBarTitleText": "咱们", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept": { "navigationBarTitleText": "想做的事", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsCelebritySays/KnowUsCelebritySays": { "navigationBarTitleText": "名人说", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowsUsHonor/KnowsUsHonor": { "navigationBarTitleText": "荣誉", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan": { "navigationBarTitleText": "好运方案", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsCommonProblem/KnowUsCommonProblem": { "navigationBarTitleText": "问与答", "usingComponents": {}, "usingAutoImportComponents": {} }, "pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews": { "navigationBarTitleText": "健康报", "usingComponents": {}, "usingAutoImportComponents": { "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot" } }, "pagesKnowUs/KnowUsInternationalNewss/KnowUsInternationalNewss": { "navigationBarTitleText": "健康报", "usingComponents": {}, "usingAutoImportComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#F8F8F8", "backgroundColor": "#F8F8F8" } };exports.default = _default;
 
 /***/ }),
 

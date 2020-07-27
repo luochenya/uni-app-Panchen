@@ -32,7 +32,9 @@
         "MemberCommonProblem/MemberCommonProblem",
         "MemberGoodLuckPlan/MemberGoodLuckPlan",
         "MemberDeepButler/MemberDeepButler",
-        "MemberCreateManager/MemberCreateManager"
+        "MemberCreateManager/MemberCreateManager",
+        "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
+        "MemberRegistered/MemberRegistered"
       ]
     },
     {
@@ -101,11 +103,16 @@
       ]
     }
   },
+  "plugins": {
+    "tencentvideo": {
+      "version": "1.3.14",
+      "provider": "wxa75efa648b60994b"
+    }
+  },
   "permission": {},
   "usingComponents": {
     "mpopup": "/components/xuan-popup/xuan-popup",
     "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
     "input-box": "/components/input-box/input-box"
-  },
-  "sitemapLocation": "sitemap62.json"
+  }
 }

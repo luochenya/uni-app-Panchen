@@ -3,11 +3,11 @@
 		<top-navigation-bar></top-navigation-bar>
 		<view class="member">
 			<!-- 轮播图 -->
-			<uni-swiper-dot :info="info" :current="current" field="content" :mode="mode">
+			<uni-swiper-dot :info="info" :current="current" field="content">
 				<swiper @change="change" style="height: 344rpx;" autoplay="true" circular="true">
 					<swiper-item v-for="(item ,index) in info" :key="index">
 						<view class="memberImgStyle">
-							<image :src="item.imgUrl" mode=""></image>
+							<image :src="imgUrl + item.imgs" mode=""></image>
 						</view>
 					</swiper-item>
 				</swiper>
@@ -23,9 +23,9 @@
 			<text class="member_title">好运方案</text>
 			<!-- 循环列表 -->
 			<scroll-view scroll-x="true" style="white-space: nowrap; display: flex">
-				<view class="member_style" v-for="(item, index) in novelty" :key="index" @click="toMemberGoodLuckPlan()">
-					<image :src="item.imgUrl" mode=""></image>
-					<text>{{item.text}}</text>
+				<view class="member_style" v-for="(item, index) in novelty" :key="index" @click="toMemberGoodLuckPlan(item)">
+					<image :src="imgUrl + item.imgs" mode=""></image>
+					<text>{{item.title}}</text>
 				</view>
 			</scroll-view>
 			<!-- 深度管家 -->
@@ -37,12 +37,21 @@
 			<!-- 反馈列表 -->
 			<view class="member_list">
 				<view v-for="(item, index) in clientFeedbackList" :key="index">
-					<image :src="item.imgUrl" mode=""></image>
-					<text>{{ item.text }}</text>
+					<image v-if="item.type == 1" class="member_list_image" :src="imgUrl + item.imgs" mode=""></image>
+					<text v-if="item.type == 1">{{ item.content }}</text>
+					
+					<!-- <text>我是地址{{ item.url.substring(44) }}</text> -->
+					<!-- video视频 -->
+					<!-- <video v-if="item.type == 2" class="member_list_video" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" @error="videoErrorCallback" controls></video> -->
+					<!-- <video v-if="item.type == 2" class="member_list_video" src="https://v.qq.com/txp/iframe/player.html?vid=t3111t5q7fn" @error="videoErrorCallback" controls></video> -->
+					<txv-video v-if="item.type == 2" class="member_list_video" :vid="item.url" :playerid="item.url"></txv-video>
+					<!-- <video v-if="item.type == 2" class="member_list_video" :src="imgUrl + item.url" @error="videoErrorCallback" controls></video> -->
 				</view>
+				<!-- <iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=q0022eew4t8" allowFullScreen="true"></iframe> -->
+				<!-- <view>
+				    <web-view :webview-styles="aaa" src="https://v.qq.com/txp/iframe/player.html?vid=q0022eew4t8"></web-view>
+				</view> -->
 			</view>
-			<!-- video视频 -->
-			<image class="member_Image member_video" src="../../static/memberImg/video.png" mode=""></image>
 		</view>
 	</view>
 </template>
@@ -53,12 +62,11 @@
 		components:{topNavigationBar},
 		data() {
 			return {
+				current: 0,
+				url:"q0022eew4t8",
+				imgUrl: this.$imgUrl,
 				title: '会员',
-				info: [
-					{imgUrl: '../../static/memberImg/banner1.png'},
-					{imgUrl: '../../static/memberImg/banner1.png'},
-					{imgUrl: '../../static/memberImg/banner1.png'}
-				],
+				info: [],
 				functionList:[{
 					text: '会员中心',
 					imgUrl: '../../static/memberImg/functionList1.png'
@@ -75,33 +83,18 @@
 					text: '常见问题',
 					imgUrl: '../../static/memberImg/functionList5.png'
 				}],
-				novelty: [{
-					text: '保健专场',
-					imgUrl: '../../static/memberImg/NewThings1.png',
-				},{
-					text: '进口大牌',
-					imgUrl: '../../static/memberImg/NewThings2.png',
-				},{
-					text: '199元任选3件',
-					imgUrl: '../../static/memberImg/NewThings3.png',
-				}],
-				clientFeedbackList: [{
-					text:'真的特别特别好，老公总失眠，入睡困难，怕有些促进睡眠的长期吃有副作用，这是一款保健品，不是药，对身体没有副作用，也没有依赖性。',
-					imgUrl: '../../static/memberImg/clientFeedback1.png'
-				},{
-					text:'透過高頻熱能刺激膠原蛋白收縮與更新，達到臉部肌膚緊實、拉提又有彈力恢復年輕肌膚狀態。',
-					imgUrl: '../../static/memberImg/clientFeedback2.png'
-				},{
-					text:'给老公和宝宝买了保健品，效果都不错，应该是正品，喝完了过阵子在买些用，特别满意。',
-					imgUrl: '../../static/memberImg/clientFeedback3.png'
-				}]
+				novelty: [],
+				clientFeedbackList: []
 			}
 		},
 		onLoad:function(option){
+			var that = this
 			uni.getStorage({
 			    key: 'memberInfo',
 			    success: function (res) {
-					
+						that._getHomeBanner()
+						that._getMembersLuckySchemeList()
+						that._getFeedbackList()
 			    },
 				fail:function(res){
 					uni.redirectTo({
@@ -111,8 +104,87 @@
 			});
 		},
 		methods: {
+			// 视频播放报错
+			videoErrorCallback: function(e) {
+				// uni.showModal({
+				// 	content: e.target.errMsg,
+				// 	showCancel: false
+				// })
+			},
 			change (e) {
 				this.current = e.detail.current;
+			},
+			// 获取banner图
+			_getHomeBanner () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_home_banner').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.info = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			// 获取好运方案列表
+			_getMembersLuckySchemeList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_members_lucky_scheme_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.novelty = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			// 获取客户反馈
+			_getFeedbackList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_feedback_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.clientFeedbackList = res.data.data;
+						//this.clientFeedbackList[i].url
+						for(let i=0;i<this.clientFeedbackList.length;i++){
+							if (this.clientFeedbackList[i].url) {
+								this.clientFeedbackList[i].url = this.getCaption(this.clientFeedbackList[i].url)
+							}
+						}
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
 			},
 			skipFunctionList(text) {
 				if (text == '会员中心') {
@@ -141,23 +213,30 @@
 					})
 				}
 			},
-			toMemberGoodLuckPlan() {
+			toMemberGoodLuckPlan(item) {
+				var items = JSON.stringify(item)
 				uni.navigateTo({
-					url: '../../pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan'
+					url: '../../pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan?item=' + items
 				})
 			},
 			toMemberDeepButler() {
 				uni.navigateTo({
 					url: '../../pagesMember/MemberDeepButler/MemberDeepButler'
 				})
-			}
+			},
+			getCaption(obj) {
+			            var index = obj.lastIndexOf("vid=");
+			            obj = obj.substring(index + 4, obj.length);
+			            //  console.log(obj);
+			            return obj;
+			        }
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 .member {
-	padding: 0 4.27%;
+	padding: 0 4.27% 198rpx;
 	// 轮播图
 	.memberImgStyle {
 		height: 344rpx;
@@ -210,6 +289,7 @@
 		image {
 			width: 100%;
 			height: 100%;
+			border-radius:4px;
 		}
 		text {
 			width: 284rpx;
@@ -238,7 +318,7 @@
 			justify-content: space-between;
 			padding: 32rpx 0;
 			border-bottom: 1px solid #D8D8D8;
-			image {
+			.member_list_image {
 				width: 240rpx;
 				height: 240rpx;
 			}
@@ -250,11 +330,11 @@
 				line-height:46rpx;
 			}
 		}
-	}
-	// video视频
-	.member_video {
-		margin-top: 33.5rpx;
-		margin-bottom: 192rpx;
+		// video视频
+		.member_list_video {
+			width: 100%;
+			height: 384rpx;
+		}
 	}
 }
 </style>

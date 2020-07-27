@@ -97,17 +97,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-calendar": () =>
-    Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 297))
+    Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 313))
 }
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  if (!_vm._isMounted) {
-    _vm.e0 = function($event) {
-      _vm.popupStatus = false
-    }
-  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -141,7 +136,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCalendar = function uniCalendar() {return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 297));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var uniCalendar = function uniCalendar() {return Promise.all(/*! import() | components/uni-calendar/uni-calendar */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-calendar/uni-calendar")]).then(__webpack_require__.bind(null, /*! @/components/uni-calendar/uni-calendar.vue */ 313));};var _default =
 
 
 
@@ -253,17 +248,51 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       calendarStatus: false,
       status: true,
       statuss: false,
-      Birthday: '' };
+      name: '',
+      phone: '',
+      sex: '男',
+      birthday: '',
+      stature: '',
+      weight: '',
+      remark: '',
+      dataTime: '' };
 
   },
+  mounted: function mounted() {
+    this.dataTime = this.getNowFormatDate();
+  },
   methods: {
+    // 获取当前时间
+    getNowFormatDate: function getNowFormatDate() {
+      var date = new Date();
+      var seperator1 = "-";
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var strDate = date.getDate();
+      if (month >= 1 && month <= 9) {
+        month = "0" + month;
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+      }
+      var currentdate = year + seperator1 + month + seperator1 + strDate;
+      return currentdate;
+    },
+    toSkip: function toSkip() {
+      this.popupStatus = false;
+      uni.redirectTo({
+        url: '../MemberDeepButler/MemberDeepButler' });
+
+    },
     statusClick: function statusClick(value) {
       if (value == 1) {
         this.status = true;
         this.statuss = false;
+        this.sex = '男';
       } else {
         this.status = false;
         this.statuss = true;
+        this.sex = '女';
       }
     },
     openCalendar: function openCalendar() {
@@ -274,11 +303,98 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.calendarStatus = false;
     },
     confirm: function confirm(e) {
-      this.Birthday = e.fulldate;
+      this.birthday = e.fulldate;
     },
-    submit: function submit() {
-      this.popupStatus = true;
+    submit: function submit() {var _this = this;
+      if (this.name == '') {
+        uni.showToast({
+          icon: 'none',
+          title: '姓名不能为空',
+          duration: 1000 });
+
+        return false;
+      }
+      if (this.phone == '') {
+        uni.showToast({
+          icon: 'none',
+          title: '电话不能为空',
+          duration: 1000 });
+
+        return false;
+      }
+      if (this.birthday == '') {
+        uni.showToast({
+          icon: 'none',
+          title: '出生日不能为空',
+          duration: 1000 });
+
+        return false;
+      }
+      if (this.stature == '') {
+        uni.showToast({
+          icon: 'none',
+          title: '身高不能为空',
+          duration: 1000 });
+
+        return false;
+      }
+      if (this.weight == '') {
+        uni.showToast({
+          icon: 'none',
+          title: '体重不能为空',
+          duration: 1000 });
+
+        return false;
+      }
+      // 加载动画
+      uni.showLoading({
+        title: '提交中' });
+
+      this.$member.post(
+      'Store/insert_steward_material',
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="name"' +
+      '\r\n' +
+      '\r\n' + this.name +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="phone"' +
+      '\r\n' +
+      '\r\n' + this.phone +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="sex"' +
+      '\r\n' +
+      '\r\n' + this.sex +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="birthday"' +
+      '\r\n' +
+      '\r\n' + this.birthday +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="stature"' +
+      '\r\n' +
+      '\r\n' + this.stature +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="weight"' +
+      '\r\n' +
+      '\r\n' + this.weight +
+      '\r\n--XXX' +
+      '\r\nContent-Disposition: form-data; name="remark"' +
+      '\r\n' +
+      '\r\n' + this.remark +
+      '\r\n--XXX--').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.popupStatus = true;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

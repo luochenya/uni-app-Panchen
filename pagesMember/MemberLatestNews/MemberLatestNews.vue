@@ -1,9 +1,20 @@
 <template>
 	<view class="MemberLatestNews">
-		<image class="MemberLatestNews_image" src="../static/image/MemberLatestNewsBanner.png" mode=""></image>
+		<view class="member">
+			<!-- 轮播图 -->
+			<uni-swiper-dot :info="info" :current="current" field="content">
+				<swiper @change="change" style="height: 344rpx;" autoplay="true" circular="true">
+					<swiper-item v-for="(item ,index) in info" :key="index">
+						<view class="memberImgStyle">
+							<image :src="imgUrl + item.imgs" mode=""></image>
+						</view>
+					</swiper-item>
+				</swiper>
+			</uni-swiper-dot>
+		</view>
 		<view class="MemberLatestNews_box" v-for="(item, index) in dataFormList" :key="index" @click="toMemberLatestNewsContent(item)">
 			<text class="MemberLatestNews_box_title">{{item.title}}</text>
-			<text class="MemberLatestNews_box_time">{{item.time}}</text>
+			<text class="MemberLatestNews_box_time">{{item.created_at}}</text>
 		</view>
 	</view>
 </template>
@@ -12,22 +23,66 @@
 	export default {
 		data() {
 			return {
-				dataFormList: [{
-					title: '试运营阶段，训练营暂时每个用户只开放一个名额试营暂时每个用户只开放一个名额',
-					time: '2020/03/02'
-				},{
-					title: '经过这段时间的努力，肺炎情况得到很大程度的控制，所以我公司决定3月1日正式复工',
-					time: '2020/02/28'
-				},{
-					title: '我公司8大主力产品均已获得美国FDA认证通过',
-					time: '2020/02/20'
-				}]
+				current: 0,
+				imgUrl: this.$imgUrl,
+				info: '',
+				dataFormList: []
 			};
 		},
+		onLoad:function(){
+			this._getMembersNewsBannerList()
+			this._getMembersNewsList()
+		},
 		methods: {
+			change (e) {
+				this.current = e.detail.current;
+			},
+			// 获取banner图
+			_getMembersNewsBannerList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_members_news_banner_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.info = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			// 获取列表
+			_getMembersNewsList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_members_news_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataFormList = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			toMemberLatestNewsContent(item) {
 				var items = JSON.stringify(item)
-				var price = "这里是通往教育学院"
 				uni.navigateTo({
 					url: '../../pagesMember/MemberLatestNewsContent/MemberLatestNewsContent?items=' + items 
 				})
@@ -39,6 +94,17 @@
 <style lang="scss">
 .MemberLatestNews {
 	padding: 0 4.27%;
+	// 轮播图
+	.memberImgStyle {
+		height: 344rpx;
+		width: 100%;
+		color: #ffffff;
+		margin: 0 auto;
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
 	.MemberLatestNews_image {
 		width: 100%;
 		height: 262rpx;

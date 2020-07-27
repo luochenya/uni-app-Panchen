@@ -1,8 +1,15 @@
 <template>
 	<view class="caseExclusive">
-		<view class="caseExclusive_iamge">
-			<image src="../static/image/caseExclusive.png" mode=""></image>
-		</view>
+		<!-- 轮播图 -->
+		<uni-swiper-dot :info="info" :current="current" field="content">
+			<swiper @change="change" autoplay="true" circular="true">
+				<swiper-item v-for="(item ,index) in info" :key="index">
+					<view class="spotNewsImg">
+						<image :src="imgUrl + item.imgs" mode="scaleToFill"></image>
+					</view>
+				</swiper-item>
+			</swiper>
+		</uni-swiper-dot>
 		<view class="caseExclusive_title">推荐案例</view>
 		<view class="caseExclusive_box">
 			<view class="caseExclusive_box_content" @click="spikCaseDetails(item)" v-for="(item, index) in caseExclusive" :key="index">
@@ -23,16 +30,41 @@
 		data() {
 			return {
 				imgUrl: this.$imgUrl,
+				current: 0,
+				info: [],
 				caseExclusive: []
 			};
 		},
 		onLoad:function(option){
 			this.gettingData()
-		},
-		mounted() {
-			this.gettingData()
+			this._getSharingBannerList()
 		},
 		methods: {
+			change (e) {
+				this.current = e.detail.current;
+			},
+			// 获取banner图
+			_getSharingBannerList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('System/get_sharing_banner_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.info = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			gettingData () {
 				 // 加载动画
 				 uni.showLoading({
@@ -66,7 +98,7 @@
 
 <style lang="less" scoped>
 .caseExclusive {
-	.caseExclusive_iamge {
+	.spotNewsImg {
 		padding: 0 4.27%;
 		width: 100%;
 		height: 262rpx;

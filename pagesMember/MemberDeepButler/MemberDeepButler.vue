@@ -33,7 +33,7 @@
 
 <style lang="less">
 .MemberDeepButler {
-	padding: 0 4.27%;
+	padding: 0 4.27% 140rpx;
 	.MemberDeepButler_image {
 		width: 100%;
 		height: 386rpx;
@@ -53,7 +53,7 @@
 		}
 		.MemberDeepButler_content {
 			display: block;
-			text-indent: 2em;
+			// text-indent: 2em;
 			font-size:28rpx;
 			font-family:PingFangSC-Regular,PingFang SC;
 			font-weight:400;
@@ -61,7 +61,7 @@
 			line-height:62rpx;
 		}
 		.MemberDeepButler_button {
-			margin: 48rpx auto 140rpx;
+			margin: 48rpx auto 0;
 			text-align: center;
 			width:390rpx;
 			height:88rpx;

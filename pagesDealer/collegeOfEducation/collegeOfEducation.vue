@@ -1,6 +1,15 @@
 <template>
 	<view class="collegeOfEducation">
-		<image class="collegeOfEducation_image" src="../static/image/collegeOfEducation.png" mode=""></image>
+			<!-- 轮播图 -->
+			<uni-swiper-dot :info="novelty" :current="current" field="content">
+					<swiper @change="change" autoplay="true" circular="true">
+							<swiper-item v-for="(item ,index) in novelty" :key="index">
+									<view>
+										<image :src="imgUrl + item.imgs" mode="" class="collegeOfEducation_image"></image>
+									</view>
+							</swiper-item>
+					</swiper>
+			</uni-swiper-dot>
 		<view class="collegeOfEducation_title">推荐课程</view>
 		<view class="collegeOfEducation_box" @click="skipCourseDetails(item.id)" v-for="(item, index) in recommendedCourse" :key="index">
 			<view class="collegeOfEducation_box_content">
@@ -17,7 +26,9 @@
 		data() {
 			return {
 				recommendedCourse: [],
-				imgUrl: this.$imgUrl
+				current: 0,
+				imgUrl: this.$imgUrl,
+				novelty: []
 			}
 		},
 		onLoad:function(option){
@@ -25,8 +36,34 @@
 		},
 		mounted() {
 			this.gettingData()
+			this._getCoursesBannerList()
 		},
 		methods: {
+			change (e) {
+				this.current = e.detail.current;
+			},
+			// 获取banner图
+			_getCoursesBannerList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('System/get_courses_banner_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.novelty = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			gettingData () {
 				 // 加载动画
 				 uni.showLoading({

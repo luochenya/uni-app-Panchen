@@ -1,6 +1,6 @@
 <template>
 	<view class="MemberGuardianCardsDetails">
-		<image class="MemberGuardianCardsDetails_image" src="../static/image/MemberGuardianCardsDetails.png" mode=""></image>
+		<image class="MemberGuardianCardsDetails_image" :src="url" @longpress="toSave()" mode=""></image>
 	</view>
 </template>
 
@@ -8,8 +8,42 @@
 	export default {
 		data() {
 			return {
-				
+				url: ""
 			};
+		},
+		onLoad:function(option){
+			this.url = this.$imgUrl + option.edm
+		},
+		methods:{
+			toSave() {
+				uni.showModal({
+					title: '图片保存',
+					content: '确定要保存图片吗',
+					success: e => {
+						if (e['confirm']) {
+							this.save();
+						}
+					}
+				});
+			},
+			save() {
+				uni.getImageInfo({
+					src: this.url,
+					success: function(image) {
+						uni.saveImageToPhotosAlbum({
+							filePath: image.path,
+							success: function() {
+								console.log('save success');
+								uni.showToast({
+									title: '图片保存成功',
+									icon: 'none',
+									duration: 2200
+								});
+							}
+						});
+					}
+				});
+			}
 		}
 	}
 </script>

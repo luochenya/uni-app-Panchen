@@ -154,13 +154,16 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 //
 //
 //
-//
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      imgUrl: this.$imgUrl,
+      dataFormList: '' };
 
-
+  },
+  onLoad: function onLoad(option) {
+    this.dataFormList = JSON.parse(option.item);
   } };exports.default = _default;
 
 /***/ }),

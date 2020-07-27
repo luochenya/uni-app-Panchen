@@ -48,7 +48,6 @@
 }
 .KnowUsGoodLuckPlan .KnowUsGoodLuckPlan_bottom .KnowUsGoodLuckPlan_bottom_content {
   display: block;
-  text-indent: 3em;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

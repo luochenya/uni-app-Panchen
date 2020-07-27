@@ -1,5 +1,5 @@
 .MemberCreateManager {
-  padding: 0 4.27%;
+  padding: 0 4.27% 78rpx;
   background: #f8f8fa;
 }
 .MemberCreateManager .MemberCreateManager_popup {
@@ -157,7 +157,6 @@
 }
 .MemberCreateManager .MemberCreateManager_button {
   margin-top: 54rpx;
-  margin-bottom: 78rpx;
   height: 88rpx;
   width: 100%;
   background: #68b74d;

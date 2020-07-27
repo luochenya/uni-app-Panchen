@@ -24,9 +24,6 @@
 		onLoad:function(option){
 			this.caseDetailsList = JSON.parse(option.items)
 		},
-		methods: {
-			
-		}
 	}
 </script>
 
@@ -68,6 +65,6 @@
 	line-height: 52rpx;
 	width: 80%;
 	margin: 20rpx auto;
-	text-indent: 2em;
+	// text-indent: 2em;
 }
 </style>

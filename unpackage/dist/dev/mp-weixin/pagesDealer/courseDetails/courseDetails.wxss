@@ -18,7 +18,6 @@
 .courseDetails .courseDetails_content.data-v-a1140c5a {
   display: block;
   padding: 0 32rpx;
-  text-indent: 2em;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

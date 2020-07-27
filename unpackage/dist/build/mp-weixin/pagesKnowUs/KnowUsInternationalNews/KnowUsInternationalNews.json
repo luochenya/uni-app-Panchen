@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "国际新知",
-  "usingComponents": {}
+  "navigationBarTitleText": "健康报",
+  "usingComponents": {
+    "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot"
+  }
 }

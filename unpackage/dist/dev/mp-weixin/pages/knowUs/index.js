@@ -97,9 +97,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "top-navigation-bar": () =>
-    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290)),
+    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306)),
   "uni-swiper-dot": () =>
-    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 275))
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
 }
 var render = function() {
   var _vm = this
@@ -138,7 +138,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306));};var _default =
 
 
 
@@ -187,6 +187,7 @@ __webpack_require__.r(__webpack_exports__);
   components: { topNavigationBar: topNavigationBar },
   data: function data() {
     return {
+      current: 0,
       imgUrl: this.$imgUrl,
       info: [],
       company: [{
@@ -208,33 +209,46 @@ __webpack_require__.r(__webpack_exports__);
         text: '问与答',
         imgUrl: '../../static/knowUsImg/rollF.png' }],
 
-      novelty: [{
-        text: '保健专场',
-        imgUrl: '../../static/knowUsImg/NewThings1.png' },
-      {
-        text: '进口大牌',
-        imgUrl: '../../static/knowUsImg/NewThings2.png' },
-      {
-        text: '199元任选3件',
-        imgUrl: '../../static/knowUsImg/NewThings3.png' }],
-
+      novelty: [],
       partner: [
       { imgUrl: '../../static/knowUsImg/brandA.png' },
       { imgUrl: '../../static/knowUsImg/brandB.png' },
       { imgUrl: '../../static/knowUsImg/brandC.png' },
       { imgUrl: '../../static/knowUsImg/brandD.png' }],
 
-      current: 0,
       mode: 'default' };
 
   },
   onLoad: function onLoad() {
-    this.gettingData();
+    this._gettingData();
+    this._getLuckyScheme();
   },
   methods: {
-    toKnowUsGoodLuckPlan: function toKnowUsGoodLuckPlan() {
+    _getLuckyScheme: function _getLuckyScheme() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$http.post('Visitor/get_lucky_scheme').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.novelty = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    toKnowUsGoodLuckPlan: function toKnowUsGoodLuckPlan(item) {
+      var items = JSON.stringify(item);
       uni.navigateTo({
-        url: '../../pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan' });
+        url: '../../pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan?item=' + items });
 
     },
     skipClick: function skipClick(text) {
@@ -244,7 +258,7 @@ __webpack_require__.r(__webpack_exports__);
 
       } else if (text == "健康报") {
         uni.navigateTo({
-          url: '../../pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept' });
+          url: '../../pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews' });
 
       } else if (text == "名人说") {
         uni.navigateTo({
@@ -260,11 +274,11 @@ __webpack_require__.r(__webpack_exports__);
 
       } else if (text == "想做的事") {
         uni.navigateTo({
-          url: '../../pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews' });
+          url: '../../pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept' });
 
       }
     },
-    gettingData: function gettingData() {var _this = this;
+    _gettingData: function _gettingData() {var _this2 = this;
       // 加载动画
       uni.showLoading({
         title: '加载中' });
@@ -273,7 +287,7 @@ __webpack_require__.r(__webpack_exports__);
         // 关闭加载动画
         uni.hideLoading();
         if (res.data.code == 200) {
-          _this.info = res.data.data;
+          _this2.info = res.data.data;
         } else {
           uni.showToast({
             icon: 'none',

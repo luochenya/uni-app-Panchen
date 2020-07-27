@@ -19,12 +19,12 @@
 					<text>{{item.text}}</text>
 				</view>
 			</scroll-view>
-			<!-- 新鲜事 -->
-			<text class="novelty_title">新鲜事</text>
+			<!-- 好运方案 -->
+			<text class="novelty_title">好运方案</text>
 			<scroll-view scroll-x="true" enable-flex="true" style="white-space: nowrap">
-				<view class="novelty_style" v-for="(item, index) in novelty" :key="index" @click="toKnowUsGoodLuckPlan()">
-					<image :src="item.imgUrl" mode=""></image>
-					<text>{{item.text}}</text>
+				<view class="novelty_style" v-for="(item, index) in novelty" :key="index" @click="toKnowUsGoodLuckPlan(item)">
+					<image :src="imgUrl + item.imgs" mode=""></image>
+					<text>{{item.title}}</text>
 				</view>
 			</scroll-view>
 			<!-- 合作伙伴 -->
@@ -47,6 +47,7 @@
 		components: {topNavigationBar},
 		data() {
 			return {
+				current: 0,
 				imgUrl: this.$imgUrl,
 				info: [],
 				company: [{
@@ -68,33 +69,46 @@
 					text: '问与答',
 					imgUrl: '../../static/knowUsImg/rollF.png'
 				}],
-				novelty: [{
-					text: '保健专场',
-					imgUrl: '../../static/knowUsImg/NewThings1.png',
-				},{
-					text: '进口大牌',
-					imgUrl: '../../static/knowUsImg/NewThings2.png',
-				},{
-					text: '199元任选3件',
-					imgUrl: '../../static/knowUsImg/NewThings3.png',
-				}],
+				novelty: [],
 				partner: [
 					{imgUrl: '../../static/knowUsImg/brandA.png'},
 					{imgUrl: '../../static/knowUsImg/brandB.png'},
 					{imgUrl: '../../static/knowUsImg/brandC.png'},
 					{imgUrl: '../../static/knowUsImg/brandD.png'}
 				],
-				current: 0,
 				mode: 'default',
 			}
 		},
 		onLoad() {
-			this.gettingData()
+			this._gettingData()
+			this._getLuckyScheme()
 		},
 		methods: {
-			toKnowUsGoodLuckPlan() {
+			_getLuckyScheme () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('Visitor/get_lucky_scheme').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.novelty = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			toKnowUsGoodLuckPlan(item) {
+				var items = JSON.stringify(item)
 				uni.navigateTo({
-					url: '../../pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan'
+					url: '../../pagesKnowUs/KnowUsGoodLuckPlan/KnowUsGoodLuckPlan?item=' + items
 				})
 			},
 			skipClick(text) {
@@ -104,7 +118,7 @@
 					})
 				} else if (text == "健康报") {
 					uni.navigateTo({
-						url: '../../pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept'
+						url: '../../pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews'
 					})
 				} else if (text == "名人说") {
 					uni.navigateTo({
@@ -120,11 +134,11 @@
 					})
 				} else if (text == "想做的事") {
 					uni.navigateTo({
-						url: '../../pagesKnowUs/KnowUsInternationalNews/KnowUsInternationalNews'
+						url: '../../pagesKnowUs/KnowUsHealthConcept/KnowUsHealthConcept'
 					})
 				}
 			},
-			gettingData () {
+			_gettingData () {
 				 // 加载动画
 				 uni.showLoading({
 					 title: '加载中'
@@ -189,7 +203,7 @@
 			display: block;
 		}
 	}
-	// 新鲜事标题
+	// 好运方案标题
 	.novelty_title {
 		font-weight: bold;
 		font-size:30rpx;
@@ -208,6 +222,7 @@
 		image {
 			width: 100%;
 			height: 100%;
+			border-radius: 4px;
 		}
 		text {
 			width: 284rpx;

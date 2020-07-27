@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -142,10 +142,44 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      url: "" };
 
+  },
+  onLoad: function onLoad(option) {
+    this.url = this.$imgUrl + option.edm;
+  },
+  methods: {
+    toSave: function toSave() {var _this = this;
+      uni.showModal({
+        title: '图片保存',
+        content: '确定要保存图片吗',
+        success: function success(e) {
+          if (e['confirm']) {
+            _this.save();
+          }
+        } });
 
-  } };exports.default = _default;
+    },
+    save: function save() {
+      uni.getImageInfo({
+        src: this.url,
+        success: function success(image) {
+          uni.saveImageToPhotosAlbum({
+            filePath: image.path,
+            success: function success() {
+              console.log('save success');
+              uni.showToast({
+                title: '图片保存成功',
+                icon: 'none',
+                duration: 2200 });
+
+            } });
+
+        } });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

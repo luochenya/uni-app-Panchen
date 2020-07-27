@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "最新消息",
-  "usingComponents": {}
+  "usingComponents": {
+    "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot"
+  }
 }

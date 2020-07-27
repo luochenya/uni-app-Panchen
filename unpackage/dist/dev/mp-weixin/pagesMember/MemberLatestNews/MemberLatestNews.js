@@ -95,7 +95,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "uni-swiper-dot": () =>
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -143,26 +146,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
-      dataFormList: [{
-        title: '试运营阶段，训练营暂时每个用户只开放一个名额试营暂时每个用户只开放一个名额',
-        time: '2020/03/02' },
-      {
-        title: '经过这段时间的努力，肺炎情况得到很大程度的控制，所以我公司决定3月1日正式复工',
-        time: '2020/02/28' },
-      {
-        title: '我公司8大主力产品均已获得美国FDA认证通过',
-        time: '2020/02/20' }] };
-
+      current: 0,
+      imgUrl: this.$imgUrl,
+      info: '',
+      dataFormList: [] };
 
   },
+  onLoad: function onLoad() {
+    this._getMembersNewsBannerList();
+    this._getMembersNewsList();
+  },
   methods: {
+    change: function change(e) {
+      this.current = e.detail.current;
+    },
+    // 获取banner图
+    _getMembersNewsBannerList: function _getMembersNewsBannerList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_members_news_banner_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.info = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    // 获取列表
+    _getMembersNewsList: function _getMembersNewsList() {var _this2 = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_members_news_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this2.dataFormList = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     toMemberLatestNewsContent: function toMemberLatestNewsContent(item) {
       var items = JSON.stringify(item);
-      var price = "这里是通往教育学院";
       uni.navigateTo({
         url: '../../pagesMember/MemberLatestNewsContent/MemberLatestNewsContent?items=' + items });
 

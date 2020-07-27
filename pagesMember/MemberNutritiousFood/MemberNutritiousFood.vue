@@ -1,16 +1,16 @@
 <template>
 	<view class="MemberNutritiousFood">
-		<view class="MemberNutritiousFood_box" v-for="(item, index) in dataFormList" :key="index">
-			<image class="MemberNutritiousFood_box_image" :src="item.imageUrl" mode=""></image>
+		<view class="MemberNutritiousFood_box" v-for="(item, index) in dataFormList" :key="index" @click="toDetails(item.edm)">
+			<image class="MemberNutritiousFood_box_image" :src="imgUrl + item.imgs" mode=""></image>
 			<view class="MemberNutritiousFood_box_view">
 				<view class="MemberNutritiousFood_box_view_top">
-					<text>{{item.title}}</text>
+					<text>{{item.food_name}}</text>
 					<view>
 						<image class="MemberNutritiousFood_box_view_top_image" src="../static/image/MemberNutritiousFoodD.png" mode=""></image>
 						分享
 					</view>
 				</view>
-				<text class="MemberNutritiousFood_box_view_bottom">{{item.content}}</text>
+				<text class="MemberNutritiousFood_box_view_bottom">{{item.introduction}}</text>
 			</view>
 		</view>
 	</view>
@@ -20,20 +20,41 @@
 	export default {
 		data() {
 			return {
-				dataFormList: [{
-					imageUrl: '../static/image/MemberNutritiousFoodA.png',
-					title: '维生素A',
-					content: '来自美国拥有百年历史的知名大厂营养原料维他命。'
-				},{
-					imageUrl: '../static/image/MemberNutritiousFoodB.png',
-					title: '维生素C',
-					content: '天然萃取高吸收综合维他命通过众多国际认证最安全、安心的保健食品。'
-				},{
-					imageUrl: '../static/image/MemberNutritiousFoodC.png',
-					title: '综合维他命',
-					content: '由植物制成天然萃取的维他命来源，选择真正天然成分的营养补充品。'
-				}]
+				imgUrl: this.$imgUrl,
+				dataFormList: []
 			};
+		},
+		onLoad:function(){
+			this._getNutritionFoodsList()
+		},
+		methods:{
+			// 获取列表
+			_getNutritionFoodsList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_nutrition_foods_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataFormList = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			toDetails(edm) {
+				uni.navigateTo({
+					url: '../../pagesMember/MemberNutritiousFoodDetails/MemberNutritiousFoodDetails?edm=' + edm
+				})
+			}
 		}
 	}
 </script>

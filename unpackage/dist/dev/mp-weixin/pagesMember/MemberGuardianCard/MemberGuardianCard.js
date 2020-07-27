@@ -167,37 +167,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default =
 {
   data: function data() {
-    return {};
-
+    return {
+      dataFormList: [],
+      active_index: 1,
+      imgUrl: this.$imgUrl };
 
   },
+  swiper: function swiper(e) {
+
+  },
+  onLoad: function onLoad() {
+    this._getLuckCardList();
+  },
   methods: {
-    toMemberGuardianCardsDetails: function toMemberGuardianCardsDetails() {
+    is_active: function is_active(e) {
+      this.active_index = e.detail.current;
+    },
+    // 获取列表
+    _getLuckCardList: function _getLuckCardList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_luck_card_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.dataFormList = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    toMemberGuardianCardsDetails: function toMemberGuardianCardsDetails(edm) {
       uni.navigateTo({
-        url: '../../pagesMember/MemberGuardianCardsDetails/MemberGuardianCardsDetails' });
+        url: '../../pagesMember/MemberGuardianCardsDetails/MemberGuardianCardsDetails?edm=' + edm });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

@@ -1,9 +1,9 @@
-.caseExclusive .caseExclusive_iamge.data-v-3e9df9e1 {
+.caseExclusive .spotNewsImg.data-v-3e9df9e1 {
   padding: 0 4.27%;
   width: 100%;
   height: 262rpx;
 }
-.caseExclusive .caseExclusive_iamge image.data-v-3e9df9e1 {
+.caseExclusive .spotNewsImg image.data-v-3e9df9e1 {
   width: 100%;
   height: 100%;
 }

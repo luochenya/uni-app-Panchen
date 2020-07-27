@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .member.data-v-750b8cd2 {
-  padding: 0 4.27%;
+  padding: 0 4.27% 198rpx;
 }
 .member .memberImgStyle.data-v-750b8cd2 {
     height: 344rpx;
@@ -79,6 +79,7 @@
 .member .member_style image.data-v-750b8cd2 {
       width: 100%;
       height: 100%;
+      border-radius: 4px;
 }
 .member .member_style text.data-v-750b8cd2 {
       width: 284rpx;
@@ -108,7 +109,7 @@
     padding: 32rpx 0;
     border-bottom: 1px solid #D8D8D8;
 }
-.member .member_list view image.data-v-750b8cd2 {
+.member .member_list view .member_list_image.data-v-750b8cd2 {
       width: 240rpx;
       height: 240rpx;
 }
@@ -119,8 +120,8 @@
       color: #828282;
       line-height: 46rpx;
 }
-.member .member_video.data-v-750b8cd2 {
-    margin-top: 33.5rpx;
-    margin-bottom: 192rpx;
+.member .member_list .member_list_video.data-v-750b8cd2 {
+    width: 100%;
+    height: 384rpx;
 }
 

@@ -6,14 +6,12 @@
   height: 262rpx;
 }
 .KnowUsCommonProblem .KnowUsCommonProblem_nav {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 .KnowUsCommonProblem .KnowUsCommonProblem_nav view {
+  display: inline-block;
   width: 25%;
   height: 56rpx;
   border-radius: 28rpx;

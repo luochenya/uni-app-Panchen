@@ -8,8 +8,8 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerA.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">姓名</text>
 				</view>
-				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="text" value="" placeholder="请输入您的姓名" />
-				<text class="MemberCreateManager_box_input_input" v-if="popupStatus"></text>
+				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="text" v-model="name" placeholder="请输入您的姓名" />
+				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{name}}</text>
 			</view>
 			<view class="MemberCreateManager_box_border"></view>
 			<view class="MemberCreateManager_box_input">
@@ -17,8 +17,8 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerB.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">电话</text>
 				</view>
-				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="number" value="" placeholder="请输入您的电话" />
-				<text class="MemberCreateManager_box_input_input" v-if="popupStatus"></text>
+				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="number" v-model="phone" placeholder="请输入您的电话" />
+				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{phone}}</text>
 			</view>
 		</view>
 		<!-- 性别  出生日 -->
@@ -47,8 +47,8 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerD.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">出生日</text>
 				</view>
-				<input class="MemberCreateManager_box_input_input" type="text" value="" v-if="!popupStatus" disabled v-model="Birthday" placeholder="请选择您的出生日" @click="openCalendar()" />
-				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{Birthday}}</text>
+				<input class="MemberCreateManager_box_input_input" type="text" v-if="!popupStatus" disabled v-model="birthday" placeholder="请选择您的出生日" @click="openCalendar()" />
+				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{birthday}}</text>
 			</view>
 		</view>
 		<!-- 身高  体重 -->
@@ -58,8 +58,8 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerE.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">身高</text>
 				</view>
-				<input class="MemberCreateManager_box_input_input" type="text" value="" v-if="!popupStatus" placeholder="请输入您的身高" />
-				<text class="MemberCreateManager_box_input_input" v-if="popupStatus"></text>
+				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="number" v-model="stature" placeholder="请输入您的身高" />
+				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{stature}}</text>
 			</view>
 			<view class="MemberCreateManager_box_border"></view>
 			<view class="MemberCreateManager_box_input">
@@ -67,8 +67,8 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerF.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">体重</text>
 				</view>
-				<input class="MemberCreateManager_box_input_input" type="number" value="" v-if="!popupStatus" placeholder="请输入您的体重" />
-				<text class="MemberCreateManager_box_input_input" v-if="popupStatus"></text>
+				<input class="MemberCreateManager_box_input_input" v-if="!popupStatus" type="number" v-model="weight" placeholder="请输入您的体重" />
+				<text class="MemberCreateManager_box_input_input" v-if="popupStatus">{{weight}}</text>
 			</view>
 		</view>
 		<!-- 备注 -->
@@ -78,21 +78,21 @@
 					<image class="MemberCreateManager_box_input_label_image" src="../static/image/MemberCreateManagerG.png" mode=""></image>
 					<text class="MemberCreateManager_box_input_label_text">备注</text>
 				</view>
-				<textarea class="MemberCreateManager_box_input_textarea" maxlength="-1" v-if="!popupStatus && !calendarStatus" placeholder="请输入您的备注" />
-				<text class="MemberCreateManager_box_input_textarea" v-if="popupStatus || calendarStatus"></text>
+				<textarea class="MemberCreateManager_box_input_textarea" maxlength="-1" v-if="!popupStatus && !calendarStatus" v-model="remark" placeholder="请输入您的备注" />
+				<text class="MemberCreateManager_box_input_textarea" v-if="popupStatus || calendarStatus">{{remark}}</text>
 			</view>
 		</view>
 		<view class=MemberCreateManager_button @click="submit()">
 			提交
 		</view>
 		
-		<uni-calendar :insert="false" :lunar="true" ref="calendar" @close="close" @confirm="confirm" />
+		<uni-calendar :insert="false" :lunar="false" ref="calendar" :end-date="dataTime" @close="close" @confirm="confirm" />
 		<view class="MemberCreateManager_popup" v-if="popupStatus">
 			<view class="MemberCreateManager_popup_box">
 				<image class="MemberCreateManager_popup_box_image" src="../static/image/success.png" mode=""></image>
 				<text class="MemberCreateManager_popup_box_title">提交成功！</text>
 				<text class="MemberCreateManager_popup_box_content">已收到您的需求，本公司将于近日指派专人与您联系</text>
-				<view class="MemberCreateManager_popup_box_button" @click="popupStatus = false">确定</view>
+				<view class="MemberCreateManager_popup_box_button" @click="toSkip()">确定</view>
 			</view>
 		</view>
 	</view>
@@ -110,17 +110,51 @@
 				calendarStatus: false,
 				status: true,
 				statuss: false,
-				Birthday: ''
+				name: '',
+				phone: '',
+				sex: '男',
+				birthday: '',
+				stature: '',
+				weight: '',
+				remark: '',
+				dataTime: ''
 			};
 		},
+		mounted() {
+			this.dataTime = this.getNowFormatDate()
+		},
 		methods:{
+			// 获取当前时间
+			getNowFormatDate() {
+				var date = new Date();
+				var seperator1 = "-";
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var strDate = date.getDate();
+				if (month >= 1 && month <= 9) {
+					month = "0" + month;
+				}
+				if (strDate >= 0 && strDate <= 9) {
+					strDate = "0" + strDate;
+				}
+				var currentdate = year + seperator1 + month + seperator1 + strDate;
+				return currentdate;
+			},
+			toSkip() {
+				this.popupStatus = false
+				uni.redirectTo({
+					url: '../MemberDeepButler/MemberDeepButler'
+				})
+			},
 			statusClick(value) {
 				if (value == 1) {
 					this.status = true
 					this.statuss = false
+					this.sex = '男'
 				} else {
 					this.status = false
 					this.statuss = true
+					this.sex = '女'
 				}
 			},
 			openCalendar () {
@@ -131,10 +165,96 @@
 				this.calendarStatus = false
 			},
 			confirm(e) {
-				this.Birthday = e.fulldate
+				this.birthday = e.fulldate
 			},
 			submit() {
-				this.popupStatus = true
+				if (this.name == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '姓名不能为空',
+						duration: 1000
+					})
+					return false
+				}
+				if (this.phone == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '电话不能为空',
+						duration: 1000
+					})
+					return false
+				}
+				if (this.birthday == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '出生日不能为空',
+						duration: 1000
+					})
+					return false
+				}
+				if (this.stature == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '身高不能为空',
+						duration: 1000
+					})
+					return false
+				}
+				if (this.weight == '') {
+					uni.showToast({
+						icon: 'none',
+						title: '体重不能为空',
+						duration: 1000
+					})
+					return false
+				}
+					 // 加载动画
+					uni.showLoading({
+						title: '提交中'
+					});
+					this.$member.post(
+						'Store/insert_steward_material',
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="name"' +
+						'\r\n' +
+						'\r\n' + this.name +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="phone"' +
+						'\r\n' +
+						'\r\n' + this.phone +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="sex"' +
+						'\r\n' +
+						'\r\n' + this.sex +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="birthday"' +
+						'\r\n' +
+						'\r\n' + this.birthday +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="stature"' +
+						'\r\n' +
+						'\r\n' + this.stature +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="weight"' +
+						'\r\n' +
+						'\r\n' + this.weight +
+						'\r\n--XXX' +
+						'\r\nContent-Disposition: form-data; name="remark"' +
+						'\r\n' +
+						'\r\n' + this.remark +
+						'\r\n--XXX--').then(res => {
+						// 关闭加载动画
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.popupStatus = true
+						} else {
+							 uni.showToast({
+								icon: 'none',
+								title: res.data.msg,
+								duration: 2000
+							 })
+						}
+					})
 			}
 		}
 	}
@@ -142,7 +262,7 @@
 
 <style lang="less">
 .MemberCreateManager {
-	padding: 0 4.27%;
+	padding: 0 4.27% 78rpx;
 	background:rgba(248,248,250,1);
 	.MemberCreateManager_popup {
 		width: 100vw;
@@ -279,7 +399,7 @@
 	}
 	.MemberCreateManager_button {
 		margin-top: 54rpx;
-		margin-bottom: 78rpx;
+		// margin-bottom: 78rpx; 
 		height:88rpx;
 		width: 100%;
 		background:rgba(104,183,77,1);

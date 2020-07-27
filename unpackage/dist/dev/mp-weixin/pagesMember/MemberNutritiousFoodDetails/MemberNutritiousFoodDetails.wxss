@@ -1,0 +1,8 @@
+.MemberNutritiousFoodDetails {
+  padding: 60rpx 4.27%;
+}
+.MemberNutritiousFoodDetails .MemberNutritiousFoodDetails_image {
+  width: 100%;
+  height: 838rpx;
+}
+

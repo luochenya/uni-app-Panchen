@@ -9,7 +9,10 @@
 		"path" : "pages/member/index",
 		"style" : {
 			"navigationBarTitleText": "会员购",
-			"navigationStyle":"custom"
+			"navigationStyle":"custom",
+			"usingComponents": {
+			   "txv-video": "plugin://tencentvideo/video"
+			}
 		}
 	},{
 		"path" : "pages/dealer/index",
@@ -43,7 +46,10 @@
 		},{
 			"path" : "courseDetails/courseDetails",
 			"style" : {
-				"navigationBarTitleText": "课程详情"
+				"navigationBarTitleText": "课程详情",
+				"usingComponents": {
+					 "txv-video": "plugin://tencentvideo/video"
+				}
 			}
 		},{
 			"path" : "collegeOfEducation/collegeOfEducation",
@@ -123,23 +129,33 @@
 			"style" : {
 				"navigationBarTitleText":"建立个人健康管理师"
 			}
+    },{
+			"path" : "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
+			"style" : {
+				"navigationBarTitleText":"营养食品介绍EDM"
+			}
+    },{
+			"path" : "MemberRegistered/MemberRegistered",
+			"style" : {
+				"navigationBarTitleText":"会员注册"
+			}
     }]
 	},{
 		"root":"pagesKnowUs",
 		"pages": [{
 			"path" : "KnowUsCompany/KnowUsCompany",
 			"style" : {
-				"navigationBarTitleText":"关于公司"
+				"navigationBarTitleText":"咱们"
 			}
 		},{
 			"path" : "KnowUsHealthConcept/KnowUsHealthConcept",
 			"style" : {
-				"navigationBarTitleText":"健康理念"
+				"navigationBarTitleText":"想做的事"
 			}
 		},{
 			"path" : "KnowUsCelebritySays/KnowUsCelebritySays",
 			"style" : {
-				"navigationBarTitleText":"名人语录"
+				"navigationBarTitleText":"名人说"
 			}
     },{
 			"path" : "KnowsUsHonor/KnowsUsHonor",
@@ -149,7 +165,7 @@
     },{
 			"path" : "KnowUsGoodLuckPlan/KnowUsGoodLuckPlan",
 			"style" : {
-				"navigationBarTitleText":"新鲜事"
+				"navigationBarTitleText":"好运方案"
 			}
     },{
 			"path" : "KnowUsCommonProblem/KnowUsCommonProblem",
@@ -159,12 +175,12 @@
     },{
 			"path" : "KnowUsInternationalNews/KnowUsInternationalNews",
 			"style" : {
-				"navigationBarTitleText":"国际新知"
+				"navigationBarTitleText":"健康报"
 			}
     },{
 			"path" : "KnowUsInternationalNewss/KnowUsInternationalNewss",
 			"style" : {
-				"navigationBarTitleText":"国际新知"
+				"navigationBarTitleText":"健康报"
 			}
     }]
 	}],

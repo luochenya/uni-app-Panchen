@@ -32,7 +32,9 @@
         "MemberCommonProblem/MemberCommonProblem",
         "MemberGoodLuckPlan/MemberGoodLuckPlan",
         "MemberDeepButler/MemberDeepButler",
-        "MemberCreateManager/MemberCreateManager"
+        "MemberCreateManager/MemberCreateManager",
+        "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
+        "MemberRegistered/MemberRegistered"
       ]
     },
     {
@@ -99,6 +101,12 @@
       "packages": [
         "pagesKnowUs"
       ]
+    }
+  },
+  "plugins": {
+    "tencentvideo": {
+      "version": "1.3.14",
+      "provider": "wxa75efa648b60994b"
     }
   },
   "permission": {},

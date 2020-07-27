@@ -5,7 +5,7 @@
 			<swiper @change="change" autoplay="true" circular="true">
 				<swiper-item v-for="(item ,index) in info" :key="index">
 					<view class="spotNewsImg">
-						<image :src="item.imgUrl" mode="scaleToFill"></image>
+						<image :src="imgUrl + item.imgs" mode="scaleToFill"></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -21,15 +21,10 @@
 	export default {
 		data() {
 			return {
-				info: [{
-					imgUrl: '../static/image/spotNewsbanner.png'
-				}, {
-					imgUrl: '../static/image/spotNewsbanner.png'
-				}, {
-					imgUrl: '../static/image/spotNewsbanner.png'
-				}],
-				spotNewsList: [],
+				imgUrl: this.$imgUrl,
+				info: [],
 				current: 0,
+				spotNewsList: [],
 			};
 		},
 		onLoad:function(option){
@@ -37,8 +32,31 @@
 		},
 		mounted() {
 			this.gettingData()
+			this._getNewsBannerList()
 		},
 		methods: {
+			// 获取banner图
+			_getNewsBannerList () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('System/get_news_banner_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.info = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			gettingData () {
 				 // 加载动画
 				 uni.showLoading({

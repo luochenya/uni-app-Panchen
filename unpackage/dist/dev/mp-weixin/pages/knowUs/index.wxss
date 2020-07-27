@@ -66,6 +66,7 @@
 .knowUs .novelty_style image.data-v-48e40601 {
       width: 100%;
       height: 100%;
+      border-radius: 4px;
 }
 .knowUs .novelty_style text.data-v-48e40601 {
       width: 284rpx;

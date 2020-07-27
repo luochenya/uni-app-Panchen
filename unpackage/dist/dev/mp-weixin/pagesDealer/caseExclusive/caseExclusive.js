@@ -95,7 +95,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "uni-swiper-dot": () =>
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -153,22 +156,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       imgUrl: this.$imgUrl,
+      current: 0,
+      info: [],
       caseExclusive: [] };
 
   },
   onLoad: function onLoad(option) {
     this.gettingData();
-  },
-  mounted: function mounted() {
-    this.gettingData();
+    this._getSharingBannerList();
   },
   methods: {
-    gettingData: function gettingData() {var _this = this;
+    change: function change(e) {
+      this.current = e.detail.current;
+    },
+    // 获取banner图
+    _getSharingBannerList: function _getSharingBannerList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$http.post('System/get_sharing_banner_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.info = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    gettingData: function gettingData() {var _this2 = this;
       // 加载动画
       uni.showLoading({
         title: '加载中' });
@@ -177,7 +212,7 @@ var _default =
         // 关闭加载动画
         uni.hideLoading();
         if (res.data.code == 200) {
-          _this.caseExclusive = res.data.data;
+          _this2.caseExclusive = res.data.data;
         } else {
           uni.showToast({
             icon: 'none',

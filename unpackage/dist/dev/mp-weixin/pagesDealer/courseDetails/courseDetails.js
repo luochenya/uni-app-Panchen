@@ -142,6 +142,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var _default =
 {
   data: function data() {
@@ -154,6 +155,19 @@ var _default =
     this.gettingData(option.id);
   },
   methods: {
+    // 视频播放报错
+    videoErrorCallback: function videoErrorCallback(e) {
+      // uni.showModal({
+      // 	content: e.target.errMsg,
+      // 	showCancel: false
+      // })
+    },
+    // url切割
+    getCaption: function getCaption(obj) {
+      var index = obj.lastIndexOf("vid=");
+      obj = obj.substring(index + 4, obj.length);
+      return obj;
+    },
     gettingData: function gettingData(id) {var _this = this;
       // 加载动画
       uni.showLoading({
@@ -169,6 +183,10 @@ var _default =
         uni.hideLoading();
         if (res.data.code == 200) {
           _this.courseList = res.data.data;
+          if (res.data.data.type == 2) {
+            _this.courseList.url = _this.getCaption(res.data.data.url);
+          }
+          console.log(_this.courseList);
         } else {
           uni.showToast({
             icon: 'none',

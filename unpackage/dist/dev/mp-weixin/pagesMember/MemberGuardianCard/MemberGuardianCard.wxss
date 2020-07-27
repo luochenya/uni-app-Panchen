@@ -1,104 +1,95 @@
-.MemberGuardianCard {
-  padding: 60rpx 6.4% 0;
-}
-.MemberGuardianCard .MemberGuardianCard_title {
-  display: block;
-  margin-bottom: 48rpx;
-  margin-left: 20rpx;
-  font-size: 32rpx;
-  font-family: PingFangSC-Light, PingFang SC;
-  font-weight: 300;
-  color: #828282;
-  line-height: 44rpx;
-  letter-spacing: 2rpx;
-}
-.MemberGuardianCard .MemberGuardianCard_box {
+.w-100 {
   width: 100%;
-  height: 356rpx;
-  background: #24252a;
-  border-radius: 40rpx;
+  padding-top: 122rpx;
+}
+.h-100 {
+  height: 100%;
+}
+.wh-100 {
+  width: 100%;
+  height: 100%;
+}
+.card_swiper {
+  height: 320rpx;
+}
+.swiper-item {
+  height: 320rpx;
   overflow: hidden;
-  margin-bottom: 48rpx;
+  border-radius: 20rpx;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
+  position: relative;
 }
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_top {
-  padding: 0 5.81%;
-  height: 120rpx;
-  line-height: 120rpx;
+.selected {
+  color: #000;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+.card_title_box {
+  position: absolute;
+  top: 15%;
+  left: 10%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  justify-items: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
 }
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_top .MemberGuardianCard_box_top_card {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  justify-items: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  font-size: 34rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
-  font-weight: 500;
-  color: #ffffff;
-  line-height: 48rpx;
-  letter-spacing: 2rpx;
-}
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_top .MemberGuardianCard_box_top_card image {
-  width: 58rpx;
-  height: 36rpx;
-}
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_top .MemberGuardianCard_box_top_shareIt {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  justify-items: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-          align-items: center;
-  text-align: center;
-  margin-left: auto;
-  padding: 0 20rpx;
-  height: 50rpx;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 26rpx;
+.card_title_box .card_title_txt {
   font-size: 28rpx;
-  font-family: PingFangSC-Light, PingFang SC;
-  font-weight: 300;
   color: #ffffff;
-  line-height: 50rpx;
+  line-height: 40rpx;
 }
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_top .MemberGuardianCard_box_top_shareIt image {
-  width: 48rpx;
-  height: 48rpx;
+.card_bottom_box {
+  position: absolute;
+  top: 75%;
+  left: 10%;
 }
-.MemberGuardianCard .MemberGuardianCard_box .MemberGuardianCard_box_bottom {
-  padding: 76rpx 0;
+.card_bottom_box .card_bottom_box_txt {
+  font-size: 20rpx;
+  color: #ffffff;
+  line-height: 28rpx;
+}
+.card_swiper swiper-item:nth-child(2) .card_title_txt {
+  color: #ffe0c4 !important;
+}
+.card_swiper swiper-item:nth-child(2) .card_bottom_box_txt {
+  color: rgba(255, 224, 196, 0.5) !important;
+}
+.card_explanation {
+  padding: 108rpx 10.4% 0;
+}
+.card_explanation .card_explanation_txt {
   text-align: center;
-  background: #24252a;
-  box-shadow: -328rpx 0px 98rpx 0px rgba(42, 40, 39, 0.5);
+  font-size: 28rpx;
+  color: rgba(36, 37, 42, 0.7);
+  line-height: 44rpx;
+  height: 88rpx;
+  display: block;
+}
+.card_btn {
+  margin-top: 321rpx;
+  padding: 26rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  background: -webkit-linear-gradient(225deg, #37383a 0%, #222220 100%);
+  background: linear-gradient(225deg, #37383a 0%, #222220 100%);
+  box-shadow: 0px 32rpx 64rpx 0px rgba(45, 45, 45, 0.2);
+  border-radius: 12rpx;
   font-size: 30rpx;
-  font-family: PingFangSC-Light, PingFang SC;
-  font-weight: 300;
   color: #ffffff;
   line-height: 42rpx;
-  border-radius: 0 0 40rpx 40rpx;
 }
-.MemberGuardianCard .demoA {
-  background: #68b74d;
-}
-.MemberGuardianCard .demoA .MemberGuardianCard_box_bottom {
-  background: #68b74d;
-  box-shadow: -328rpx 0px 98rpx 0px #5ba641;
-}
-.MemberGuardianCard .demoB {
-  background: #fb861e;
-}
-.MemberGuardianCard .demoB .MemberGuardianCard_box_bottom {
-  background: #fb861e;
-  box-shadow: -328rpx 0px 98rpx 0px #f77400;
+.card_btn image {
+  width: 48rpx;
+  height: 48rpx;
 }
 

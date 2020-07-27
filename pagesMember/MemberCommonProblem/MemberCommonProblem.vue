@@ -1,15 +1,12 @@
 <template>
-	<view class="MemberCommonProblem">
-		<image class="MemberCommonProblem_image" src="../static/image/MemberLatestNewsBanner.png" mode=""></image>
-		<view class="MemberCommonProblem_nav">
-			<view :class="activeNum == 1 ? 'active' : ''" @click="activeClick(1)">购物</view>
-			<view :class="activeNum == 2 ? 'active' : ''" @click="activeClick(2)">积分</view>
-			<view :class="activeNum == 3 ? 'active' : ''" @click="activeClick(3)">合作</view>
-			<view :class="activeNum == 4 ? 'active' : ''" @click="activeClick(4)">其他</view>
+	<view class="KnowUsCommonProblem">
+		<image class="KnowUsCommonProblem_image" src="../static/image/MemberLatestNewsBanner.png" mode=""></image>
+		<view class="KnowUsCommonProblem_nav">
+			<view v-for="(item, index) in faqsClass" :key="index" :class="activeNum == index ? 'active' : ''" @click="activeClick(index)">{{item.class_name}}</view>
 		</view>
-		<view class="MemberCommonProblem_content" v-for="(item,index) in dataFormList" :key="index">
-			<text class="MemberCommonProblem_content_title">{{item.title}}</text>
-			<text class="MemberCommonProblem_content_content">{{item.content}}</text>
+		<view class="KnowUsCommonProblem_content" v-for="(item,index) in dataFormList" :key="index">
+			<text class="KnowUsCommonProblem_content_title">{{item.title}}</text>
+			<text class="KnowUsCommonProblem_content_content">{{item.answer}}</text>
 		</view>
 	</view>
 </template>
@@ -18,89 +15,93 @@
 	export default {
 		data() {
 			return {
-				activeNum: 1,
-				dataFormList: [{
-					title: '如何付款呢？',
-					content: '联系经销商后，确认物品，双方谈妥交易方式即可。'
-				},{
-					title: '怎么知道自己有没有符合优惠价？',
-					content: '于产品介绍中，有提及相关资格，也可以直接洽询经销商协助。'
-				},{
-					title: '有可能接到公司来电说明付款失败吗？',
-					content: '不可能，本公司不会主动致电给用户，如收到相关电话切勿轻易相信，如遇财物损失，本公司概不负责。'
-				}],
-				dataFormListD: [{
-					title: '如何付款呢？',
-					content: '联系经销商后，确认物品，双方谈妥交易方式即可。'
-				},{
-					title: '怎么知道自己有没有符合优惠价？',
-					content: '于产品介绍中，有提及相关资格，也可以直接洽询经销商协助。'
-				},{
-					title: '有可能接到公司来电说明付款失败吗？',
-					content: '不可能，本公司不会主动致电给用户，如收到相关电话切勿轻易相信，如遇财物损失，本公司概不负责。'
-				}],
-				
-				dataFormListA: [{
-					title: '如何付款呢？A',
-					content: '联系经销商后，确认物品，双方谈妥交易方式即可。A'
-				},{
-					title: '怎么知道自己有没有符合优惠价？A',
-					content: '于产品介绍中，有提及相关资格，也可以直接洽询经销商协助。A'
-				},{
-					title: '有可能接到公司来电说明付款失败吗？A',
-					content: '不可能，本公司不会主动致电给用户，如收到相关电话切勿轻易相信，如遇财物损失，本公司概不负责。A'
-				}],
-				dataFormListB: [{
-					title: '如何付款呢？B',
-					content: '联系经销商后，确认物品，双方谈妥交易方式即可。B'
-				},{
-					title: '怎么知道自己有没有符合优惠价？B',
-					content: '于产品介绍中，有提及相关资格，也可以直接洽询经销商协助。B'
-				},{
-					title: '有可能接到公司来电说明付款失败吗？B',
-					content: '不可能，本公司不会主动致电给用户，如收到相关电话切勿轻易相信，如遇财物损失，本公司概不负责。B'
-				}],
-				dataFormListC: [{
-					title: '如何付款呢？C',
-					content: '联系经销商后，确认物品，双方谈妥交易方式即可。C'
-				},{
-					title: '怎么知道自己有没有符合优惠价？C',
-					content: '于产品介绍中，有提及相关资格，也可以直接洽询经销商协助。C'
-				},{
-					title: '有可能接到公司来电说明付款失败吗？C',
-					content: '不可能，本公司不会主动致电给用户，如收到相关电话切勿轻易相信，如遇财物损失，本公司概不负责。C'
-				}],
-				
+				class_id: '',
+				faqsClass: '',
+				activeNum: 0,
+				dataFormList: []
 			};
 		},
+		onLoad:function(){
+			this._getFaqsClass()
+		},
 		methods:{
+			// 获取问答分类
+			_getFaqsClass () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post('Store/get_questions_class_list').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.faqsClass = res.data.data
+						this._getFaqs(res.data.data[0].id)
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
+			// 获取问答列表
+			_getFaqs (id) {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$member.post(
+				'Store/get_questions_list',
+					'\r\n--XXX' +
+					'\r\nContent-Disposition: form-data; name="class_id"' +
+					'\r\n' +
+					'\r\n' + id +
+					'\r\n--XXX--'
+					).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataFormList = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			activeClick(num) {
-				this.activeNum = num
-				if (num == 1) {
-					this.dataFormList = this.dataFormListD
-				} else if (num == 2) {
-					this.dataFormList = this.dataFormListA
-				} else if (num == 3) {
-					this.dataFormList = this.dataFormListB
-				} else if (num == 4) {
-					this.dataFormList = this.dataFormListC
+				if (num == this.activeNum) {
+					return false
 				}
+				this.activeNum = num
+				this._getFaqs(this.faqsClass[num].id)
 			}
 		}
 	}
 </script>
 
 <style lang="less">
-.MemberCommonProblem {
+.KnowUsCommonProblem {
 	padding: 28rpx 4.27% 0;
-	.MemberCommonProblem_image {
+	.KnowUsCommonProblem_image {
 		width: 100%;
 		height: 262rpx;
 	}
-	.MemberCommonProblem_nav {
-		display: flex;
-		justify-content: space-between;
+	.KnowUsCommonProblem_nav {
+		// display: flex;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
 		view {
+			display: inline-block;
 			width: 25%;
 			height: 56rpx;
 			border-radius: 28rpx;
@@ -116,10 +117,10 @@
 			color:rgba(255,255,255,1);
 		}
 	}
-	.MemberCommonProblem_content {
+	.KnowUsCommonProblem_content {
 		padding: 32rpx 24rpx;
 		border-bottom: 2rpx solid #D8D8D8;
-		.MemberCommonProblem_content_title {
+		.KnowUsCommonProblem_content_title {
 			display: block;
 			margin-bottom: 24rpx;
 			font-size:32rpx;
@@ -129,7 +130,7 @@
 			line-height:44rpx;
 			letter-spacing:2rpx;
 		}
-		.MemberCommonProblem_content_content {
+		.KnowUsCommonProblem_content_content {
 			font-size:28rpx;
 			font-family:PingFangSC-Light,PingFang SC;
 			font-weight:300;

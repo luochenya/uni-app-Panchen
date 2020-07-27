@@ -1,33 +1,59 @@
 <template>
 	<view class="KnowUsCelebritySays">
-		<view class="KnowUsCelebritySays_box" v-for="(item, index) in dataFormList">
-			<image class="KnowUsCelebritySays_box_left" :src="item.imgUrl" mode=""></image>
+		<view class="KnowUsCelebritySays_box" v-for="(item, index) in dataFormList" :key="index">
+			<image class="KnowUsCelebritySays_box_left" :src="imgUrl + item.imgs" mode=""></image>
 			<view class="KnowUsCelebritySays_box_right">
-				<text class="KnowUsCelebritySays_box_right_title">{{item.title}}</text>
-				<text class="KnowUsCelebritySays_box_right_content">- {{item.content}}</text>
+				<text class="KnowUsCelebritySays_box_right_title">{{item.name}}</text>
+				<text class="KnowUsCelebritySays_box_right_content">- {{item.saying}}</text>
 			</view>
 		</view>
 	</view>
 </template>
-
+ 
 <script>
 	export default {
 		data() {
 			return {
-				dataFormList: [{
-					imgUrl: "../static/image/KnowUsCelebritySaysA.png",
-					title: "一天一蘋果 醫生遠離我",
-					content: "Steve Jobs"
-				},{
-					imgUrl: "../static/image/KnowUsCelebritySaysB.png",
-					title: "爭辯不過是一場消耗！過好自己的生活，比什麼都重要！",
-					content: "林志玲"
-				},{
-					imgUrl: "../static/image/KnowUsCelebritySaysC.png",
-					title: "我特討厭認真工作的人",
-					content: "马云"
-				}]
+				imgUrl: this.$imgUrl,
+				dataFormList: [],
+				// {
+				// 	imgUrl: "../static/image/KnowUsCelebritySaysA.png",
+				// 	title: "一天一蘋果 醫生遠離我",
+				// 	content: "Steve Jobs"
+				// },{
+				// 	imgUrl: "../static/image/KnowUsCelebritySaysB.png",
+				// 	title: "爭辯不過是一場消耗！過好自己的生活，比什麼都重要！",
+				// 	content: "林志玲"
+				// },{
+				// 	imgUrl: "../static/image/KnowUsCelebritySaysC.png",
+				// 	title: "我特討厭認真工作的人",
+				// 	content: "马云"
+				// }
 			};
+		},
+		mounted() {
+			this.getWisdom()
+		},
+		methods:{
+				getWisdom () {
+					 // 加载动画
+					 uni.showLoading({
+						 title: '加载中'
+					 });
+					this.$http.post('Visitor/get_wisdom').then(res => {
+						// 关闭加载动画
+						uni.hideLoading();
+						if (res.data.code == 200) {
+							this.dataFormList = res.data.data
+						} else {
+							 uni.showToast({
+								icon: 'none',
+								title: res.data.msg,
+								duration: 2000
+							 })
+						}
+					})
+				},
 		}
 	}
 </script>

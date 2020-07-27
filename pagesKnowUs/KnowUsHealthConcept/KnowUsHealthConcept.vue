@@ -39,7 +39,7 @@
 	.KnowUsHealthConcept_content {
 		display: block;
 		padding-bottom: 48rpx;
-		text-indent: 2em;
+		// text-indent: 2em;
 		font-size:28rpx;
 		font-family:PingFangSC-Regular,PingFang SC;
 		font-weight:400;

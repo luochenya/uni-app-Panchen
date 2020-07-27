@@ -1,19 +1,17 @@
-.MemberCommonProblem {
+.KnowUsCommonProblem {
   padding: 28rpx 4.27% 0;
 }
-.MemberCommonProblem .MemberCommonProblem_image {
+.KnowUsCommonProblem .KnowUsCommonProblem_image {
   width: 100%;
   height: 262rpx;
 }
-.MemberCommonProblem .MemberCommonProblem_nav {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-          justify-content: space-between;
+.KnowUsCommonProblem .KnowUsCommonProblem_nav {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
-.MemberCommonProblem .MemberCommonProblem_nav view {
+.KnowUsCommonProblem .KnowUsCommonProblem_nav view {
+  display: inline-block;
   width: 25%;
   height: 56rpx;
   border-radius: 28rpx;
@@ -24,15 +22,15 @@
   font-weight: 400;
   color: #131f2b;
 }
-.MemberCommonProblem .MemberCommonProblem_nav .active {
+.KnowUsCommonProblem .KnowUsCommonProblem_nav .active {
   background: #68b74d;
   color: #ffffff;
 }
-.MemberCommonProblem .MemberCommonProblem_content {
+.KnowUsCommonProblem .KnowUsCommonProblem_content {
   padding: 32rpx 24rpx;
   border-bottom: 2rpx solid #D8D8D8;
 }
-.MemberCommonProblem .MemberCommonProblem_content .MemberCommonProblem_content_title {
+.KnowUsCommonProblem .KnowUsCommonProblem_content .KnowUsCommonProblem_content_title {
   display: block;
   margin-bottom: 24rpx;
   font-size: 32rpx;
@@ -42,7 +40,7 @@
   line-height: 44rpx;
   letter-spacing: 2rpx;
 }
-.MemberCommonProblem .MemberCommonProblem_content .MemberCommonProblem_content_content {
+.KnowUsCommonProblem .KnowUsCommonProblem_content .KnowUsCommonProblem_content_content {
   font-size: 28rpx;
   font-family: PingFangSC-Light, PingFang SC;
   font-weight: 300;

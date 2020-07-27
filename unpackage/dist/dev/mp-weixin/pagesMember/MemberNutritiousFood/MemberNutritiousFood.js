@@ -133,7 +133,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -155,21 +155,42 @@ var _default =
 {
   data: function data() {
     return {
-      dataFormList: [{
-        imageUrl: '../static/image/MemberNutritiousFoodA.png',
-        title: '维生素A',
-        content: '来自美国拥有百年历史的知名大厂营养原料维他命。' },
-      {
-        imageUrl: '../static/image/MemberNutritiousFoodB.png',
-        title: '维生素C',
-        content: '天然萃取高吸收综合维他命通过众多国际认证最安全、安心的保健食品。' },
-      {
-        imageUrl: '../static/image/MemberNutritiousFoodC.png',
-        title: '综合维他命',
-        content: '由植物制成天然萃取的维他命来源，选择真正天然成分的营养补充品。' }] };
+      imgUrl: this.$imgUrl,
+      dataFormList: [] };
 
+  },
+  onLoad: function onLoad() {
+    this._getNutritionFoodsList();
+  },
+  methods: {
+    // 获取列表
+    _getNutritionFoodsList: function _getNutritionFoodsList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
 
-  } };exports.default = _default;
+      this.$member.post('Store/get_nutrition_foods_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.dataFormList = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    toDetails: function toDetails(edm) {
+      uni.navigateTo({
+        url: '../../pagesMember/MemberNutritiousFoodDetails/MemberNutritiousFoodDetails?edm=' + edm });
+
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

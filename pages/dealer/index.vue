@@ -2,9 +2,16 @@
 	<view>
 		<top-navigation-bar></top-navigation-bar>
 		<view class="dealer">
-			<view class="dealer_image">
-				<image src="../../static/dealerImg/dealerA.png" mode=""></image>
-			</view>
+			<!-- 轮播图 -->
+			<uni-swiper-dot :info="info" :current="current" field="content">
+					<swiper @change="change" autoplay="true" circular="true" class="dealer_image">
+							<swiper-item v-for="(item ,index) in info" :key="index">
+									<view class="dealer_image">
+										<image :src="imgUrl + item.imgs" mode=""></image>
+									</view>
+							</swiper-item>
+					</swiper>
+			</uni-swiper-dot>
 			<view class="dealer_box">
 				<view class="dealer_box_view1" @click="skipCollegeOfEducation()">
 					<text class="dealer_box_view1_title">教育学院</text>
@@ -38,14 +45,17 @@
 		components: {topNavigationBar},
 		data() {
 			return {
-				
+				current: 0,
+				imgUrl: this.$imgUrl,
+				info: []
 			}
 		},
 		onLoad:function(option){
+			var that = this
 			uni.getStorage({
 			    key: 'userInfo',
 			    success: function (res) {
-					
+						that._getBanner()
 			    },
 				fail:function(res){
 					uni.redirectTo({
@@ -54,10 +64,32 @@
 				}
 			});
 		},
-		onShow:function() {
-			
-		},
 		methods: {
+			change (e) {
+				this.current = e.detail.current;
+			},
+			// 获取banner图
+			_getBanner () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('System/get_banner').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.info = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					console.log(err)
+				})
+			},
 			// 路径跳转教育学院
 			skipCollegeOfEducation () {
 				var price = "这里是通往教育学院"

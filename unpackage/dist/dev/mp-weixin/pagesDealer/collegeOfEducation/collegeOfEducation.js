@@ -95,7 +95,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  "uni-swiper-dot": () =>
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -147,12 +150,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       recommendedCourse: [],
-      imgUrl: this.$imgUrl };
+      current: 0,
+      imgUrl: this.$imgUrl,
+      novelty: [] };
 
   },
   onLoad: function onLoad(option) {
@@ -160,9 +174,35 @@ var _default =
   },
   mounted: function mounted() {
     this.gettingData();
+    this._getCoursesBannerList();
   },
   methods: {
-    gettingData: function gettingData() {var _this = this;
+    change: function change(e) {
+      this.current = e.detail.current;
+    },
+    // 获取banner图
+    _getCoursesBannerList: function _getCoursesBannerList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$http.post('System/get_courses_banner_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.novelty = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    gettingData: function gettingData() {var _this2 = this;
       // 加载动画
       uni.showLoading({
         title: '加载中' });
@@ -171,7 +211,7 @@ var _default =
         // 关闭加载动画
         uni.hideLoading();
         if (res.data.code == 200) {
-          _this.recommendedCourse = res.data.data;
+          _this2.recommendedCourse = res.data.data;
         } else {
           uni.showToast({
             icon: 'none',

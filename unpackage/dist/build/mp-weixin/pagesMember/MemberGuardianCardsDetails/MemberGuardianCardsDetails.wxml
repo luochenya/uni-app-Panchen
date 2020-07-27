@@ -1,1 +1,1 @@
-<view class="MemberGuardianCardsDetails"><image class="MemberGuardianCardsDetails_image" src="../static/image/MemberGuardianCardsDetails.png" mode></image></view>
+<view class="MemberGuardianCardsDetails"><image class="MemberGuardianCardsDetails_image" src="{{url}}" mode data-event-opts="{{[['longpress',[['toSave']]]]}}" bindlongpress="__e"></image></view>

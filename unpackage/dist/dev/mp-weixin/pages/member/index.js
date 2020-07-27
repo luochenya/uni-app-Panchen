@@ -97,9 +97,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "top-navigation-bar": () =>
-    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290)),
+    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306)),
   "uni-swiper-dot": () =>
-    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 275))
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
 }
 var render = function() {
   var _vm = this
@@ -138,7 +138,16 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306));};var _default =
+
+
+
+
+
+
+
+
+
 
 
 
@@ -193,12 +202,11 @@ __webpack_require__.r(__webpack_exports__);
   components: { topNavigationBar: topNavigationBar },
   data: function data() {
     return {
+      current: 0,
+      url: "q0022eew4t8",
+      imgUrl: this.$imgUrl,
       title: '会员',
-      info: [
-      { imgUrl: '../../static/memberImg/banner1.png' },
-      { imgUrl: '../../static/memberImg/banner1.png' },
-      { imgUrl: '../../static/memberImg/banner1.png' }],
-
+      info: [],
       functionList: [{
         text: '会员中心',
         imgUrl: '../../static/memberImg/functionList1.png' },
@@ -215,33 +223,18 @@ __webpack_require__.r(__webpack_exports__);
         text: '常见问题',
         imgUrl: '../../static/memberImg/functionList5.png' }],
 
-      novelty: [{
-        text: '保健专场',
-        imgUrl: '../../static/memberImg/NewThings1.png' },
-      {
-        text: '进口大牌',
-        imgUrl: '../../static/memberImg/NewThings2.png' },
-      {
-        text: '199元任选3件',
-        imgUrl: '../../static/memberImg/NewThings3.png' }],
-
-      clientFeedbackList: [{
-        text: '真的特别特别好，老公总失眠，入睡困难，怕有些促进睡眠的长期吃有副作用，这是一款保健品，不是药，对身体没有副作用，也没有依赖性。',
-        imgUrl: '../../static/memberImg/clientFeedback1.png' },
-      {
-        text: '透過高頻熱能刺激膠原蛋白收縮與更新，達到臉部肌膚緊實、拉提又有彈力恢復年輕肌膚狀態。',
-        imgUrl: '../../static/memberImg/clientFeedback2.png' },
-      {
-        text: '给老公和宝宝买了保健品，效果都不错，应该是正品，喝完了过阵子在买些用，特别满意。',
-        imgUrl: '../../static/memberImg/clientFeedback3.png' }] };
-
+      novelty: [],
+      clientFeedbackList: [] };
 
   },
   onLoad: function onLoad(option) {
+    var that = this;
     uni.getStorage({
       key: 'memberInfo',
       success: function success(res) {
-
+        that._getHomeBanner();
+        that._getMembersLuckySchemeList();
+        that._getFeedbackList();
       },
       fail: function fail(res) {
         uni.redirectTo({
@@ -251,8 +244,87 @@ __webpack_require__.r(__webpack_exports__);
 
   },
   methods: {
+    // 视频播放报错
+    videoErrorCallback: function videoErrorCallback(e) {
+      // uni.showModal({
+      // 	content: e.target.errMsg,
+      // 	showCancel: false
+      // })
+    },
     change: function change(e) {
       this.current = e.detail.current;
+    },
+    // 获取banner图
+    _getHomeBanner: function _getHomeBanner() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_home_banner').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.info = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    // 获取好运方案列表
+    _getMembersLuckySchemeList: function _getMembersLuckySchemeList() {var _this2 = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_members_lucky_scheme_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this2.novelty = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    // 获取客户反馈
+    _getFeedbackList: function _getFeedbackList() {var _this3 = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$member.post('Store/get_feedback_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this3.clientFeedbackList = res.data.data;
+          //this.clientFeedbackList[i].url
+          for (var i = 0; i < _this3.clientFeedbackList.length; i++) {
+            if (_this3.clientFeedbackList[i].url) {
+              _this3.clientFeedbackList[i].url = _this3.getCaption(_this3.clientFeedbackList[i].url);
+            }
+          }
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
     },
     skipFunctionList: function skipFunctionList(text) {
       if (text == '会员中心') {
@@ -281,15 +353,22 @@ __webpack_require__.r(__webpack_exports__);
 
       }
     },
-    toMemberGoodLuckPlan: function toMemberGoodLuckPlan() {
+    toMemberGoodLuckPlan: function toMemberGoodLuckPlan(item) {
+      var items = JSON.stringify(item);
       uni.navigateTo({
-        url: '../../pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan' });
+        url: '../../pagesMember/MemberGoodLuckPlan/MemberGoodLuckPlan?item=' + items });
 
     },
     toMemberDeepButler: function toMemberDeepButler() {
       uni.navigateTo({
         url: '../../pagesMember/MemberDeepButler/MemberDeepButler' });
 
+    },
+    getCaption: function getCaption(obj) {
+      var index = obj.lastIndexOf("vid=");
+      obj = obj.substring(index + 4, obj.length);
+      //  console.log(obj);
+      return obj;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

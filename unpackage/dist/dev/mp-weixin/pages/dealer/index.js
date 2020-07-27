@@ -97,7 +97,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "top-navigation-bar": () =>
-    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290))
+    __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306)),
+  "uni-swiper-dot": () =>
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
 }
 var render = function() {
   var _vm = this
@@ -136,7 +138,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 290));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var topNavigationBar = function topNavigationBar() {return __webpack_require__.e(/*! import() | components/top-navigation-bar/top-navigation-bar */ "components/top-navigation-bar/top-navigation-bar").then(__webpack_require__.bind(null, /*! @/components/top-navigation-bar/top-navigation-bar.vue */ 306));};var _default =
+
+
+
+
+
+
+
 
 
 
@@ -175,15 +184,18 @@ __webpack_require__.r(__webpack_exports__);
 {
   components: { topNavigationBar: topNavigationBar },
   data: function data() {
-    return {};
-
+    return {
+      current: 0,
+      imgUrl: this.$imgUrl,
+      info: [] };
 
   },
   onLoad: function onLoad(option) {
+    var that = this;
     uni.getStorage({
       key: 'userInfo',
       success: function success(res) {
-
+        that._getBanner();
       },
       fail: function fail(res) {
         uni.redirectTo({
@@ -192,10 +204,32 @@ __webpack_require__.r(__webpack_exports__);
       } });
 
   },
-  onShow: function onShow() {
-
-  },
   methods: {
+    change: function change(e) {
+      this.current = e.detail.current;
+    },
+    // 获取banner图
+    _getBanner: function _getBanner() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$http.post('System/get_banner').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.info = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
     // 路径跳转教育学院
     skipCollegeOfEducation: function skipCollegeOfEducation() {
       var price = "这里是通往教育学院";

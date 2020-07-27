@@ -1,0 +1,1 @@
+<view class="MemberNutritiousFoodDetails"><image class="MemberNutritiousFoodDetails_image" src="{{url}}" mode data-event-opts="{{[['longpress',[['toSave']]]]}}" bindlongpress="__e"></image></view>

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 // 请求
-import {http, text} from "@/components/luch-request/index.js"
+import {http, member} from "@/components/luch-request/index.js"
 Vue.prototype.$http = http
-Vue.prototype.$text = text
+Vue.prototype.$member = member
 // 弹窗
 import mpopup from "@/components/xuan-popup/xuan-popup.vue"
 // 轮播图

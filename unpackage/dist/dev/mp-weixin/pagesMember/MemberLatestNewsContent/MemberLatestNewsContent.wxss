@@ -45,7 +45,6 @@
 .MemberLatestNewsContent .MemberLatestNewsContent_content.data-v-e3a63ce0 {
     display: block;
     font-size: 28rpx;
-    text-indent: 2em;
     font-family: PingFangSC-Regular,PingFang SC;
     font-weight: 400;
     color: #999999;

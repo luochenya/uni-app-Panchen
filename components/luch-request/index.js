@@ -1,21 +1,19 @@
 import Request from './request'
 
-const test = new Request()
-test.setConfig((config) => { /* 设置全局配置 */
-  config.baseUrl = 'http://www.aaa.cn'
+const member = new Request()
+member.setConfig((config) => { /* 设置全局配置 */
+  config.baseUrl = 'http://fc.dhkzw.top/api/'
   config.header = {
-    ...config.header,
-    a: 1,
-    b: 2
+    ...config.header
   }
   // config.custom = { auth: true }
   return config
 })
 
-test.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
+member.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
   config.header = {
     ...config.header,
-    a: 3
+		token: uni.getStorageSync("tokens") ? uni.getStorageSync("tokens") : ''
   }
   // if (config.custom.auth) {
   //   config.header.token = 'token'
@@ -33,11 +31,26 @@ test.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
  * @param { Number } statusCode - 请求响应体statusCode（只读）
  * @return { Boolean } 如果为true,则 resolve, 否则 reject
  */
-test.validateStatus = (statusCode) => {
+member.validateStatus = (statusCode) => {
   return statusCode === 200
 }
 
-test.interceptor.response((response) => { /* 请求之后拦截器 */
+member.interceptor.response((response) => { /* 请求之后拦截器 */
+  if (response.data.code == 201 || response.data.code == 202 || response.data.code == 203) { // 服务端返回的状态码等于202（token失效)，清空token并重新登录
+	  uni.removeStorage({
+			key:'memberInfo',
+			success:function() {
+				// console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+			}
+		})
+		uni.removeStorage({
+			key:'tokens',
+			success:function() {
+				// console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+			}
+		})
+	  uni.redirectTo({ url: "../../pages/dealerLogin/dealerLogin" });
+  }
   return response
 }, (response) => { // 请求错误做点什么
   return response
@@ -66,7 +79,7 @@ http.validateStatus = (statusCode) => {
 http.interceptor.request((config, cancel) => { /* 请求之前拦截器 */
   config.header = {
     ...config.header,
-	token: uni.getStorageSync("token") ? uni.getStorageSync("token") : ''
+		token: uni.getStorageSync("token") ? uni.getStorageSync("token") : ''
   }
   return config
 })
@@ -76,7 +89,18 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
   //   return Promise.reject(response)
   // }
   if (response.data.code == 201 || response.data.code == 202 || response.data.code == 203) { // 服务端返回的状态码等于202（token失效)，清空token并重新登录
-	  uni.clearStorageSync();
+	  uni.removeStorage({
+	  	key:'userInfo',
+	  	success:function() {
+	  		// console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+	  	}
+	  })
+		uni.removeStorage({
+			key:'token',
+			success:function() {
+				// console.log(' 移除成功')　　　　　　-----获取成功后移除key 中的内容
+			}
+		})
 	  uni.redirectTo({ url: "../../pages/dealerLogin/dealerLogin" });
   }
   // if (response.config.custom.verification) { // 演示自定义参数的作用
@@ -89,5 +113,5 @@ http.interceptor.response((response) => { /* 请求之后拦截器 */
 
 export {
   http,
-  test
+  member
 }

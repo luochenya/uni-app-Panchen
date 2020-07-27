@@ -173,7 +173,13 @@ var _default =
 
   },
   methods: {
-    // 清空用户名
+    // 跳转会员注册
+    toMemberRegistered: function toMemberRegistered() {
+      uni.navigateTo({
+        url: '../../pagesMember/MemberRegistered/MemberRegistered' });
+
+    },
+    // 清空手机号
     userNameEmpty: function userNameEmpty() {
       this.userName = '';
     },
@@ -185,7 +191,7 @@ var _default =
       if (this.userName == '') {
         uni.showToast({
           icon: 'none',
-          title: '请输入用户名',
+          title: '请输入手机号码',
           duration: 2000 });
 
       } else if (this.passWord == '') {
@@ -199,55 +205,46 @@ var _default =
         uni.showLoading({
           title: '登录中' });
 
-        // 关闭加载动画
-        uni.hideLoading();
-        uni.setStorage({
-          key: "memberInfo",
-          data: this.userName });
+        this.$member.post(
+        'Store/login',
+        '\r\n--XXX' +
+        '\r\nContent-Disposition: form-data; name="username"' +
+        '\r\n' +
+        '\r\n' + this.userName +
+        '\r\n--XXX' +
+        '\r\nContent-Disposition: form-data; name="password"' +
+        '\r\n' +
+        '\r\n' + this.passWord +
+        '\r\n--XXX--').then(function (res) {
+          // 关闭加载动画
+          uni.hideLoading();
+          if (res.data.code == 200) {
+            uni.setStorage({
+              key: "memberInfo",
+              data: res.data.data });
 
-        uni.switchTab({
-          url: "../member/index" });
+            uni.setStorage({
+              key: "tokens",
+              data: res.data.data.token });
 
-        // this.$http.post(
-        // 	'Account/login',
-        // 	'\r\n--XXX' +
-        // 	'\r\nContent-Disposition: form-data; name="username"' +
-        // 	'\r\n' +
-        // 	'\r\n' + this.userName +
-        // 	'\r\n--XXX' +
-        // 	'\r\nContent-Disposition: form-data; name="password"' +
-        // 	'\r\n' +
-        // 	'\r\n' + this.passWord +
-        // 	'\r\n--XXX--').then(res => {
-        // 	// 关闭加载动画
-        // 	uni.hideLoading();
-        // 	if (res.data.code == 200) {
-        // 		uni.setStorage({
-        // 			key: "userInfo",
-        // 			data: res.data.data
-        // 		})
-        // 		uni.setStorage({
-        // 			key: "token",
-        // 			data: res.data.data.token
-        // 		})
-        // 		 uni.showToast({
-        // 			icon: 'success',
-        // 			title: res.data.msg,
-        // 			duration: 2000,
-        // 			success: function () {
-        // 				uni.switchTab({
-        // 					url: "../dealer/index"
-        // 				})
-        // 			}
-        // 		 })
-        // 	} else {
-        // 		 uni.showToast({
-        // 			icon: 'none',
-        // 			title: res.data.msg,
-        // 			duration: 2000
-        // 		 })
-        // 	}
-        // })
+            uni.showToast({
+              icon: 'success',
+              title: res.data.msg,
+              duration: 2000,
+              success: function success() {
+                uni.switchTab({
+                  url: "../member/index" });
+
+              } });
+
+          } else {
+            uni.showToast({
+              icon: 'none',
+              title: res.data.msg,
+              duration: 2000 });
+
+          }
+        });
       }
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

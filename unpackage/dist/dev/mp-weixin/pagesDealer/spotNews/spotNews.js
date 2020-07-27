@@ -97,7 +97,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
   "uni-swiper-dot": () =>
-    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 275))
+    __webpack_require__.e(/*! import() | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then(__webpack_require__.bind(null, /*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 291))
 }
 var render = function() {
   var _vm = this
@@ -159,15 +159,10 @@ var _default =
 {
   data: function data() {
     return {
-      info: [{
-        imgUrl: '../static/image/spotNewsbanner.png' },
-      {
-        imgUrl: '../static/image/spotNewsbanner.png' },
-      {
-        imgUrl: '../static/image/spotNewsbanner.png' }],
-
-      spotNewsList: [],
-      current: 0 };
+      imgUrl: this.$imgUrl,
+      info: [],
+      current: 0,
+      spotNewsList: [] };
 
   },
   onLoad: function onLoad(option) {
@@ -175,9 +170,32 @@ var _default =
   },
   mounted: function mounted() {
     this.gettingData();
+    this._getNewsBannerList();
   },
   methods: {
-    gettingData: function gettingData() {var _this = this;
+    // 获取banner图
+    _getNewsBannerList: function _getNewsBannerList() {var _this = this;
+      // 加载动画
+      uni.showLoading({
+        title: '加载中' });
+
+      this.$http.post('System/get_news_banner_list').then(function (res) {
+        // 关闭加载动画
+        uni.hideLoading();
+        if (res.data.code == 200) {
+          _this.info = res.data.data;
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: res.data.msg,
+            duration: 2000 });
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    gettingData: function gettingData() {var _this2 = this;
       // 加载动画
       uni.showLoading({
         title: '加载中' });
@@ -186,7 +204,7 @@ var _default =
         // 关闭加载动画
         uni.hideLoading();
         if (res.data.code == 200) {
-          _this.spotNewsList = res.data.data;
+          _this2.spotNewsList = res.data.data;
         } else {
           uni.showToast({
             icon: 'none',
