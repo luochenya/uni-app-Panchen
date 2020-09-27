@@ -57,17 +57,18 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wx1ff0faf8017a2cd6",
-				"plugins": {
-					"tencentvideo": {
-						"version": "1.3.14",
-						"provider": "wxa75efa648b60994b"
-					}
-				},
+        "appid" : "wxc0ae8d7263dd4357",
+        "plugins" : {
+            "tencentvideo" : {
+                "version" : "1.3.14",
+                "provider" : "wxa75efa648b60994b"
+            }
+        },
         "setting" : {
             "urlCheck" : false,
             "minified" : true,
-            "es6" : true
+            "es6" : true,
+            "postcss" : true
         },
         "usingComponents" : true,
         "permission" : {}

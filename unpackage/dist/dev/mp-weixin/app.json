@@ -114,5 +114,6 @@
     "mpopup": "/components/xuan-popup/xuan-popup",
     "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
     "input-box": "/components/input-box/input-box"
-  }
+  },
+  "sitemapLocation": "sitemap28.json"
 }

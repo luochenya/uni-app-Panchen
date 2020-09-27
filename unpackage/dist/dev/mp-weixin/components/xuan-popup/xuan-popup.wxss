@@ -51,25 +51,25 @@
   z-index: 998;
 }
 .mpopup .pic {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    text-align: center;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-            justify-content: center;
-    width: 15px;
-    height: 15px;
-    margin: auto 20px auto 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  width: 15px;
+  height: 15px;
+  margin: auto 20px auto 0;
 }
 .mpopup .pic .icon {
-      width: 100%;
-      height: auto;
+  width: 100%;
+  height: auto;
 }
 .mpopup .text {
-    margin: auto 20px auto 0;
-    width: 65%;
-    font-size: 16px;
+  margin: auto 20px auto 0;
+  width: 65%;
+  font-size: 16px;
 }
 .mpopup-success {
   background: #f0f9eb;
@@ -97,8 +97,8 @@
   color: #5cbaff;
 }
 .mpopup-loading image {
-    -webkit-animation: rotate360 1.5s ease infinite;
-            animation: rotate360 1.5s ease infinite;
+  -webkit-animation: rotate360 1.5s ease infinite;
+          animation: rotate360 1.5s ease infinite;
 }
 .fade_Down {
   -webkit-animation: fadeInDown 0.6s both;

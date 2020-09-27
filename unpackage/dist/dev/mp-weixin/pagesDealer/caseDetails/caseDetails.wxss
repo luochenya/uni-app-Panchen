@@ -1,4 +1,4 @@
-.caseDetailsStyle.data-v-8f931e2e {
+.caseDetailsStyle.data-v-4ff402a5 {
   margin: 20rpx auto;
   width: 684rpx;
   height: 650rpx;
@@ -6,30 +6,30 @@
   border: solid 2rpx #d6d6d6;
   text-align: center;
 }
-.caseDetailsStyle .caseDetailsImg.data-v-8f931e2e {
+.caseDetailsStyle .caseDetailsImg.data-v-4ff402a5 {
   width: 240rpx;
   height: 329rpx;
   margin-top: 45rpx;
   margin-bottom: 20rpx;
 }
-.caseDetailsStyle .caseDetailsTitle.data-v-8f931e2e {
+.caseDetailsStyle .caseDetailsTitle.data-v-4ff402a5 {
   width: 70%;
   margin: 0 auto;
 }
-.caseDetailsStyle .caseDetailsTitle .caseDetailsTitleA.data-v-8f931e2e {
+.caseDetailsStyle .caseDetailsTitle .caseDetailsTitleA.data-v-4ff402a5 {
   line-height: 60rpx;
   font-weight: bold;
   font-size: 34rpx;
   color: #131f2b;
   display: block;
 }
-.caseDetailsStyle .caseDetailsTitle .caseDetailsTitleB.data-v-8f931e2e {
+.caseDetailsStyle .caseDetailsTitle .caseDetailsTitleB.data-v-4ff402a5 {
   line-height: 75rpx;
   font-size: 28rpx;
   color: #2f3a44;
   display: block;
 }
-.caseDetailsContent.data-v-8f931e2e {
+.caseDetailsContent.data-v-4ff402a5 {
   color: #999999;
   font-size: 26rpx;
   line-height: 52rpx;

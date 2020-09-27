@@ -1,11 +1,11 @@
-.collegeOfEducation.data-v-20fb187a {
+.collegeOfEducation.data-v-065f6702 {
   padding: 0 4.27%;
 }
-.collegeOfEducation .collegeOfEducation_image.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_image.data-v-065f6702 {
   width: 100%;
   height: 262rpx;
 }
-.collegeOfEducation .collegeOfEducation_title.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_title.data-v-065f6702 {
   display: block;
   margin-top: 20rpx;
   padding-bottom: 16rpx;
@@ -16,7 +16,7 @@
   line-height: 48rpx;
   border-bottom: 2rpx solid #D8D8D8;
 }
-.collegeOfEducation .collegeOfEducation_box.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box.data-v-065f6702 {
   padding: 32rpx 0;
   display: -webkit-box;
   display: -webkit-flex;
@@ -26,11 +26,11 @@
           justify-content: space-between;
   border-bottom: 2rpx solid #D8D8D8;
 }
-.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content.data-v-065f6702 {
   width: 446rpx;
   height: 130rpx;
 }
-.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_title.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_title.data-v-065f6702 {
   font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
@@ -42,7 +42,7 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
-.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_times.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_content .collegeOfEducation_box_content_times.data-v-065f6702 {
   display: block;
   margin-top: 40rpx;
   font-size: 22rpx;
@@ -51,7 +51,7 @@
   color: #828282;
   line-height: 32rpx;
 }
-.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_image.data-v-20fb187a {
+.collegeOfEducation .collegeOfEducation_box .collegeOfEducation_box_image.data-v-065f6702 {
   width: 208rpx;
   height: 130rpx;
 }

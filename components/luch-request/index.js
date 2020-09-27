@@ -2,7 +2,7 @@ import Request from './request'
 
 const member = new Request()
 member.setConfig((config) => { /* 设置全局配置 */
-  config.baseUrl = 'http://fc.dhkzw.top/api/'
+  config.baseUrl = 'https://fc.dhkzw.top/api/'
   config.header = {
     ...config.header
   }
@@ -59,7 +59,7 @@ member.interceptor.response((response) => { /* 请求之后拦截器 */
 const http = new Request()
 
 http.setConfig((config) => { /* 设置全局配置 */
-  config.baseUrl = 'http://fc.dhkzw.top/api/' /* 根域名不同 */
+  config.baseUrl = 'https://fc.dhkzw.top/api/' /* 根域名不同 */
   config.header = {
     ...config.header,
     token: 1

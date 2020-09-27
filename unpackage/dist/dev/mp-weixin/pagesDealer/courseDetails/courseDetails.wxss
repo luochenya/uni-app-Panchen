@@ -1,11 +1,11 @@
-.courseDetails.data-v-a1140c5a {
+.courseDetails.data-v-265c4d8f {
   padding: 0 4.27%;
 }
-.courseDetails .courseDetails_image.data-v-a1140c5a {
+.courseDetails .courseDetails_image.data-v-265c4d8f {
   width: 100%;
   height: 352rpx;
 }
-.courseDetails .courseDetails_title.data-v-a1140c5a {
+.courseDetails .courseDetails_title.data-v-265c4d8f {
   display: block;
   text-align: center;
   padding: 48rpx 32rpx 18rpx;
@@ -15,7 +15,7 @@
   color: #131f2b;
   line-height: 58rpx;
 }
-.courseDetails .courseDetails_content.data-v-a1140c5a {
+.courseDetails .courseDetails_content.data-v-265c4d8f {
   display: block;
   padding: 0 32rpx;
   font-size: 28rpx;

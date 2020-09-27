@@ -28,39 +28,39 @@
   padding: 0 4.27%;
 }
 .MemberLatestNews .memberImgStyle {
-    height: 344rpx;
-    width: 100%;
-    color: #ffffff;
-    margin: 0 auto;
+  height: 344rpx;
+  width: 100%;
+  color: #ffffff;
+  margin: 0 auto;
 }
 .MemberLatestNews .memberImgStyle image {
-      width: 100%;
-      height: 100%;
+  width: 100%;
+  height: 100%;
 }
 .MemberLatestNews .MemberLatestNews_image {
-    width: 100%;
-    height: 262rpx;
-    margin: 16rpx 0;
+  width: 100%;
+  height: 262rpx;
+  margin: 16rpx 0;
 }
 .MemberLatestNews .MemberLatestNews_box {
-    width: 100%;
-    border-bottom: 2rpx solid #D8D8D8;
+  width: 100%;
+  border-bottom: 2rpx solid #D8D8D8;
 }
 .MemberLatestNews .MemberLatestNews_box .MemberLatestNews_box_title {
-      font-size: 30rpx;
-      font-family: PingFangSC-Regular,PingFang SC;
-      font-weight: 400;
-      color: #131f2b;
-      line-height: 48rpx;
-      padding: 34rpx 0;
-      display: block;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: #131f2b;
+  line-height: 48rpx;
+  padding: 34rpx 0;
+  display: block;
 }
 .MemberLatestNews .MemberLatestNews_box .MemberLatestNews_box_time {
-      display: block;
-      font-size: 22rpx;
-      font-family: PingFangSC-Regular,PingFang SC;
-      font-weight: 400;
-      color: #828282;
-      line-height: 80rpx;
+  display: block;
+  font-size: 22rpx;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-weight: 400;
+  color: #828282;
+  line-height: 80rpx;
 }
 
