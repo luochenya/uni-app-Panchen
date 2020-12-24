@@ -33,7 +33,7 @@
 						uni.saveImageToPhotosAlbum({
 							filePath: image.path,
 							success: function() {
-								console.log('save success');
+								// console.log('save success');
 								uni.showToast({
 									title: '图片保存成功',
 									icon: 'none',

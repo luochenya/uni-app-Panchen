@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "购物商城",
+  "navigationBarTextStyle": "white",
+  "navigationBarBackgroundColor": "#68B74D",
+  "backgroundColor": "#68B74D",
+  "usingComponents": {
+    "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
+    "shopping-cart": "/components/shopping-cart/shopping-cart"
+  }
+}

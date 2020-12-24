@@ -1,0 +1,1 @@
+<view class="shoppingCart data-v-236c42d0"><image src="../../static/mallImg/shoppingCarts.png" mode class="data-v-236c42d0"></image><block wx:if="{{cartCount>0}}"><view class="data-v-236c42d0">{{cartCount>99?'99+':cartCount}}</view></block></view>

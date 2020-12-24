@@ -13,12 +13,12 @@
 				</swiper>
 			</uni-swiper-dot>
 			<!-- 列表展示 -->
-			<view class="memberBox">
+			<scroll-view class="memberBox" scroll-x="true" style="white-space: nowrap; display: flex">
 				<view v-for="(item, index) in functionList" :key="index" @click="skipFunctionList(item.text)">
 					<image :src="item.imgUrl" mode=""></image>
 					<text>{{item.text}}</text>
 				</view>
-			</view>
+			</scroll-view>
 			<!-- 好运方案 -->
 			<text class="member_title">好运方案</text>
 			<!-- 循环列表 -->
@@ -82,6 +82,9 @@
 				},{
 					text: '常见问题',
 					imgUrl: '../../static/memberImg/functionList5.png'
+				},{
+					text: '购物商城',
+					imgUrl: '../../static/memberImg/functionList6.png'
 				}],
 				novelty: [],
 				clientFeedbackList: []
@@ -133,7 +136,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			// 获取好运方案列表
@@ -155,7 +158,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			// 获取客户反馈
@@ -183,7 +186,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			skipFunctionList(text) {
@@ -210,6 +213,11 @@
 				if (text == '常见问题') {
 					uni.navigateTo({
 						url: '../../pagesMember/MemberCommonProblem/MemberCommonProblem'
+					})
+				}
+				if (text == '购物商城') {
+					uni.navigateTo({
+						url: '../../pages/ShoppingMall/ShoppingMall'
 					})
 				}
 			},
@@ -250,10 +258,9 @@
 	}
 	// 列表展示
 	.memberBox {
-		display: flex;
-		justify-content: space-around;
 		view {
-			width: 20%;
+			display: inline-block;
+			width: 132rpx;
 			text-align: center;
 			padding-top: 16rpx;
 			image {

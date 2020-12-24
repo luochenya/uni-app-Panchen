@@ -904,7 +904,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1936,6 +1936,1167 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
+/*!**********************************************!*\
+  !*** D:/demo/uni-app-Panchen/store/index.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
+var _vuex = _interopRequireDefault(__webpack_require__(/*! vuex */ 12));
+var _cart = _interopRequireDefault(__webpack_require__(/*! ./modules/cart */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+_vue.default.use(_vuex.default);var _default =
+
+new _vuex.default.Store({
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {
+    cart: _cart.default } });exports.default = _default;
+
+/***/ }),
+
+/***/ 12:
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/*! exports provided: default, Store, createNamespacedHelpers, install, mapActions, mapGetters, mapMutations, mapState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
+/*!
+ * vuex v3.4.0
+ * (c) 2020 Evan You
+ * @license MIT
+ */
+function applyMixin (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+}
+
+var target = typeof window !== 'undefined'
+  ? window
+  : typeof global !== 'undefined'
+    ? global
+    : {};
+var devtoolHook = target.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  }, { prepend: true });
+
+  store.subscribeAction(function (action, state) {
+    devtoolHook.emit('vuex:action', action, state);
+  }, { prepend: true });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+function partial (fn, arg) {
+  return function () {
+    return fn(arg)
+  }
+}
+
+// Base data struct for store's module, package with some attribute and method
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  // Store some children item
+  this._children = Object.create(null);
+  // Store the origin module object which passed by programmer
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+
+  // Store the origin module's state
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors = { namespaced: { configurable: true } };
+
+prototypeAccessors.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.hasChild = function hasChild (key) {
+  return key in this._children
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if ((true)) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  if (!parent.getChild(key).runtime) { return }
+
+  parent.removeChild(key);
+};
+
+ModuleCollection.prototype.isRegistered = function isRegistered (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+
+  return parent.hasChild(key)
+};
+
+function update (path, targetModule, newModule) {
+  if ((true)) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if ((true)) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if ((true)) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+  this._makeLocalGettersCache = Object.create(null);
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  var state = this._modules.root.state;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  var useDevtools = options.devtools !== undefined ? options.devtools : Vue.config.devtools;
+  if (useDevtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors$1 = { state: { configurable: true } };
+
+prototypeAccessors$1.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors$1.state.set = function (v) {
+  if ((true)) {
+    assert(false, "use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+
+  this._subscribers
+    .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+    .forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+    ( true) &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if ((true)) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  try {
+    this._actionSubscribers
+      .slice() // shallow copy to prevent iterator invalidation if subscriber synchronously calls unsubscribe
+      .filter(function (sub) { return sub.before; })
+      .forEach(function (sub) { return sub.before(action, this$1.state); });
+  } catch (e) {
+    if ((true)) {
+      console.warn("[vuex] error in before action subscribers: ");
+      console.error(e);
+    }
+  }
+
+  var result = entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload);
+
+  return new Promise(function (resolve, reject) {
+    result.then(function (res) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.after; })
+          .forEach(function (sub) { return sub.after(action, this$1.state); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in after action subscribers: ");
+          console.error(e);
+        }
+      }
+      resolve(res);
+    }, function (error) {
+      try {
+        this$1._actionSubscribers
+          .filter(function (sub) { return sub.error; })
+          .forEach(function (sub) { return sub.error(action, this$1.state, error); });
+      } catch (e) {
+        if ((true)) {
+          console.warn("[vuex] error in error action subscribers: ");
+          console.error(e);
+        }
+      }
+      reject(error);
+    });
+  })
+};
+
+Store.prototype.subscribe = function subscribe (fn, options) {
+  return genericSubscribe(fn, this._subscribers, options)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn, options) {
+  var subs = typeof fn === 'function' ? { before: fn } : fn;
+  return genericSubscribe(subs, this._actionSubscribers, options)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if ((true)) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hasModule = function hasModule (path) {
+  if (typeof path === 'string') { path = [path]; }
+
+  if ((true)) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  return this._modules.isRegistered(path)
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors$1 );
+
+function genericSubscribe (fn, subs, options) {
+  if (subs.indexOf(fn) < 0) {
+    options && options.prepend
+      ? subs.unshift(fn)
+      : subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  // reset local getters cache
+  store._makeLocalGettersCache = Object.create(null);
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    // direct inline function use will lead to closure preserving oldVm.
+    // using partial to return function with only arguments preserved in closure environment.
+    computed[key] = partial(fn, store);
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    if (store._modulesNamespaceMap[namespace] && ("development" !== 'production')) {
+      console.error(("[vuex] duplicate namespace " + namespace + " for the namespaced module " + (path.join('/'))));
+    }
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      if ((true)) {
+        if (moduleName in parentState) {
+          console.warn(
+            ("[vuex] state field \"" + moduleName + "\" was overridden by a module with the same name at \"" + (path.join('.')) + "\"")
+          );
+        }
+      }
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if (( true) && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  if (!store._makeLocalGettersCache[namespace]) {
+    var gettersProxy = {};
+    var splitPos = namespace.length;
+    Object.keys(store.getters).forEach(function (type) {
+      // skip if the target getter is not match this namespace
+      if (type.slice(0, splitPos) !== namespace) { return }
+
+      // extract local getter type
+      var localType = type.slice(splitPos);
+
+      // Add a port to the getters proxy.
+      // Define as getter property because
+      // we do not want to evaluate the getters in this time.
+      Object.defineProperty(gettersProxy, localType, {
+        get: function () { return store.getters[type]; },
+        enumerable: true
+      });
+    });
+    store._makeLocalGettersCache[namespace] = gettersProxy;
+  }
+
+  return store._makeLocalGettersCache[namespace]
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if ((true)) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if ((true)) {
+      assert(store._committing, "do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.reduce(function (state, key) { return state[key]; }, state)
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if ((true)) {
+    assert(typeof type === 'string', ("expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if ((true)) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+/**
+ * Reduce the code which written in Vue.js for getting the state.
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} states # Object's item can be a function which accept state and getters for param, you can do something for state and getters in it.
+ * @param {Object}
+ */
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  if (( true) && !isValidMap(states)) {
+    console.error('[vuex] mapState: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for committing the mutation
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} mutations # Object's item can be a function which accept `commit` function as the first param, it can accept anthor params. You can commit mutation and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  if (( true) && !isValidMap(mutations)) {
+    console.error('[vuex] mapMutations: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // Get the commit method from store
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for getting the getters
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} getters
+ * @return {Object}
+ */
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  if (( true) && !isValidMap(getters)) {
+    console.error('[vuex] mapGetters: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    // The namespace has been mutated by normalizeNamespace
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if (( true) && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+/**
+ * Reduce the code which written in Vue.js for dispatch the action
+ * @param {String} [namespace] - Module's namespace
+ * @param {Object|Array} actions # Object's item can be a function which accept `dispatch` function as the first param, it can accept anthor params. You can dispatch action and do any other things in this function. specially, You need to pass anthor params from the mapped function.
+ * @return {Object}
+ */
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  if (( true) && !isValidMap(actions)) {
+    console.error('[vuex] mapActions: mapper parameter must be either an Array or an Object');
+  }
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      // get dispatch function from store
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+/**
+ * Rebinding namespace param for mapXXX function in special scoped, and return them by simple object
+ * @param {String} namespace
+ * @return {Object}
+ */
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+/**
+ * Normalize the map
+ * normalizeMap([1, 2, 3]) => [ { key: 1, val: 1 }, { key: 2, val: 2 }, { key: 3, val: 3 } ]
+ * normalizeMap({a: 1, b: 2, c: 3}) => [ { key: 'a', val: 1 }, { key: 'b', val: 2 }, { key: 'c', val: 3 } ]
+ * @param {Array|Object} map
+ * @return {Object}
+ */
+function normalizeMap (map) {
+  if (!isValidMap(map)) {
+    return []
+  }
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+/**
+ * Validate whether given map is valid or not
+ * @param {*} map
+ * @return {Boolean}
+ */
+function isValidMap (map) {
+  return Array.isArray(map) || isObject(map)
+}
+
+/**
+ * Return a function expect two param contains namespace and map. it will normalize the namespace and then the param's function will handle the new namespace and the map.
+ * @param {Function} fn
+ * @return {Function}
+ */
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+/**
+ * Search a special module from store by namespace. if module not exist, print error message.
+ * @param {Object} store
+ * @param {String} helper
+ * @param {String} namespace
+ * @return {Object}
+ */
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if (( true) && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+var index = {
+  Store: Store,
+  install: install,
+  version: '3.4.0',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ 3)))
+
+/***/ }),
+
+/***/ 13:
+/*!*****************************************************!*\
+  !*** D:/demo/uni-app-Panchen/store/modules/cart.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var state = {
+  cartCount: 0 };
+
+
+var mutations = {
+  setCartCount: function setCartCount(state, num) {
+    state.cartCount = num;
+  } };var _default =
+
+
+{
+  namespaced: true,
+  state: state,
+  mutations: mutations };exports.default = _default;
+
+/***/ }),
+
+/***/ 14:
 /*!****************************************************************!*\
   !*** D:/demo/uni-app-Panchen/components/luch-request/index.js ***!
   \****************************************************************/
@@ -1943,7 +3104,7 @@ function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.member = exports.http = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 12));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.member = exports.http = void 0;var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 15));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 
 var member = new _request.default();exports.member = member;
 member.setConfig(function (config) {/* 设置全局配置 */
@@ -2059,7 +3220,7 @@ http.interceptor.response(function (response) {/* 请求之后拦截器 */
 
 /***/ }),
 
-/***/ 12:
+/***/ 15:
 /*!******************************************************************!*\
   !*** D:/demo/uni-app-Panchen/components/luch-request/request.js ***!
   \******************************************************************/
@@ -2067,7 +3228,7 @@ http.interceptor.response(function (response) {/* 请求之后拦截器 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 13));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /**
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 16));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              * Request 1.0.5
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              * @Class Request
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              * @description luch-request 1.0.4 http请求插件
@@ -2411,18 +3572,18 @@ Request = /*#__PURE__*/function () {function Request() {var _this = this;_classC
 
 /***/ }),
 
-/***/ 13:
+/***/ 16:
 /*!**********************************************************!*\
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 14);
+module.exports = __webpack_require__(/*! regenerator-runtime */ 17);
 
 /***/ }),
 
-/***/ 14:
+/***/ 17:
 /*!************************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
   \************************************************************/
@@ -2453,7 +3614,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(/*! ./runtime */ 15);
+module.exports = __webpack_require__(/*! ./runtime */ 18);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -2470,7 +3631,7 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /*!*****************************************************!*\
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
@@ -8726,7 +9887,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8747,14 +9908,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8839,7 +10000,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9246,7 +10407,71 @@ internalMixin(Vue);
 
 /***/ }),
 
-/***/ 299:
+/***/ 235:
+/*!*****************************************************************************!*\
+  !*** D:/demo/uni-app-Panchen/pagesMember/static/image/MemberTicketBox1.png ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAgAElEQVR4Xr19CZRcZ3nlffurvar3lrq1Wpb3DdvYBhMWh7AFEhIHCDiZyWQSIGQjkIQBbBKHCZkThhkmYTM2ZssYJsFgsMGYJXiV5UXGthZrV0stqdVL7fX29+bc769qycYMbjOHd9ynpVZ11Xvf/y33u9/9f2tpmmboX0mWodnpQtNN6LoO09BhmwYsTQO0watW+D0DMg3gh8wu1bHn0FHEUQrPDxGGAdauHsMZG9agbNuAliHLAI2f94wrjCPESSL/lmUZoihCz/OQJAlMy0a5VIJtmjB1fUU3yPd6ts97rm+inWrAFBlaXQ/QaEBNDGjxS3++1lOGm1lYxLe+8yMc3DODXtdDr9eDY5swDAuaZsApu3jN616GX7rwXJjPYjw+TJTEiOJYnitNU8RxDC8IlAFNC/l8Qd7TNgxoz3u1n6vZTr7uJwzY7vnyUNA0WIYGSzdgGCu/JRqOX/c9uR1f/dLt6LW6SNIYcRyhVLSRaQaiIIXvh9A1DYZl4qWvuRJv+9VXPqsR4zSBHwRy5/SaJI7hh6F4JQ3oOC4cy4Rj2TB+jgVfqQmfZkA+cNvzAejQGMI6ntWAP8vt+e+M+W179+Ezn/zfaCw1ECcxHMtCuWhA1w20Oj56XogoTMSLLNNEuZjHb7zttXj9y1/6Ez6UpCm8wBfjiQGTBEEUyXe+n207MEwbOceCY6wsjH+a0Qbp4v9lVC2Ok4zhKisLoOPTgAY0hjC/NObClYfwfLuNj/zjZ3H88HH4gQ9dS1GwNVSKFqIkw1LDR6sXSD7kxQVzLQurJ2v40/e+HZvXrn3afadZhq7XO+mBSYIwjsWAmqbDshxouoGcayNvmcu/+1yM8HMZ8NCxxWx8qAzbMuR9ukGINNN+LgNyIT5/253Y8t0H0Ou0oSPAaNnEuvEyVo3VEEUJ9h9dwOP7F7HYjBCnqRQtGrGQc/HyV1yKd/7h73IZl5/tVAMyB2ZphpOF5RQDOjbyNp9l5Yu+0vCVhX/kycezkZFJrBoZksLRC0OkqSZ/Zi5hVeP353o7NF43CvGB6/8ZweIiht0AZ68fwvo1E6iUKzAMHWG3jfmFRew9soTH9i3g8HwHXaY3TYNmGJiaHMf73/8ObFq75qQBkUnVZfgODDgoLPQyy3IllB3bRsF57gb8WenoZxlVu/+h+7NyeQTVyjBGh8qI0hQENiyGhmFICDOlrMSAOw8fwcc++nlMFSK84uK1mJwYkkQv75IlSP0egl4P7W4Pc0s9PLr3GB7avYien4IB7bo5vOUtr8E1V79B7mOQXnq+p4zXNyLDl2HMiyGs6yYsy0TJtX/Wc/9/+3ftrh/ckVWHRlGujEI3XBQLORTyLjQdMHQDJrQVVWF64N2PsfJ+DW984SpsWDsO0zCIPUCYJFcUIktixEmKbqeDYwtN3P3YYWw70EQYpkgAnHvOJnzk796DguMuP2z3FAPSiIQyTzegIZiw6JhS2X8Rl3bb1/8lK1RGUB4ah2HlESfA6okRVMoF6EzOug5i05Xczu0PPIQnfvQj/NqLN6NUcIAkRBrFyLIUSRQLDmx2A4EgjmXANoH5hRZuvX8/9h/3MFawsXq4imve/Yc4+7SNy3boBb4UDV70xJMemME06YEGDNMSD/xFIRnttlu/mAVBitLQGIbHVkMzHIwM1zAyXIXBCvw8DHjHg4/i8MP34xUXboTndeC3Gig6BhzXxdJSA7PHl2BZFmqVKnLFHCwLiMMQW3ccxnceOYwNQyWsKeZw2iuvwqtfedWyAb0wEK+TkO5DmTCKxK9N01YGNEwUczaMX5gHfuUzWRRryNfGMDa1EZXaEIqFIooFFwYLCEHuCovIo3v3Y+c938elp69Cp15Hu9lEydFRqZXQ6flozDfw1NE6Ys3AhokK1qweg2UbOD7fxL8/sg9mnGHScZCtWYP/8I63L3u/As705JNYkAbl33XTgm7wy0TJsX5hYFr75hc+nhn5EvRcDRPTp2FkYjVKpby0cdIhsJiIAZ97EDe6HWz5zq04fXoMu3fvx/7D8zhzsoB1G6YQhhEWjy3hwFwDpUIOU6uGMDQyROyOXmBg955DaMweRVE3MBPb+MMP/BUKtiNeR9hCjzvVA2lAhjMNp4sXmpIDef+/iEu784sfz2IzBzhl1CbWYvXajRgaqfSNp0kuWakBidnuv+dOTJXymDs6i8aJJYxWDYxOTiJiGHqeylm2Ddu2kWU0gobAquHIocPozh5A0ktx95yHP7/uvVhdG1K1J44RROGyAWk4kgrsUnSD+Y8GtJB32BP/ggx415f/KetFGmLdxdDENKY3nYGJyQkJX6YRFhAWk5XcDkNqbm4G2dJRZEEPSa8LLfVhlIYQ+V0ErToc6V/zKpelCRLdQlxYhYUT85jb/gi2HapjoTSCj1z3V8udRZQk8MOApA0ypCCRRKP6QYgwCuH7CerNHkbHhrB2YkR6Y9VU/vTr58aBd3z6w1lo5BGlFoq1UUydfjZWrd2AXMGWDxYMyFBeQQjzdr3Aw9Luh2GlCbJuC4HXgl0dQxJ66CyeQNDpoVB0Ydk5ZNCRWi5QnsShuUXc+MV/RcPTcdYl5+HD/+XPl8kFEgo9n+1fjJkjRzF7/DiSMMH4xBjuvu8hbN26DUmUCjFRKFWwbv1aXHLhWbj4gjMxNlxZURp6ruGvfefT12eZU0Wk5VEr5lEensT42RegXC5IO/d8DChAF8CBJ7ag7DcQtRroBh1Yjguv68Hv9mBaefEiAzHcnAvddqEVRvDInhl89OZvY2xoGBdefh6ufe+fLHs/W75Wp4Mfb38K99yzFfV2Fwf37RWQzpwXxak09MyLLNaENDk3h1y+gEsuuwhvfN1LMF6r/Fz83zMNq935mQ9nWnUSiVXEiG0jly8it3oDRqdWw7KM52XAwYfs3bsD7tx++K1FobFsN4deq4nQjwDLRbPZQc6KMUTI5LiI9Rxuf+BxfPX7OzFWG8KLf/mF+Mt3/n7/7TIsdn3cdsdduO+eB1BfXBKSghYj3CKbwx47jhLJOyk0ZDGQSAzrMC0XuVIFb3jdS/HG11yJcoEA/bkXxp/mkdq3/ulDmTE8BbM0iuEkgF0bhTs8CacyLLDDdc3nFcL8wF0zBxDtfAg5LURraRGmmYOdKyEKY0RBhNDvoFA0YLs2DMfBfL2FOx6Zw7aDDZhhD1f8yhV479v/kzwmvfqhXQdx841fxO7du9Bt9wTzOY6FLE2QEmBnGsiqE7uSbxRShHQ44RhbSY2flcc5552La978Kzh/07TqWVd4nZo3tW//07WZMbEOupHHCGLYlRFobgkdLY/K2CjWrZ1QfTF7uxVeM/UGbvvC5/DLm8dgmym0zELUiZC0fcRGBr3IxUmgmbpwe/sOHMLDsxb2LQbIOg1c/Qdvwm9e9TLpzb0oxi233YUv33CTGNS2LfT8ULqRLElVu2maUljkZxl7eNJa7KR0mKT7pajoEtITU9N4z5/8DjavHfu5PFH7/sffl2Uja+G6FVQtA9boKsQZ0EwcjE2vxZrVQyoX/j/c/adVsijLcN3/ugmlxlG8+vzVGB6piqdEHllvXVq7KA4RRQFazSUcmpnHTn815iMLswd24O8/di3OmZqS0P3UF/8Pdt13D04cn0ebbWCWwbEdlEo5xJkGz/MQxsmyATXw/ckqGdKLs7CYugnbsRXYrg1jau06XPueazBcLjxvI2pbbrg2S50qbDsvLIi9/jx4jSZWn/sCFEs51Qc/jyosYBcZdh6bwzd+8BguPWMC506PIz6yC2mngSSOEHg99Lw6It+D3/Owa2YJ9x7w0cmKmDpzDT7813+KgmVgptnDpz79ebQO7MKvvegc/PjJ3ZhdWETNNZAFKWabPmZbMVp+hG4QQdO4MCl0mNANZUR6IaGZ7TgwLdWx1EbGcdkVl+BPfu/1z3sYpT1004cyursJE1Y+j9zmFyMILEyfezpcx5IO4fkaUBkR8OIErql8eHbvI+jtfgxhpwWv11YcoGlK2B1b6mHn4SZmfBP/+c/+GBduOk2SxvGOj+v/8TN424s3YMNoEV5rCbHXRa9RR7fVxfGFJTx+YAkHTnRwoBmj4wWAlgrbLQbULDEgOysazzBJezlS1Cam1+NP3/FbuPAMco8rz4faI5+7LtNSjgp16QxyE2dj/IpXwLUt1ZCv0IA/i0Kfm92FxrYfIPFaCnboNmAaYulUM9H2ImSrz8IZ574AYyOj8kgJMnzp1m/ideeuQdJZREqMEodIggB+t43G0gLmF5ZweL6FHx9o4vGjHfgRec1EPoPFhq0o+U3VsZhqEOW6qNRG8KKXvgR//LuvkrZ1pUbUHqUBWcB0eogOu7IG069+MyyTKyYI4OfywGfWnaN7tyI8shOp10HgR2CgZbqGTNhoE9rQGlTWnIOcW0CxUoFjqvlG48RhxAuHkfba0LIUaRIhDSPEgYdOax7tOrFmjNn5Du7dOY9j7Rj1boggSRHGmXifDMpoRHqjZQkjlM+XMb1xE/7Ln78N0+O1FWNEbdtN12bIWGF1aJzTFtZg42uvhm6qgRJ0NXiWG1gewa+wHPdfHschju55GJjfi4zEgOcjJL3XJxzN2iqU1pwPJ1darpz5fF48p35oB5L2ItKQ4QloETuSEBHpssYCAs+DF4boeqGw3PfuXkTXT3C0EaLuRyonMg9ybqxpQv0b/DJslIZG8ba3/Cp+41WXPc0Df1Y0ib8+euO1Gd2MYazlyjDL6zD9stfAsnVlQI3/TN9cCR/zdAOnrLZRjDgK0Fw8ivZT98CGylHEvUmWwKiMoLrxErj5kkwFxUtk0KQhYT+9OIOMY00uJDuNyJe+OOz56CwcQxL25H7TLEbPTzBX7+LEYhdPHW9j5/Ee6j0O4aFCWOcQyoJNtpuFpVDCFS++HB/8kzdJFK7k0rZ++v0ZaXAt1aGXx2GUVmHy8pfCzduwZMDeN+AKPFCkFwlXXbHQ4t2csyBFFEY4tnsLvENPwjFsRGkGfWgUw5suh1tkv8qUQSJDPQgHSffc8W/YNFbGxFAFyFJ4zSU8ufcwjsw1MDVaw0i1KKw3mZ5yOS+FiXiw1/Vx6NgifrD9BHbPe/CZOwUfqlxYyBMCAcVSDZvOPhsfu+4/r9wDH/nsBzPdsKHpOWilERiFUQydeQEq4yPSXw50I8+FkaHhgjCAH3iIk1AUDradYxaQi5HK1/TaTey+/zbE80dR2Xg2xs+4HE6+ePKzdEMMwBrW7bSxb8v34C/MYt3UOGwYWFhcQKMbYWTVOHL5soDusN2Gn6SArYbsqaHmz622hwe2H8bdTx5Gu9cPfy4Qaa9cDqkG5PMVXPjCi3H9X1yz4s5Ee/SmD2Wmk4eWG4aWn0CjbmHNeadh6LTVoouhASUH/owQZq/r+56AYtJT5ARtQgXLFcJToFB/QE/IsjR3GI25g5jceKHACZVv6K38DiRJLEm/26zjoR/ciZIFjFgRqqOrsTBzCK3mAr77WB35UgGXXnQG7MRHqUBZRwaTOTJNEAUeGs0G7nhkBrtO+Gh5CcpFE3nLEcVFM9QQ6RYcy8Evv+6VeNfvvvY5J6pB86A9etPfZFauLNVveMPFGN2wWqZlbMYHTMwzDfjMzoMP3u22Jc/xwZmHaAjHzgtcUIbhmFSFJY2dxD4y+QxLFAX0NkKpjNAj4mw6Ra/bYo3Gj77+TeShYdXqCirFPOrzR5F1OziykGDV1DgsI8GxvU+hUshhZKQKy80Bpo0oS3Hs6DHccu8hzHv8kYmL19dw8foxDOddhHoO/+OHBxAkGX7v967GG375spUb8LHP/dfMyJdhTp2LsQ3nojJeQRhz9kpdjMKBEn59L3xmgmW34fs9+aLx1LxCeZLrFKQQDGYY/DOxWSZKBJqPnqaw0uA1ZJh5OU5O3oefe+zBOzG/Zy/WXXYZ4qOHML8wBzfnwPdjkDcrFHLIOa6qzEmMJNOR6kCiJdi3/wi+tvUYLNvBC8+axAs2jyPxUmhxhrjewteXCth7rI4Pf+hd2LxucuU48OCTP86CZgOjG85GZbwmhguTgQFPwhg+LMP4mRdDtUm66hSqXYY8ugbbKojX0ZtUDlQpQYmP+oOhOBagSxckj0dKyjQN8Vy+NvZaCA7vksWxLBv+3AH4zQY0w4aZz8Nm4WG4tpuSOjjd47vzE5MkwsyRBew81sbGqTFMr6rCNnXM7DyCdZtWI+um+NiWeaRuAZ/4x/dI87DSXkRrNutZnGQoFEqij+Hwm005G3HOhAdV+KcZkNW22ZhfFvnQa5QBDdhWTliQgXcNMJi0eDSijCYjEXSKsfpkwOB1XIRg/jB6e5+AVR6CnoToLR5BkoZIul3YpVGYhTJA7aDXQpxGMneW9pDwJ04RRgm8MEa+wDl3hMU2EMweQ3WkAmtkCv/t9p24+LKL8J63/9ZK0Mvya7WlpflMHoAPzEZb+lIlsbBOwYFEgc+GkLygh3ZjEcR6hAZKLcUGXodtMQeSQlIyVRpkUNX5XYZCcQBTJ1enPJDOyt+R4qVrAne8oweQq43AXziOxPehG8D8wQPIFSsoT04gTTLEoS9fSUiowoTL1KAhZQTQ+w0TfhBj5lgHxcIwRnIRtjd13P7EcVz/oXdh4ypF26300o4fm+GjwbAcldQtBw61JRTsCA7st3M/xYDtbhO9dl1+d2BAepAqIiqEBx5Howp6798pvTWMAlgmtSyaTNiYKAa/w9f3Zrajuf1R2KUiju89iG6jjUKBXg1UOeULunAdG2kUifFT9tVxpPKsbSGzTaTU91gFBJ06TC2H3OZLsX/rFnz2/oM46+ILcd2f/U4/dFduQe3Q3u1Z7MfI1aqImVjDCIVKFcVSCSZ7UyEU2Es++2RuqTEv/agyjC55iIZU7RKLiJLN0S0G+W9gyJS5K6YB3b7uOZb3GMic+Tp/6Thmv/c1VNZswOLMEXSW6jBsE5XhCqycC6/TBvyODJ50Mj6OAz1JkMSKqKXsgZhQN/OI6/PITZ+BVqrhfR+/FbpbxAc/8C686AXnPO82VXvy4XszSsOcQhGm6yAJQhi2i0KphlwuJ71jv434CVKVQ5760jGh1CXvZOw1lKFOGpBeJ6T8TzFgKNSShGEcyWBceagqPJx7LD50JwqFKoKFOnrziwoq6SQJYoRpAAZM3lAdk+nmyEFLLqT2JqVhy1WYdglJpsFdfxaeengr/v7L92Nq41p84VMfhtsnLFYavuI0P773e1lpdBRJlMEpl9TMlRDGzqFUqQl1rvU10s+swtTn1Tn7FaU7b5uoTTJeP4Spe+Hg/CQLoQqMCuU0jUU3bRpOv4DEioaXTQEZsiRE1j2CdH4nDj55FKFeQ85ROwaSLMTMwcPYvWceZ24cwcZxF4EfwLJtaJmOMAwRxiFgFlAeWgW7VoFVrCHQgPseegI3fONR/PrVr8G7/+Aty23j8zLg9gfvyfI1Uu2pCIucvCvJnCwFG/tiqQCDeUUJf5/2GUEcol2fU55DaYVmiPEGJqRnsxs5mfMUdBkYMGHVTFLJgUkcQktC8XYjnIMV7IC59B1oi3cj6UWYzV2PowcjFCfLSOpddI8vIQgC1FaVUBwxESzOC/jXYqXgZzoKwhiaW8FwZRL5kRrMWh6Z5eLo0Tq+9J0deMXrX4Ffuvw8lIuk9J/fpT312JZMt2yYtoU00WC5bMbVg1p2HpXqECzHEm7wmR7ohz46zRNCGijKnF2H8kHRPDukoiisVB7JLoPVms28wOg4RBrW4cTzMBrfhda+B8gMaJ1t0Lx5ZAHA9pZsW2PkA/A6FyKq15GkAbS8AZgkS1NhYsLmEtJMRxQEMjb1/BiJ4WJ03WkoVocQdny4LlNFCCtfQKDl4Y9vQrHgYGJiFDlX6W9Wemn7dm3LODzVTYpzTCRkZUxDqhhHgcXyEAol1VE8sx/uBR66rfl+9WTvy2LA0EzkvSjdMGUviPJcYj4qVM0shuEdgNa4C0b9NmS9HUgjT5gRqisNJQGUma7ARXp14RLUy9chbjWgIYGWRgr/pQGyyEfYbCLwfYRBiE47QKebYWLVRkxsWguNgyTqZmwHse8haLZQGK4iLU8jLA3DMg2Mj4/Aps5uhZe2b8djGcd9xAB8aALPTDclbHXOWN0CKsOjsonlVAPSyyh47DWOI6ZgKIlk5ksvZGgSWzo2gTTFjvS2Nsz2DuiNO6F37kbWexIRVffSchWArApk82APlmUhMn5P4+XqqDtr0J6+WbQ2iAKkQQ9x0EXYayPqteG3u8JwB0GCbpAhs/MYKowgX66gWC7A73VQWT8N3XUQLdWFV9RNF9r6CxUn6LoYqSkN97NdP41c1XY/tjWz86SclDCai59QZM7V4ANoBspDkyhWCkJYnpoFwyRGc+ko/G5LWjk3VwSZHcp3CWQd04FlarB6+2HOfBBZ+36kcYg4tZRWWqM6gPMQkzQfkPaQZqH826DuDFhwzV6L9vjHkXTbwkqnfgd+pwOv3ZJK7fdU3ovYV2smpjZuxuja9QpAODaSMEDn+AkUJoehxQlCL1CzkaH1iGujQvU7bA3FgGSOdDjOqZt2nh0jarsfezAzbVsYWiZf5i6WewgYJn8Zw85VMDy+Cq719CDmsKfZqqO3cBhR6EOzbJRKFdjpCbjYDqN9CHpjK9L6wxJqnH8gI0nAUD4plEQWIcuoow6QaQq+LF/9Am5oNhac96PnlWSXUtjpSdWlXDgJKXHTYDiWfEatugql0hB6Xe77izG6cT3sagWpx27Fg5XLQ4uBiAXdj6BPnYFEKDWy1WwINClurpNTc2QNMC3Ol39Se63teXxrJsNnhwlWMSViPFGZm0iiQOBJZXwNquXi08TbNGCn20F9bh8S2UWUYLW+B+7SJ5BFM4h6J2CGatqWmAWk9LTMR5YyRIkYWSEUKyN2esYin4J+oGec2VQwn3s3vNyF6LbbajDVB/IpsSFxH29fc5BZI6iOFTBcLSPuUBlWRn50DBqVC54nrWvYbMseFRhFmJvPlTWj52lKPyeYlAN5ujF1jIRYdDQle1byP+2pxx/MmOil0zANWV0+iABQQ1VVur9bHMbI5CoFOgdbD0RyEWLh+B5EvR7CyMOQtweVI38KI2cgNRxkGeUWGrIkktDOso5438BoA5sNkOJgj91A0H+qM1oZ0Cq9GY3JP4efahgeHoPePYG5J7fAa1K05EkhQWEKa9atQ7Gcg12oQCfe9HvQ8y6yXhd+fUE8LOqFyEwb5vAUnPWbZRnZrw/012S2aWiqx2hEBb/Y+Cr6TYy4a9sDmZ3PC15gERFpGoXbMtChJMJCJCooHbXJ9ahUCoIH5UFJ4ccR6vMz8DoN+F4XNhKsqX8cerQbsZYgizxkcQ9Z2oPgklPd6icjtf++J11xAMJFq0iZb+lV2Kv/PoY3nI9qZRSxN4+FH38PQbspjLiX5FD3dIxZqgit3rgRpbFxmSVHrUW05uek1Yv4fOTzHRuF0y6SoRa7nwFzJJ2U60qeFBXtgH4TXKUID3qjtuPh+zKn2DcKw4mMCodBAj00gTIkQTnEdksjGJ5cDds6SRD4foBmfVYKiUcvTFJsiLai0L5RGGGEPaRxG0hbz1rdhIWWz6J5+AD0UvXSfl1b/j1m4MQ6HYfH/wdWbbxMclUUeTi2/R4kC0ewddc8rFIZk2lLlpj5rDY0jsl1GyWMe/UmYj2GzmhwbNkuZtgkF14IkspMQUqYlIlxLNsC6wPbWf6c7NHAcMuG3vXofRkZGEoeSI4Kg8zslCgwLdo620IchOSEUBmfQrlcFraIoJi7h1pLs+h2mvB6PqLMwGROw8TcBxDHs0gjwg56IA3YB3inmDLNbGkAmRGFSxQjPrsBGQVZ8Up8cssleN1rfxPTp52BdrsJQ0/x8N3fx1e/dS9efkYFa2s5BcfSDK5bwPp1pyPwOjKvIcGENBFHIUtj2nnkznyRFEAuIDlJhrFDUqKv6hJaDMqowqr3ZzyBF0Hb8/iDTJdiQFZgJmJNciE1yMqlOfThxb9bhTJqw2OwDaU/7vrEYGyrfBGAZ5qLYr6C2tznYCzciDSmgmBRIMrTiusySCbTqHaqLxtO3I95WPEYdGRCHm36d+Ce/bf42CdvwEsuvhDnXHQFep0OlpoN3PS5WzBkR1ijL6CUZ/tIVitFLl/D2ZdchqC1ICRsZtIAiSqGGWAUhlA4+0WqDdRI8KayXYzXwIhM2AxljmTpgSzLFHLSybS9T2zJqGyXcLXtvqvSU1QypUFN8VAHiZCmJkpDI7BzLn8DftCSBE0IRApJuDe7jEL3APJ7r0Ecd5GFS8iS3rKBWPhOTYX9oicPJHQ8p3JaEVrtJUD1Ypi1c2ANvwBwRkXfd+PNN+PSF1yG9evWYKlex4OPbMPdd/0Q73vfH6Fx/Ajuu/02LM0ekl1Ql7zsVTh9/TSiXhMxaf9M9cocGxAJWENTKJxxySmMuhqnMmwHHsemIghCKXwMab7A5+5Isk67Hrsvs5283DW9kPmI+IrUkHI7tR+XNBFVn6SIcqUyCtUSTN2RRO17bcSyDUvt32U7aEYdjB1+D7JwN5K4gSzq8K0EZghioYf1PU3Iq4EH6jVom/4C9tq3Ae6IPIiEN1NK38J3/vDfsX7NGkyvmsQ999yPG264Gdd+8L0YG6si8gmTUjy69UHkilWcf85m6AtHEXTrSLxOf7tZJB4oBhxdh9ymC5bn0Gqgr1KZ67ry7CxOfC7+naNKdjyJyIkjaDseuS9z8zlFI5EIMAy196JPEKgnpnEd4Qm5m5MEQXlkBPlcXvKF1+vA7zX75Z8rTPmuh/ETX4DduRExR5hhyNZ12YB92y2HLsM01vLIXX4LrMmrJJQ4R1azExXGrIykqR5/cifu+vfv48DuAxgbHsOvvu5VaDYbuOgF5yCJQtxy63dwx11bZWbykkvOx9suriHsLIgz8CEI2MMAABLWSURBVAY4O5HWlSijOo3caedJCLOP9jwf+bwrzpTLuUiSTFgf6sVZjWmNdqsrCyGbMp967P5MQpSYh5WG5urfqHhKnwjgilm2i5RMiqYhTy8sV+BatqgRep0locRkQyG344c+Co0dqB57F6LoBOKQeFI9A2NB9EwDz+NzZYBz/n9H/vQ/7JMIItmRlRbs1ecQm802giDCN267HeedczbOOGMjfM/DA/dvxWVXXIidu3bh7z/2VbiVMcGxVtzBP/z+S4HuAnRqcFgkdSAMlcbayI2hN3K6zMKplq31+2Haw3YsWUhGFr2P98Di1G51RHzK9k/bt/2hjDIHYkC6A5M+8R93/0hrNzBgX6hNL0wY7raDXLmESrGMSLatLiKNAql8pPXpxVlvAWP7/wJRcyv8QEYV4oFC0BouUnMcqWEj7h1D6o5j8g33CwEq3KTwpoNJnVI28AGOHZ2TfPSJT3wWf3P9+xBy30gc4akdezA0UsTXbrkFR+c7ODgXw/O7sPJV/NGrz8d5UzyUAqK2IHog6FcnvuQQjZ2JjNFEvbZUXlvwLwkGejyjbJAP221PRg4sJjI93LfjUREXkQIfaFfEk1iJZYuqwhSDUSO9kGwN2ZZcpYpSsSAsTU82UdfFgAoGpUhDD+6eO9E58G0RhNM4bMc03RWiMx3ZDNSmAW8B+fHTMLz+YslLAhPYk1JtxW2t3IPbRwGHDszi8SefRGOpiTe/9Y0ia+NrmvUGvn/nt1BfmBf3bkcuHtp1Ap3GHNaOlPAP73wD8g6VEBniiDktFOlHmujQR09DVF0l5IkssK7B5RiU7FQQ9OfUHDXoqNdbyOUcMagw8fu2PypkQswjRTR2I5YKm76iYIB5+GIakfnPIO9nGJKkSRVZTPQ8VcPrICTdJNWb7ZOP6MB2hDM70Wl3oFFe65rQbROZ4SAdWQdjZFpueNX06RJSA/hE3kEdO8BqqSAUgfrxYwv4zA2fxdVX/yZO37xRoMUAAN96y5ehpTEKhaIwK1/97mM4MddChgjveOOL8KpLN4nnpB4ZHR/dMIAzvgGFNaeLJK7VYB6HhHOpUpRIo5BTFP59qq/b6aLM0Qc7GSaXvU88pOp2P1Mbli35SIUyp2xqt5nsiKR7s5m2XGgm82YOlaGqqEgZYtzL1m4vIeEKC6yJYJw4gPaWL+PIzBzMobUYWbdRvI96FIxMwxxaJUPvicl1AmLpbeooE6UoVcpStUALcwtoNlv46Ec/jn/87x+R6miabNlUutn24BbMHtonwzDNtHD7I4tYWloSXeKrLj8Tb71yI3S/gSSKoJdHUTztAugOU5LSAvXaXTSXGtBNHY5bQBj5glGVAS0sLjaRz7nIFVh0lWRYikgcxnCI6/rSC3ofvVD1B33kzSabuY+xz8NtrLzMkAvlKgoFR/TUNLUfRmg3jiNjFQ88aIsH4M8fQUTht2UhSLhtlSA0BSbWwx5bg/HJadHCpLEKV8KD5QLWz8GshIvzddz53btQKVXx2jf8ikIN/Oob8MTcHO76xtdQrVURaDnc9dgcCiOTOPzEvXjvu/4jzpt0Ec4+heGzLkVu1WopaCIikEJPqg1oNhpyJBUZbFJ0cvCG5DtTvH9ickR4QtWRZNB2brs3I5dukjy0LeHRs77Yh7OOZaqp30zLwJ1Jlsor24FTKKNc4QxZzY3jNEO9fhxZp4Vs8SCiOtWjqrjEQQLPCxELS5rBmFyPVee9GLl8SeW6SFVwoaYEPp30fBrw4KEZfOZTn8PfXv9BODLDGMhDVJ/KYvKVz9+MvGvjUMvAgW4R9dntCBpL+ORHrxP5Wzlvwshzlyh11kwN6jMUqaZYvE67KxodSUcgsUpWKUOj3sLE5Jj8mftSRIXx1Lb7MronHYLhKX2fyDMoQ1OeQq5TsEUfegj9RVxoES/lUKjVUMyR+lFeSFVpZ/eDwMIRgUVBry28IuIUAQ+V6Hu6NbUe0xddBRISJDNZdRn6rJKycMvCTB3tThs33vB5XH7Zi3HBRWdB71Pv6ggUFcL8pR997y7MHjiAPd0K5hpdtE8cxFi5gL95/x+jVLRk/qEOVGBVVzCFvyszHwrQ+x7fanXQbDYlNTEl1Ott4QfzORLPEQrFgqQeMSBVpMwDIinhYEmksCwkmhzNJIYTiS6EM2QPSGKBxuMeN8vJoVSrId9vcyjoXtz9IJLDO+Qm/U4bvU4LBquW6SLhmVw2MHHl1dDdqvSmTCMMicGZCGyfROorko8Q9z+wBbt27MNvv/Vq8b7l41D652gNNDkzh2Zw1ze/gT1+DYvzx3H84H78+muvwpvfeBVcAt/+0F/pFhnCynsHrdsyfaZpaHe6mJ+bR6lcQZPYr0itj4FypSgLSBWHtnvbfZlM5HRTMRH9KT1lYkJty4dQp6dQL/GRDM+Y6DlHLhSpZoFVKqJSqcrpadzwVz+4A52d96kq6oVotRqqoyFEsGdR3Xwhcmf9dl98HsnNECArXQ1xFnXMpnQBh2cO41+/8k289ZqrUa1WBJ8NupSB9/F++Lt8hps/8yk8Meth9ugJtBfn8XfX/gXO3DwtmkKllFU5jVh1UBzZZTzzErKk66HT8YQsqVbLKBaL4MEsEWV0zIG7Hvkh3ULOW6GrMaHSiCQgWUWpL2E7Q4AkqUu2jppiJNJfTr7SV7tbKA0PoWBROJ5gaeZJ9HY+JAOgyOsqY3gheo15TNa2o3rRr8M5/XflDAW2UDLZI97LyEH2t2aZBubnF3DTDV/Ab/zmr6FSKSPPCmiqPR70XBqAKUdVbpXYv3vHHfjS13+IpcU68vkSPvvPH5a9PLajtjlQLTHg/bioZF+UEFQ1mOq7aiMHZx96XhecylJoMDj4Qrx5x5Zvs62AYXDTs6Oa9v6+EHqhhK9GlprgVlHZ4lX9P7NdypWHZEVtp4BylfgpRXfpOLz5I+jN7kPv2GHlaZIOLIysn8DQOVfCHiJ45ZSSg/CepA5O1hTq51qZuPHGm3HZJZdhZLQGx+XGmLw8nNBvfb5DINMp58ns378f733f38GPNbzoiqvw7nf+hkj30jQS5Rnz3EAJK6czkZnpy5AVUTro1JUhRTTF7oVoxVWhv0yoPvGjWzNiIeYm4jvOQjKeqGaRMVW9qGaysNADOYA3kCWcqdJb2fqlcEpVqaTMC6XKMDQ9g9+ri1rUayyitzCLNAhhahYSJw+nPIza6rXLBYtVj57EMKIh6IncCHPv/Vtw9PAJ/NabXo9js3MoVQt9hkQVKwm7/mmWgwcazDPe/s53Y24pxjVv+XW88fWvEDKAva4KfWUAwpOBZnFgwAEHepIH6ONQwnFKRaAjX3DlWaXJ2Pbdr2QGIQFHdpRhmNTaqRmxyWaanicVRLm0Ekz2l16HzE9guLJZhTrkYmkIpqMjDjqS13qdOqIghGvnhG/MYMApVBFFPHwxEE8Q/bXB8CIjwlDOcGLhBL7xb7fjHX/0B7AsDcdnT6A2XOnDl34O5vDeUeNYXvR83hkX4XNf/Ar+9dbv4R/+9q9x/vmbEPievDdhipvjLlTVy6oWkTR+/xi+n1BZKqUZn5kOM3e8LotRq5Vh2ga0R37wb5npUMamRI6KTTSlCBu2mkLFfigEgFoVihXphWp+ktFjkgxWoQS3UITrlGDnLGSxJ51Cr92SnrZQLAGGBTdXllZJFK8E7P38FYSRtGU05tFjx/EvX7oFv3PNWzEyMSLjhIUTCxgeGxa1mBC9aSpFh22VnOHRP8lI2sg0xcFDR/DOP/sAvvLFT8LU1NEoTPA0FotJrsB9KScNKEbsk5WDhmLAPy5v/NF49Aq1PaacvCmV//7bbspI2bulGqx8WQ3tWGk5D6JiCgkowKQGkGHLnxNws/MYPLzkRacAt1RGLleE7ZJoDUX8SLEP5w3UYBdKVSlCcuYVC4dsd1AqBFJG9KRuL8Bnb/gcXv3KX8Hk6gkMDdekOyCFNDo6IshgQCyQstcMXVT6g6IwICP4oNd/5BO4/oN/Jtsl2NNaFK5Lw6EKB3WJ/IEqRsqACsCzktLzFCMkx6uQXWLRdNX5YqS3pJX72j9fm+ULJZSHR2RgxCGLUuepcBKZdJ9sNGUaJ9ldOg8aQMEAQwqQkyuKbpnnmcaJL4cv0uKUfOQKdHkSlDReIEwPb2pwdBNvrt3p4fOf/zLOP/sCCYbNZ27C1DTPkpkTFrhSLcv5MOwMBjQbw71Q5D0PzhVMlbAyA3Y9dQDnnnO6RABHrqahkDlbNQ7YmaKogxT6TubWypBiTCYb2YZLhl51HZzSuW6R0ibRNLIP1z714fdlbJCLuRymNq1DvlITrQp/eeBhon2mp0i30gfSA2RN2ZtmwnLycIt56VBY8cKAIdyDbbvIFypCxkoe6Q9EBDRH9EJuHIyxsNjEl7/0v3HVy1+O6bVT+OH378PGTRtwzrmbxYAy7KEEL03lKJNBJyJEQJpJKAukWeYxFQFBT2MIys/JAXJXAM3DoZmuzl7gvfFxZIeVtJGKPhsI4QP29BpzZ1529pNg4e8Ypgbtnz701+TrYWUGzrxgE6o8x4q4j5FiGUhCVXn59yik6ysow86BO38GshAe5SQA18nLw3m9pjwY9+NyPxtpMul3+3PXU2/wsW1P4Lav3Y7f/u03yc6jxcU6DuyZgWbpuOCCs7Ewf0IOlpCQMgwUS5W+x9FT2HKmimIicOh/hmDaUwyoOgxWUl80gmpbBUkLBZuIg+mp4r2cPfTnIrLANCDFRi7FprYidyUd6ND+17V/lcWaiUqhhDNfsBmVoRGBBrHvI+GZVvLAgEWFU0KJhhJvCwErGEptGyWxwLFvBAPFaknE41zpXI4GrEhzzhUmplQTPKVh/vYd38Wux/fg7e/6T3ByNtrNNtrtHvbs3C9C8nPO2YzG0qLkTNmqylOJimU1guxXXzI5BPfUtQwWaLBhR8nVVN7kczTrLfheC+VKoT/GVNsyBq0cCwuleqLp7u8ciAMeFGTLwUFyQhzpNaoTiEX/5wf+MqP8q1auYsPmaZSHRkWRxCrMB8zYtpBN5pZLzij8WDZjC/OcUtRti4iSpCwJiTg1UGFHUsirvMGNjJolFXZwkSY7NHMIn7/xX3DuWefj1W94ObxOV2RqrKy+F+KRrT/G+k3rsXnzBqnkzH3SFnCbaoGEpqKx5KAMTgwl+Ssoolo0FZ6qs1C5jz/bt+eweFRtOI9iSc05VOFQrLu0eRItDONUwarQk1REJS/hDw3IvGnZJrSPf+C9mUF9SKmKtesmUB2qQLfYyHO4rI7U5JlVZKw1nXlEJVu6L5MIlf28CRnx8ViRfAX5ck0YXa4m+2UZQItoJ0Wr28G3vv5N7HjyKbzpTb+FyVUj0u/S2IPu4PixOvY9tR+nnbERa9ZNIfA5BePQW1HubM+Yf0irEdP1tV3yHsJq9wkCJRRS4gBe9aUmFudbshnSMDKUqyW4ttICDph3kSrLVjNbRPAUKyWhr076YMc24A3SCCa3CX/y7/4ySwOgtno11m5Yj3KtgiwORcMnK8P/KN0jRqMH8stTuHBAQVHWwuEOg8XKVVGsjaEyPAzbpfJUUUadXhvf/8EP8cDdW3Dli6/EpZddqDTTffUDhzeSW+NENhEuLTZEcjvGU9h4OlHfgGLkzABHsfRydZ30MP6NYF9RVOocrUGoHzs2r7BnzHyaScqwJfSJ7U4KmphL2S/TI1lAaEB6nKQQeiKrNgdoPBnpk9f9cWZkFjZedD5Gp9fBcdRULIkDREELYaOFlHswhI3pqz05bKIXMudwYk8OUU6o4IkYDgqVSRSHR4WxPjI7ix/9+z3Y/9QMXnT5ZbjyZVfIWJGMNVsrAmfOYsNAwRr2zOxQGgsN5Ap56T5K5UJ/zx2PDuAxd5Ec6yQVVPpmYlLlnVyIQp4HpykwNghPkhbtdlt6aeJHvp55U40NOC+nVyrN30mhogptOpQUDIav8Aaa6sDEgB/8o8wxHKw7czNqU6uRK41Ky8XDcLxuA1GHIDSR3lgjoCaM4T4N7v5mgibHx95SVA10c24VK6IdRLjta98TYdLll1+OF15xiUAg5WUnMaDX89DtKGkId7nz4QLPR7fjCWwpUxiZd0Sjp3TK6tDFICDx2t/UI8yQ6m5kHBvFqNRqoMSF0UuvY/i6ri35nfmYxIAYT54BCPweXJcjTTJBKmFKpyWNcyIlQG0Z4/msLKK+YFzt0x96V2YZDlavXYvK6glB56x0kccTzVlEYsQUIlokGRIhBQhvsjBRrI1sxKHGWQRlMAt5GKkBu0zerij/2wvfC1CuVlCrDvU7RYaDBp+G6nbRbXsixxUvSjIpGGRuWMQ4LuCKkwEeiB/VTgD20irNqLGDwm7SQYVkXVzpVweAe+74vJwSN2gfWahIIZNZotfx86mwqNaKcExFe4n2hdCIsEbE1lSmqg3iPAeRT/x/AUgwsyt/GMWAAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 252:
+/*!***********************************************************************************!*\
+  !*** D:/demo/uni-app-Panchen/pagesMember/static/image/MemberFavoriteProduct2.png ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,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"
+
+/***/ }),
+
+/***/ 3:
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 333:
+/*!*****************************************************************!*\
+  !*** D:/demo/uni-app-Panchen/static/mallImg/ProductDetails.png ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/static/mallImg/ProductDetails.png";
+
+/***/ }),
+
+/***/ 355:
 /*!********************************************************************!*\
   !*** D:/demo/uni-app-Panchen/components/input-box/verification.js ***!
   \********************************************************************/
@@ -9339,38 +10564,7 @@ verification;exports.default = _default;
 
 /***/ }),
 
-/***/ 3:
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 314:
+/***/ 377:
 /*!***************************************************************!*\
   !*** D:/demo/uni-app-Panchen/components/uni-calendar/util.js ***!
   \***************************************************************/
@@ -9378,7 +10572,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 315));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _calendar = _interopRequireDefault(__webpack_require__(/*! ./calendar.js */ 378));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _classCallCheck(instance, Constructor) {if (!(instance instanceof Constructor)) {throw new TypeError("Cannot call a class as a function");}}function _defineProperties(target, props) {for (var i = 0; i < props.length; i++) {var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);}}function _createClass(Constructor, protoProps, staticProps) {if (protoProps) _defineProperties(Constructor.prototype, protoProps);if (staticProps) _defineProperties(Constructor, staticProps);return Constructor;}var
 
 Calendar = /*#__PURE__*/function () {
   function Calendar()
@@ -9733,7 +10927,7 @@ Calendar;exports.default = _default;
 
 /***/ }),
 
-/***/ 315:
+/***/ 378:
 /*!*******************************************************************!*\
   !*** D:/demo/uni-app-Panchen/components/uni-calendar/calendar.js ***!
   \*******************************************************************/
@@ -10298,6 +11492,28 @@ calendar;exports.default = _default;
 /***/ (function(module, exports) {
 
 
+
+/***/ }),
+
+/***/ 65:
+/*!*********************************************************!*\
+  !*** D:/demo/uni-app-Panchen/static/mallImg/banner.png ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/static/mallImg/banner.png";
+
+/***/ }),
+
+/***/ 66:
+/*!***************************************************************!*\
+  !*** D:/demo/uni-app-Panchen/static/mallImg/ShoppingMall.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/static/mallImg/ShoppingMall.png";
 
 /***/ })
 

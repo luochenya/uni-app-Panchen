@@ -102,7 +102,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			toKnowUsGoodLuckPlan(item) {
@@ -156,7 +156,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			change (e) {

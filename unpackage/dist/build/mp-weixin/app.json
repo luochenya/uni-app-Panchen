@@ -34,7 +34,10 @@
         "MemberDeepButler/MemberDeepButler",
         "MemberCreateManager/MemberCreateManager",
         "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
-        "MemberRegistered/MemberRegistered"
+        "MemberRegistered/MemberRegistered",
+        "MemberTicketBox/MemberTicketBox",
+        "MemberFavoriteProduct/MemberFavoriteProduct",
+        "MemberOrderManagement/MemberOrderManagement"
       ]
     },
     {
@@ -53,9 +56,9 @@
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTitleText": "移动养生",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
   },
   "tabBar": {
     "color": "#7A7E83",

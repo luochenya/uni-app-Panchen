@@ -1,0 +1,1 @@
+{"version":3,"sources":["uni-app:///main.js"],"names":["createPage","Page"],"mappings":";;;;;;;;;;kDAAA;AACA;AACA,wH;AACAA,UAAU,CAACC,qBAAD,CAAV,C","file":"pagesMember/ShoppingMall/ShoppingMall.js","sourcesContent":["import 'uni-pages';\nimport Vue from 'vue'\nimport Page from './pagesMember/ShoppingMall/ShoppingMall.vue'\ncreatePage(Page)"],"sourceRoot":""}

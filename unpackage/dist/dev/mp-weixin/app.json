@@ -4,7 +4,8 @@
     "pages/member/index",
     "pages/dealer/index",
     "pages/dealerLogin/dealerLogin",
-    "pages/memberLogin/memberLogin"
+    "pages/memberLogin/memberLogin",
+    "pages/ShoppingMall/ShoppingMall"
   ],
   "subPackages": [
     {
@@ -34,7 +35,10 @@
         "MemberDeepButler/MemberDeepButler",
         "MemberCreateManager/MemberCreateManager",
         "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
-        "MemberRegistered/MemberRegistered"
+        "MemberRegistered/MemberRegistered",
+        "MemberTicketBox/MemberTicketBox",
+        "MemberFavoriteProduct/MemberFavoriteProduct",
+        "MemberOrderManagement/MemberOrderManagement"
       ]
     },
     {
@@ -49,13 +53,20 @@
         "KnowUsInternationalNews/KnowUsInternationalNews",
         "KnowUsInternationalNewss/KnowUsInternationalNewss"
       ]
+    },
+    {
+      "root": "pagesMall",
+      "pages": [
+        "Search/Search",
+        "ProductDetails/ProductDetails"
+      ]
     }
   ],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#F8F8F8",
-    "backgroundColor": "#F8F8F8"
+    "navigationBarTitleText": "移动养生",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#FFFFFF"
   },
   "tabBar": {
     "color": "#7A7E83",
@@ -101,11 +112,17 @@
       "packages": [
         "pagesKnowUs"
       ]
+    },
+    "pages/ShoppingMall/ShoppingMall": {
+      "network": "all",
+      "packages": [
+        "pagesMall"
+      ]
     }
   },
   "plugins": {
     "tencentvideo": {
-      "version": "1.3.14",
+      "version": "1.3.17",
       "provider": "wxa75efa648b60994b"
     }
   },
@@ -114,6 +131,5 @@
     "mpopup": "/components/xuan-popup/xuan-popup",
     "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
     "input-box": "/components/input-box/input-box"
-  },
-  "sitemapLocation": "sitemap32.json"
+  }
 }

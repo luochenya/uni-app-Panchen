@@ -45,7 +45,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			// 获取问答列表
@@ -74,7 +74,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			activeClick(num) {

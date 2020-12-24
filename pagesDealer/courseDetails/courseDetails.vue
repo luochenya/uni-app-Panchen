@@ -51,7 +51,7 @@
 						if (res.data.data.type == 2) {
 							this.courseList.url = this.getCaption(res.data.data.url)
 						}
-						console.log(this.courseList)
+						// console.log(this.courseList)
 					} else {
 						 uni.showToast({
 							icon: 'none',
@@ -60,7 +60,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 		}

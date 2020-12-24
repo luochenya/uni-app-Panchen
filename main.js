@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 // 请求
 import {http, member} from "@/components/luch-request/index.js"
 Vue.prototype.$http = http
@@ -18,11 +19,15 @@ Vue.component('input-box',inputBox)
 Vue.prototype.$userBarrageColor = uni.getStorageSync('user').userBarrageColor
 Vue.prototype.$imgUrl = 'http://fc.dhkzw.top/'
 
+//把vuex定义成全局组件
+Vue.prototype.$store = store
 Vue.config.productionTip = false
 
 App.mpType = 'app'
 
 const app = new Vue({
-    ...App
+    ...App,
+	//挂载
+    store
 })
 app.$mount()

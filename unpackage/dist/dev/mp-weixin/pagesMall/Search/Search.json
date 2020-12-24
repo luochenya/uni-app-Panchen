@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "搜寻",
+  "usingComponents": {
+    "shopping-cart": "/components/shopping-cart/shopping-cart"
+  }
+}

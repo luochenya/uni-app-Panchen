@@ -87,7 +87,7 @@
 						 })
 					}
 				}).catch(err => {
-					console.log(err)
+					// console.log(err)
 				})
 			},
 			// 路径跳转教育学院

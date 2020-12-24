@@ -25,15 +25,11 @@
 /* 透明度 */
 /* 文章场景相关 */
 .MemberCentre.data-v-59d778e0 {
-  padding: 130rpx 4.27% 0;
+  padding: 40rpx 4.27% 222rpx;
+  margin-bottom: 240rpx;
   position: relative;
-}
-.MemberCentre .MemberCentre_leftImg.data-v-59d778e0 {
-  position: absolute;
-  left: 0;
-  top: 130rpx;
-  width: 151rpx;
-  height: 375rpx;
+  background: -webkit-linear-gradient(top, #3F3A39 0%, #151515 100%);
+  background: linear-gradient(180deg, #3F3A39 0%, #151515 100%);
 }
 .MemberCentre .MemberCentre_rightImg.data-v-59d778e0 {
   position: absolute;
@@ -45,57 +41,117 @@
 .MemberCentre .MemberCentre_name.data-v-59d778e0 {
   font-size: 36rpx;
   font-weight: bold;
-  color: #2a2827;
+  color: #F6F6F6;
   line-height: 50rpx;
-  display: block;
-  text-align: center;
 }
 .MemberCentre .MemberCentre_phone.data-v-59d778e0 {
-  margin-bottom: 55rpx;
+  margin-top: 4rpx;
+  margin-bottom: 26rpx;
   font-size: 30rpx;
-  color: #828282;
+  color: #9FA0A2;
   line-height: 42rpx;
   letter-spacing: 2rpx;
   display: block;
-  text-align: center;
 }
 .MemberCentre .MemberCentre_box.data-v-59d778e0 {
-  position: relative;
-  width: 100%;
+  position: absolute;
+  top: 200rpx;
+  width: 91.34%;
   height: 320rpx;
-  background: #24252a;
-  box-shadow: 0px 28rpx 94rpx -18rpx rgba(36, 37, 42, 0.62);
-  border-radius: 16rpx;
+  padding: 48rpx 52rpx;
+  background: -webkit-linear-gradient(135deg, #E6BB94 0%, #FBE3CD 100%);
+  background: linear-gradient(315deg, #E6BB94 0%, #FBE3CD 100%);
+  box-shadow: 0px 28rpx 96rpx -18rpx rgba(236, 199, 165, 0.5);
+  border-radius: 28rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.MemberCentre .MemberCentre_box .MemberCentre_box_left .MemberCentre_box_left_title.data-v-59d778e0 {
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #24252A;
+  line-height: 42rpx;
+}
+.MemberCentre .MemberCentre_box .MemberCentre_box_left .MemberCentre_box_left_content.data-v-59d778e0 {
+  margin-top: 70rpx;
+}
+.MemberCentre .MemberCentre_box .MemberCentre_box_left .MemberCentre_box_left_content .MemberCentre_box_left_content_num.data-v-59d778e0 {
+  font-size: 84rpx;
+  font-family: Futura-Medium, Futura;
+  font-weight: bold;
+  color: #24252A;
+  line-height: 112rpx;
+}
+.MemberCentre .MemberCentre_box .MemberCentre_box_left .MemberCentre_box_left_content .MemberCentre_box_left_content_text.data-v-59d778e0 {
+  font-size: 40rpx;
+  font-weight: 400;
+  color: #24252A;
+  line-height: 56rpx;
+  letter-spacing: 2rpx;
+}
+.MemberCentre .MemberCentre_box .MemberCentre_box_right image.data-v-59d778e0 {
+  width: 186rpx;
+  height: 176rpx;
+}
+.MemberCentre_content.data-v-59d778e0 {
+  width: 100%;
+  padding: 0 4.27%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.MemberCentre_content .MemberCentre_content_view.data-v-59d778e0 {
+  width: 33.33%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+}
+.MemberCentre_content .MemberCentre_content_view view.data-v-59d778e0 {
+  margin-bottom: 20rpx;
+  width: 102rpx;
+  height: 102rpx;
+  background: -webkit-linear-gradient(315deg, #F6D9BF 0%, #E6A781 100%);
+  background: linear-gradient(135deg, #F6D9BF 0%, #E6A781 100%);
+  box-shadow: 0px 8rpx 20rpx 0px rgba(238, 193, 161, 0.3);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
-.MemberCentre .MemberCentre_box .MemberCentre_box_image.data-v-59d778e0 {
-  width: 109rpx;
-  height: 42rpx;
-  position: absolute;
-  right: 27rpx;
-  top: 31rpx;
+.MemberCentre_content .MemberCentre_content_view view image.data-v-59d778e0 {
+  width: 66rpx;
+  height: 74rpx;
 }
-.MemberCentre .MemberCentre_box .MemberCentre_box_num.data-v-59d778e0 {
-  font-family: Futura-Medium,Futura;
-  font-weight: bold;
-  color: #fdfdfd;
-  line-height: 112rpx;
-  font-size: 84rpx;
-}
-.MemberCentre .MemberCentre_box .MemberCentre_box_text.data-v-59d778e0 {
-  font-size: 40rpx;
-  font-family: PingFangSC-Regular,PingFang SC;
+.MemberCentre_content .MemberCentre_content_view text.data-v-59d778e0 {
+  display: block;
+  text-align: center;
+  width: 100%;
+  font-size: 28rpx;
   font-weight: 400;
-  color: #fdfdfd;
-  line-height: 56rpx;
-  letter-spacing: 2rpx;
+  color: #24252A;
+  line-height: 80rpx;
 }
 

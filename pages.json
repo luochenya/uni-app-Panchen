@@ -1,189 +1,244 @@
 {
-	"pages": [{
-		"path": "pages/knowUs/index",
-		"style": {
-			"navigationBarTitleText": "",
-			"navigationStyle":"custom"
-		}
-	},{
-		"path" : "pages/member/index",
-		"style" : {
-			"navigationBarTitleText": "会员购",
-			"navigationStyle":"custom",
-			"usingComponents": {
-			   "txv-video": "plugin://tencentvideo/video"
-			}
-		}
-	},{
-		"path" : "pages/dealer/index",
-		"style" : {
-			"navigationBarTitleText": "经销商",
-			"navigationStyle":"custom"
-		}
-	},{
-		"path" : "pages/dealerLogin/dealerLogin",
-		"style" : {
-			"navigationBarTitleText": ""
-		}
-	},{
-		"path" : "pages/memberLogin/memberLogin",
-		"style" : {
-			"navigationBarTitleText": ""
-		}
-  }],
-	"subPackages": [{
-		"root": "pagesDealer",
-		"pages": [{
-			"path":"caseDetails/caseDetails",
+	"pages": [
+		{
+			"path": "pages/knowUs/index",
 			"style": {
-				"navigationBarTitleText":"案例"
+				"navigationBarTitleText": "",
+				"navigationStyle":"custom"
 			}
 		},{
-			"path":"caseExclusive/caseExclusive",
-			"style": {
-				"navigationBarTitleText":"案例分享"
-			}
-		},{
-			"path" : "courseDetails/courseDetails",
+			"path" : "pages/member/index",
 			"style" : {
-				"navigationBarTitleText": "课程详情",
+				"navigationBarTitleText": "会员购",
+				"navigationStyle":"custom",
 				"usingComponents": {
-					 "txv-video": "plugin://tencentvideo/video"
+				   "txv-video": "plugin://tencentvideo/video"
 				}
 			}
 		},{
-			"path" : "collegeOfEducation/collegeOfEducation",
+			"path" : "pages/dealer/index",
 			"style" : {
-				"navigationBarTitleText": "教育学院"
+				"navigationBarTitleText": "经销商",
+				"navigationStyle":"custom"
 			}
 		},{
-			"path" : "spotNews/spotNews",
-			"style" : {
-				"navigationBarTitleText": "最新消息"
-			}
-		},{
-			"path" : "consultingFeedback/consultingFeedback",
-			"style" : {
-				"navigationBarTitleText": "资讯反馈"
-			}
-		},{
-			"path" : "knowledgeTest/knowledgeTest",
-			"style" : {
-				"navigationBarTitleText": "知识测试"
-			}
-		},{
-			"path" : "quiz/quiz",
+			"path" : "pages/dealerLogin/dealerLogin",
 			"style" : {
 				"navigationBarTitleText": ""
 			}
-		}]
-	},{
-		"root":"pagesMember",
-		"pages": [{
-			"path":"MemberCentre/MemberCentre",
-			"style": {
-				"navigationBarTitleText":"会员中心"
-			}
 		},{
-			"path" : "MemberLatestNews/MemberLatestNews",
+			"path" : "pages/memberLogin/memberLogin",
 			"style" : {
-				"navigationBarTitleText":"最新消息"
+				"navigationBarTitleText": ""
 			}
+		}
+	    ,{
+            "path" : "pages/ShoppingMall/ShoppingMall",
+            "style" : {
+				"navigationBarTitleText":"购物商城",
+				"navigationBarTextStyle": "#FFFFFF",
+				"navigationBarBackgroundColor": "#68B74D",
+				"backgroundColor": "#68B74D"
+			}
+        }
+    ],
+	"subPackages": [
+		{
+			"root": "pagesDealer",
+			"pages": [
+				{
+					"path":"caseDetails/caseDetails",
+					"style": {
+						"navigationBarTitleText":"案例"
+					}
+				},{
+					"path":"caseExclusive/caseExclusive",
+					"style": {
+						"navigationBarTitleText":"案例分享"
+					}
+				},{
+					"path" : "courseDetails/courseDetails",
+					"style" : {
+						"navigationBarTitleText": "课程详情",
+						"usingComponents": {
+							"txv-video": "plugin://tencentvideo/video"
+						}
+					}
+				},{
+					"path" : "collegeOfEducation/collegeOfEducation",
+					"style" : {
+						"navigationBarTitleText": "教育学院"
+					}
+				},{
+					"path" : "spotNews/spotNews",
+					"style" : {
+						"navigationBarTitleText": "最新消息"
+					}
+				},{
+					"path" : "consultingFeedback/consultingFeedback",
+					"style" : {
+						"navigationBarTitleText": "资讯反馈"
+					}
+				},{
+					"path" : "knowledgeTest/knowledgeTest",
+					"style" : {
+						"navigationBarTitleText": "知识测试"
+					}
+				},{
+					"path" : "quiz/quiz",
+					"style" : {
+						"navigationBarTitleText": ""
+					}
+				}
+			]
 		},{
-			"path" : "MemberLatestNewsContent/MemberLatestNewsContent",
-			"style" : {
-				"navigationBarTitleText":"消息详情"
-			}
+			"root":"pagesMember",
+			"pages": [
+				{
+					"path":"MemberCentre/MemberCentre",
+					"style": {
+						"navigationBarTextStyle": "#FFFFFF",
+						"navigationBarTitleText":"会员中心",
+						"navigationBarBackgroundColor": "#3F3A39",
+						"backgroundColor": "#3F3A39"
+					}
+				},{
+					"path" : "MemberLatestNews/MemberLatestNews",
+					"style" : {
+						"navigationBarTitleText":"最新消息"
+					}
+				},{
+					"path" : "MemberLatestNewsContent/MemberLatestNewsContent",
+					"style" : {
+						"navigationBarTitleText":"消息详情"
+					}
+				},{
+					"path" : "MemberGuardianCard/MemberGuardianCard",
+					"style" : {
+						"navigationBarTitleText":"守护卡介绍"
+					}
+				},{
+					"path" : "MemberGuardianCardsDetails/MemberGuardianCardsDetails",
+					"style" : {
+						"navigationBarTitleText":"守护卡介绍EDM"
+					}
+				},{
+					"path" : "MemberNutritiousFood/MemberNutritiousFood",
+					"style" : {
+						"navigationBarTitleText":"营养食品"
+					}
+				},{
+					"path" : "MemberCommonProblem/MemberCommonProblem",
+					"style" : {
+						"navigationBarTitleText":"常见问题"
+					}
+				},{
+					"path" : "MemberGoodLuckPlan/MemberGoodLuckPlan",
+					"style" : {
+						"navigationBarTitleText":"会员好运方案"
+					}
+				},{
+					"path" : "MemberDeepButler/MemberDeepButler",
+					"style" : {
+						"navigationBarTitleText":"深度管家介绍"
+					}
+				},{
+					"path" : "MemberCreateManager/MemberCreateManager",
+					"style" : {
+						"navigationBarTitleText":"建立个人健康管理师"
+					}
+				},{
+					"path" : "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
+					"style" : {
+						"navigationBarTitleText":"营养食品介绍EDM"
+					}
+				},{
+					"path" : "MemberRegistered/MemberRegistered",
+					"style" : {
+						"navigationBarTitleText":"会员注册"
+					}
+				},{
+					"path" : "MemberTicketBox/MemberTicketBox",
+					"style" : {
+						"navigationBarTitleText":"票卷匣"
+					}
+				},{
+					"path" : "MemberFavoriteProduct/MemberFavoriteProduct",
+					"style" : {
+						"navigationBarTitleText":"收藏商品"
+					}
+				},{
+					"path" : "MemberOrderManagement/MemberOrderManagement",
+					"style" : {
+						"navigationBarTitleText":"订单管理"
+					}
+				}
+            ]
 		},{
-			"path" : "MemberGuardianCard/MemberGuardianCard",
-			"style" : {
-				"navigationBarTitleText":"守护卡介绍"
-			}
+			"root":"pagesKnowUs",
+			"pages": [
+				{
+					"path" : "KnowUsCompany/KnowUsCompany",
+					"style" : {
+						"navigationBarTitleText":"咱们"
+					}
+				},{
+					"path" : "KnowUsHealthConcept/KnowUsHealthConcept",
+					"style" : {
+						"navigationBarTitleText":"想做的事"
+					}
+				},{
+					"path" : "KnowUsCelebritySays/KnowUsCelebritySays",
+					"style" : {
+						"navigationBarTitleText":"名人说"
+					}
+				},{
+					"path" : "KnowsUsHonor/KnowsUsHonor",
+					"style" : {
+						"navigationBarTitleText":"荣誉"
+					}
+				},{
+					"path" : "KnowUsGoodLuckPlan/KnowUsGoodLuckPlan",
+					"style" : {
+						"navigationBarTitleText":"好运方案"
+					}
+				},{
+					"path" : "KnowUsCommonProblem/KnowUsCommonProblem",
+					"style" : {
+						"navigationBarTitleText":"问与答"
+					}
+				},{
+					"path" : "KnowUsInternationalNews/KnowUsInternationalNews",
+					"style" : {
+						"navigationBarTitleText":"健康报"
+					}
+				},{
+					"path" : "KnowUsInternationalNewss/KnowUsInternationalNewss",
+					"style" : {
+						"navigationBarTitleText":"健康报"
+					}
+				}
+			]
 		},{
-			"path" : "MemberGuardianCardsDetails/MemberGuardianCardsDetails",
-			"style" : {
-				"navigationBarTitleText":"守护卡介绍EDM"
-			}
-    },{
-			"path" : "MemberNutritiousFood/MemberNutritiousFood",
-			"style" : {
-				"navigationBarTitleText":"营养食品"
-			}
-    },{
-			"path" : "MemberCommonProblem/MemberCommonProblem",
-			"style" : {
-				"navigationBarTitleText":"常见问题"
-			}
-    },{
-			"path" : "MemberGoodLuckPlan/MemberGoodLuckPlan",
-			"style" : {
-				"navigationBarTitleText":"会员好运方案"
-			}
-		},{
-			"path" : "MemberDeepButler/MemberDeepButler",
-			"style" : {
-				"navigationBarTitleText":"深度管家介绍"
-			}
-    },{
-			"path" : "MemberCreateManager/MemberCreateManager",
-			"style" : {
-				"navigationBarTitleText":"建立个人健康管理师"
-			}
-    },{
-			"path" : "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
-			"style" : {
-				"navigationBarTitleText":"营养食品介绍EDM"
-			}
-    },{
-			"path" : "MemberRegistered/MemberRegistered",
-			"style" : {
-				"navigationBarTitleText":"会员注册"
-			}
-    }]
-	},{
-		"root":"pagesKnowUs",
-		"pages": [{
-			"path" : "KnowUsCompany/KnowUsCompany",
-			"style" : {
-				"navigationBarTitleText":"咱们"
-			}
-		},{
-			"path" : "KnowUsHealthConcept/KnowUsHealthConcept",
-			"style" : {
-				"navigationBarTitleText":"想做的事"
-			}
-		},{
-			"path" : "KnowUsCelebritySays/KnowUsCelebritySays",
-			"style" : {
-				"navigationBarTitleText":"名人说"
-			}
-    },{
-			"path" : "KnowsUsHonor/KnowsUsHonor",
-			"style" : {
-				"navigationBarTitleText":"荣誉"
-			}
-    },{
-			"path" : "KnowUsGoodLuckPlan/KnowUsGoodLuckPlan",
-			"style" : {
-				"navigationBarTitleText":"好运方案"
-			}
-    },{
-			"path" : "KnowUsCommonProblem/KnowUsCommonProblem",
-			"style" : {
-				"navigationBarTitleText":"问与答"
-			}
-    },{
-			"path" : "KnowUsInternationalNews/KnowUsInternationalNews",
-			"style" : {
-				"navigationBarTitleText":"健康报"
-			}
-    },{
-			"path" : "KnowUsInternationalNewss/KnowUsInternationalNewss",
-			"style" : {
-				"navigationBarTitleText":"健康报"
-			}
-    }]
-	}],
+			"root":"pagesMall",
+			"pages": [
+				{
+					"path" : "Search/Search",
+					"style" : {
+						"navigationBarTitleText":"搜寻"
+					}
+				}
+                ,{
+                    "path" : "ProductDetails/ProductDetails",
+                    "style" : {
+						"navigationBarTitleText":"",
+						"navigationBarBackgroundColor": "#F6F6F6",
+						"backgroundColor": "#F6F6F6"
+					}
+                }
+            ]
+		}
+	],
 	"preloadRule": {
 		"pages/dealer/index": {
 			"network":"all",
@@ -196,13 +251,17 @@
 		"pages/knowUs/index": {
 			"network":"all",
 			"packages":["pagesKnowUs"]
+		},
+		"pages/ShoppingMall/ShoppingMall": {
+			"network":"all",
+			"packages":["pagesMall"]
 		}
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "移动养生",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
 	},
 	"tabBar": {
 		"color": "#7A7E83",

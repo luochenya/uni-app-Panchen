@@ -9,12 +9,13 @@
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni, createApp) {__webpack_require__(/*! uni-pages */ 4);var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 2));
 var _App = _interopRequireDefault(__webpack_require__(/*! ./App */ 5));
+var _store = _interopRequireDefault(__webpack_require__(/*! ./store */ 11));
 
-var _index = __webpack_require__(/*! @/components/luch-request/index.js */ 11);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+var _index = __webpack_require__(/*! @/components/luch-request/index.js */ 14);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function ownKeys(object, enumerableOnly) {var keys = Object.keys(object);if (Object.getOwnPropertySymbols) {var symbols = Object.getOwnPropertySymbols(object);if (enumerableOnly) symbols = symbols.filter(function (sym) {return Object.getOwnPropertyDescriptor(object, sym).enumerable;});keys.push.apply(keys, symbols);}return keys;}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};if (i % 2) {ownKeys(Object(source), true).forEach(function (key) {_defineProperty(target, key, source[key]);});} else if (Object.getOwnPropertyDescriptors) {Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));} else {ownKeys(Object(source)).forEach(function (key) {Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));});}}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
 _vue.default.prototype.$http = _index.http;
 _vue.default.prototype.$member = _index.member;
 // 弹窗
-var mpopup = function mpopup() {__webpack_require__.e(/*! require.ensure | components/xuan-popup/xuan-popup */ "components/xuan-popup/xuan-popup").then((function () {return resolve(__webpack_require__(/*! @/components/xuan-popup/xuan-popup.vue */ 280));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSwiperDot = function uniSwiperDot() {__webpack_require__.e(/*! require.ensure | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then((function () {return resolve(__webpack_require__(/*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 287));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var inputBox = function inputBox() {Promise.all(/*! require.ensure | components/input-box/input-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/input-box/input-box")]).then((function () {return resolve(__webpack_require__(/*! @/components/input-box/input-box */ 294));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
+var mpopup = function mpopup() {__webpack_require__.e(/*! require.ensure | components/xuan-popup/xuan-popup */ "components/xuan-popup/xuan-popup").then((function () {return resolve(__webpack_require__(/*! @/components/xuan-popup/xuan-popup.vue */ 336));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var uniSwiperDot = function uniSwiperDot() {__webpack_require__.e(/*! require.ensure | components/uni-swiper-dot/uni-swiper-dot */ "components/uni-swiper-dot/uni-swiper-dot").then((function () {return resolve(__webpack_require__(/*! @/components/uni-swiper-dot/uni-swiper-dot.vue */ 343));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var inputBox = function inputBox() {Promise.all(/*! require.ensure | components/input-box/input-box */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/input-box/input-box")]).then((function () {return resolve(__webpack_require__(/*! @/components/input-box/input-box */ 350));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};
 
 
 
@@ -27,12 +28,16 @@ _vue.default.component('input-box', inputBox);
 _vue.default.prototype.$userBarrageColor = uni.getStorageSync('user').userBarrageColor;
 _vue.default.prototype.$imgUrl = 'http://fc.dhkzw.top/';
 
+//把vuex定义成全局组件
+_vue.default.prototype.$store = _store.default;
 _vue.default.config.productionTip = false;
 
 _App.default.mpType = 'app';
 
-var app = new _vue.default(_objectSpread({},
-_App.default));
+var app = new _vue.default(_objectSpread(_objectSpread({},
+_App.default), {}, {
+  //挂载
+  store: _store.default }));
 
 createApp(app).$mount();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["createApp"]))

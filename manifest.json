@@ -60,15 +60,16 @@
         "appid" : "wxc0ae8d7263dd4357",
         "plugins" : {
             "tencentvideo" : {
-                "version" : "1.3.14",
+                "version" : "1.3.17",
                 "provider" : "wxa75efa648b60994b"
             }
         },
         "setting" : {
-            "urlCheck" : false,
+            "urlCheck" : true,
             "minified" : true,
             "es6" : true,
-            "postcss" : true
+            "postcss" : true,
+			"checkSiteMap" : false
         },
         "usingComponents" : true,
         "permission" : {}

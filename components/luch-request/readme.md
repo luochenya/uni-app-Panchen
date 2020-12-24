@@ -239,10 +239,10 @@ http.interceptor.response((response) => { /* 对响应成功做点什么 （stat
  // if (response.config.custom.verification) { // 演示自定义参数的作用
   //   return response.data
   // }
-  console.log(response)
+  <!-- console.log(response) -->
   return response
 }, (response) => { /*  对响应错误做点什么 （statusCode !== 200），必须return response*/
-  console.log(response)
+  <!-- console.log(response) -->
   return response
 })
 ```
