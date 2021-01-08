@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsInternationalNews">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'健康报'" @returnClick="returnClick"></top-navigation>
+		
 		<!-- <image class="KnowUsInternationalNews_image" src="../static/image/KnowUsInternationalNews.png" mode=""></image> -->
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="bannerList" :current="current" field="content" :mode="mode">
@@ -33,6 +36,12 @@
 			this.getInternational()
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取banner
 			getInternationalBanner () {
 				 // 加载动画
@@ -88,7 +97,7 @@
 
 <style lang="less">
 .KnowUsInternationalNews {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.KnowUsInternationalNews_image {
 		width: 100%;
 		height: 262rpx;

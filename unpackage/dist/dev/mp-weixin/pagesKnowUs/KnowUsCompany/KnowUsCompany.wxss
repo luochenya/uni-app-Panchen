@@ -1,5 +1,5 @@
 .KnowUsCompany {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .KnowUsCompany .KnowUsCompany_image {
   width: 100%;

@@ -1,5 +1,8 @@
 <template>
 	<view class="caseExclusive">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'案例分享'" @returnClick="returnClick"></top-navigation>
+		
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="info" :current="current" field="content">
 			<swiper @change="change" autoplay="true" circular="true">
@@ -40,6 +43,12 @@
 			this._getSharingBannerList()
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			change (e) {
 				this.current = e.detail.current;
 			},
@@ -99,7 +108,7 @@
 <style lang="less" scoped>
 .caseExclusive {
 	.spotNewsImg {
-		padding: 0 4.27%;
+		padding: 20rpx 4.27% 0;
 		width: 100%;
 		height: 262rpx;
 		image {

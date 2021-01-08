@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberDeepButler">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'深度管家介绍'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="MemberDeepButler_image" src="../static/image/MemberDeepButler.png" mode=""></image>
 		<view class="MemberDeepButler_box">
 			<text class="MemberDeepButler_title">- 深度管家 -</text>
@@ -22,6 +25,12 @@
 			};
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			toMemberCreateManager() {
 				uni.navigateTo({
 					url: '../../pagesMember/MemberCreateManager/MemberCreateManager'
@@ -33,7 +42,7 @@
 
 <style lang="less">
 .MemberDeepButler {
-	padding: 0 4.27% 140rpx;
+	padding: 20rpx 4.27% 140rpx;
 	.MemberDeepButler_image {
 		width: 100%;
 		height: 386rpx;

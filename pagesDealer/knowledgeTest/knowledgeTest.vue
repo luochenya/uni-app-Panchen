@@ -1,5 +1,8 @@
 <template>
 	<view class="knowledgeTest">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'知识测试'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="knowledgeTest_box" v-for="(item, index) in knowledgeTeseList" :key="index">
 			<view class="knowledgeTest_box_backgImage">
 				<image :src="backgroundImage" mode=""></image>
@@ -28,6 +31,12 @@
 			this.gettingData()
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			gettingData () {
 				 // 加载动画
 				 uni.showLoading({
@@ -60,7 +69,7 @@
 
 <style lang="less">
 .knowledgeTest {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.knowledgeTest_box {
 		width: 100%;
 		height: 280rpx;

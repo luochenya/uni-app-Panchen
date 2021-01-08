@@ -36,9 +36,10 @@
             "path" : "pages/ShoppingMall/ShoppingMall",
             "style" : {
 				"navigationBarTitleText":"购物商城",
-				"navigationBarTextStyle": "#FFFFFF",
-				"navigationBarBackgroundColor": "#68B74D",
-				"backgroundColor": "#68B74D"
+				"navigationStyle":"custom"
+				// "navigationBarTextStyle": "#FFFFFF",
+				// "navigationBarBackgroundColor": "#68B74D",
+				// "backgroundColor": "#68B74D"
 			}
         }
     ],
@@ -49,17 +50,20 @@
 				{
 					"path":"caseDetails/caseDetails",
 					"style": {
-						"navigationBarTitleText":"案例"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"案例"
 					}
 				},{
 					"path":"caseExclusive/caseExclusive",
 					"style": {
-						"navigationBarTitleText":"案例分享"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"案例分享"
 					}
 				},{
 					"path" : "courseDetails/courseDetails",
 					"style" : {
-						"navigationBarTitleText": "课程详情",
+						"navigationStyle":"custom",
+						// "navigationBarTitleText": "课程详情",
 						"usingComponents": {
 							"txv-video": "plugin://tencentvideo/video"
 						}
@@ -67,27 +71,32 @@
 				},{
 					"path" : "collegeOfEducation/collegeOfEducation",
 					"style" : {
-						"navigationBarTitleText": "教育学院"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText": "教育学院"
 					}
 				},{
 					"path" : "spotNews/spotNews",
 					"style" : {
-						"navigationBarTitleText": "最新消息"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText": "最新消息"
 					}
 				},{
 					"path" : "consultingFeedback/consultingFeedback",
 					"style" : {
-						"navigationBarTitleText": "资讯反馈"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText": "资讯反馈"
 					}
 				},{
 					"path" : "knowledgeTest/knowledgeTest",
 					"style" : {
-						"navigationBarTitleText": "知识测试"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText": "知识测试"
 					}
 				},{
 					"path" : "quiz/quiz",
 					"style" : {
-						"navigationBarTitleText": ""
+						"navigationStyle":"custom"
+						// "navigationBarTitleText": ""
 					}
 				}
 			]
@@ -97,80 +106,95 @@
 				{
 					"path":"MemberCentre/MemberCentre",
 					"style": {
-						"navigationBarTextStyle": "#FFFFFF",
-						"navigationBarTitleText":"会员中心",
-						"navigationBarBackgroundColor": "#3F3A39",
-						"backgroundColor": "#3F3A39"
+						"navigationStyle":"custom"
+						// "navigationBarTextStyle": "#FFFFFF",
+						// "navigationBarTitleText":"会员中心",
+						// "navigationBarBackgroundColor": "#3F3A39",
+						// "backgroundColor": "#3F3A39"
 					}
 				},{
 					"path" : "MemberLatestNews/MemberLatestNews",
 					"style" : {
-						"navigationBarTitleText":"最新消息"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"最新消息"
 					}
 				},{
 					"path" : "MemberLatestNewsContent/MemberLatestNewsContent",
 					"style" : {
-						"navigationBarTitleText":"消息详情"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"消息详情"
 					}
 				},{
 					"path" : "MemberGuardianCard/MemberGuardianCard",
 					"style" : {
-						"navigationBarTitleText":"守护卡介绍"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"守护卡介绍"
 					}
 				},{
 					"path" : "MemberGuardianCardsDetails/MemberGuardianCardsDetails",
 					"style" : {
-						"navigationBarTitleText":"守护卡介绍EDM"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"守护卡介绍EDM"
 					}
 				},{
 					"path" : "MemberNutritiousFood/MemberNutritiousFood",
 					"style" : {
-						"navigationBarTitleText":"营养食品"
-					}
-				},{
-					"path" : "MemberCommonProblem/MemberCommonProblem",
-					"style" : {
-						"navigationBarTitleText":"常见问题"
-					}
-				},{
-					"path" : "MemberGoodLuckPlan/MemberGoodLuckPlan",
-					"style" : {
-						"navigationBarTitleText":"会员好运方案"
-					}
-				},{
-					"path" : "MemberDeepButler/MemberDeepButler",
-					"style" : {
-						"navigationBarTitleText":"深度管家介绍"
-					}
-				},{
-					"path" : "MemberCreateManager/MemberCreateManager",
-					"style" : {
-						"navigationBarTitleText":"建立个人健康管理师"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"营养食品"
 					}
 				},{
 					"path" : "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
 					"style" : {
-						"navigationBarTitleText":"营养食品介绍EDM"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"营养食品介绍EDM"
+					}
+				},{
+					"path" : "MemberCommonProblem/MemberCommonProblem",
+					"style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"常见问题"
+					}
+				},{
+					"path" : "MemberGoodLuckPlan/MemberGoodLuckPlan",
+					"style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"会员好运方案"
+					}
+				},{
+					"path" : "MemberDeepButler/MemberDeepButler",
+					"style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"深度管家介绍"
+					}
+				},{
+					"path" : "MemberCreateManager/MemberCreateManager",
+					"style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"建立个人健康管理师"
 					}
 				},{
 					"path" : "MemberRegistered/MemberRegistered",
 					"style" : {
-						"navigationBarTitleText":"会员注册"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"会员注册"
 					}
 				},{
 					"path" : "MemberTicketBox/MemberTicketBox",
 					"style" : {
-						"navigationBarTitleText":"票卷匣"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"票卷匣"
 					}
 				},{
 					"path" : "MemberFavoriteProduct/MemberFavoriteProduct",
 					"style" : {
-						"navigationBarTitleText":"收藏商品"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"收藏商品"
 					}
 				},{
 					"path" : "MemberOrderManagement/MemberOrderManagement",
 					"style" : {
-						"navigationBarTitleText":"订单管理"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"订单管理"
 					}
 				}
             ]
@@ -180,42 +204,50 @@
 				{
 					"path" : "KnowUsCompany/KnowUsCompany",
 					"style" : {
-						"navigationBarTitleText":"咱们"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"咱们"
 					}
 				},{
 					"path" : "KnowUsHealthConcept/KnowUsHealthConcept",
 					"style" : {
-						"navigationBarTitleText":"想做的事"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"想做的事"
 					}
 				},{
 					"path" : "KnowUsCelebritySays/KnowUsCelebritySays",
 					"style" : {
-						"navigationBarTitleText":"名人说"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"名人说"
 					}
 				},{
 					"path" : "KnowsUsHonor/KnowsUsHonor",
 					"style" : {
-						"navigationBarTitleText":"荣誉"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"荣誉"
 					}
 				},{
 					"path" : "KnowUsGoodLuckPlan/KnowUsGoodLuckPlan",
 					"style" : {
-						"navigationBarTitleText":"好运方案"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"好运方案"
 					}
 				},{
 					"path" : "KnowUsCommonProblem/KnowUsCommonProblem",
 					"style" : {
-						"navigationBarTitleText":"问与答"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"问与答"
 					}
 				},{
 					"path" : "KnowUsInternationalNews/KnowUsInternationalNews",
 					"style" : {
-						"navigationBarTitleText":"健康报"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"健康报"
 					}
 				},{
 					"path" : "KnowUsInternationalNewss/KnowUsInternationalNewss",
 					"style" : {
-						"navigationBarTitleText":"健康报"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"健康报"
 					}
 				}
 			]
@@ -225,15 +257,53 @@
 				{
 					"path" : "Search/Search",
 					"style" : {
-						"navigationBarTitleText":"搜寻"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"搜寻"
 					}
 				}
                 ,{
                     "path" : "ProductDetails/ProductDetails",
                     "style" : {
-						"navigationBarTitleText":"",
-						"navigationBarBackgroundColor": "#F6F6F6",
-						"backgroundColor": "#F6F6F6"
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"",
+						// "navigationBarBackgroundColor": "#F6F6F6",
+						// "backgroundColor": "#F6F6F6"
+					}
+                }
+                ,{
+                    "path" : "ShoppingCart/ShoppingCart",
+                    "style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"购物车",
+						// "navigationBarBackgroundColor": "#F8F8FA",
+						// "backgroundColor": "#F8F8FA"
+					}
+                }
+                ,{
+                    "path" : "AddressList/AddressList",
+                    "style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"管理收货地址",
+						// "navigationBarBackgroundColor": "#F8F8FA",
+						// "backgroundColor": "#F8F8FA"
+					}
+                }
+                ,{
+                    "path" : "AddAddress/AddAddress",
+                    "style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"添加地址",
+						// "navigationBarBackgroundColor": "#F8F8FA",
+						// "backgroundColor": "#F8F8FA"
+					}
+                }
+                ,{
+                    "path" : "OrderDetails/OrderDetails",
+                    "style" : {
+						"navigationStyle":"custom"
+						// "navigationBarTitleText":"订单详情",
+						// "navigationBarBackgroundColor": "#F8F8FA",
+						// "backgroundColor": "#F8F8FA"
 					}
                 }
             ]

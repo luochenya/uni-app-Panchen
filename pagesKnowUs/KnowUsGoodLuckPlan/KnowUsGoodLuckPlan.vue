@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsGoodLuckPlan">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'好运方案'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="KnowUsGoodLuckPlan_top">
 			<image class="KnowUsGoodLuckPlan_top_image" :src="imgUrl + dataFormList.imgs" mode=""></image>
 			<text class="KnowUsGoodLuckPlan_top_title">{{dataFormList.title}}</text>
@@ -29,6 +32,14 @@
 		},
 		onLoad:function(option) {
 			this.dataFormList = JSON.parse(option.item)
+		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 		}
 	}
 </script>
@@ -36,7 +47,7 @@
 <style lang="less">
 .KnowUsGoodLuckPlan {
 	.KnowUsGoodLuckPlan_top {
-		padding: 30rpx 4.27% 0;
+		padding: 20rpx 4.27% 0;
 		.KnowUsGoodLuckPlan_top_image {
 			width: 100%;
 			height: 352rpx;

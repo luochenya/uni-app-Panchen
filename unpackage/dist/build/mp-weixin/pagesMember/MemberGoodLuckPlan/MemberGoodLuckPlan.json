@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "会员好运方案",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation"
+  }
 }

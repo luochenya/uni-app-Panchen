@@ -93,7 +93,7 @@
   line-height: 36rpx;
 }
 .ProductDetails .ProductDetails_box .ProductDetails_box_sales view text.data-v-7812facc {
-  text-decoration: underline;
+  text-decoration: line-through;
 }
 .ProductDetails .ProductDetails_box .ProductDetails_box_num.data-v-7812facc {
   margin: 40rpx 0;
@@ -129,6 +129,7 @@
           justify-content: space-between;
 }
 .ProductDetails .ProductDetails_box .ProductDetails_box_num .ProductDetails_box_num_right .image1.data-v-7812facc {
+  height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -148,6 +149,7 @@
   line-height: 36rpx;
 }
 .ProductDetails .ProductDetails_box .ProductDetails_box_num .ProductDetails_box_num_right .image2.data-v-7812facc {
+  height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

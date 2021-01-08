@@ -1,5 +1,8 @@
 <template>
 	<view class="ProductDetails">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#F6F6F6'" :titleColor="'#FFFFFF'" @returnClick="returnClick"></top-navigation>
+		
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="info" :current="current" field="content">
 			<swiper @change="change" style="height: 580rpx;background: #F6F6F6;" autoplay="true" circular="true">
@@ -96,6 +99,12 @@
 			}
 	    },
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 轮播变动
 			change (e) {
 				this.current = e.detail.current;
@@ -169,7 +178,7 @@
 				color: #9FA0A2;
 				line-height: 36rpx;
 				text {
-					text-decoration: underline;
+					text-decoration: line-through;
 				}
 			}
 		}
@@ -193,6 +202,7 @@
 				align-items: center;
 				justify-content: space-between;
 				.image1 {
+					height: 100%;
 					display: flex;
 					align-items: center;
 					padding: 0 20rpx;
@@ -208,6 +218,7 @@
 					line-height: 36rpx;
 				}
 				.image2 {
+					height: 100%;
 					display: flex;
 					align-items: center;
 					padding: 0 20rpx;

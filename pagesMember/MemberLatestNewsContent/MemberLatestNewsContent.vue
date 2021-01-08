@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberLatestNewsContent">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'订单管理'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="MemberLatestNewsContent_image" :src="imgUrl + dataFormList.imgs" mode=""></image>
 		<text class="MemberLatestNewsContent_title">{{dataFormList.title}}</text>
 		<text class="MemberLatestNewsContent_content">{{dataFormList.content}}</text>
@@ -17,12 +20,20 @@
 		onLoad:function(option){
 			this.dataFormList = JSON.parse(option.items)
 		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
+		}
 	}
 </script>
 
 <style lang="scss" scoped>
 .MemberLatestNewsContent {
-	padding: 0 4.27%;
+	padding: 20px 4.27% 0;
 	.MemberLatestNewsContent_image {
 		width: 100%;
 		height: 352rpx;

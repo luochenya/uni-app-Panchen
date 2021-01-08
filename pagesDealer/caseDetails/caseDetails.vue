@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'案例'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="caseDetailsStyle">
 			<image class="caseDetailsImg" :src="imgUrl + caseDetailsList.imgs" mode=""></image>
 			<view class="caseDetailsTitle">
@@ -24,6 +27,14 @@
 		onLoad:function(option){
 			this.caseDetailsList = JSON.parse(option.items)
 		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
+		}
 	}
 </script>
 

@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowsUsHonor">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'荣誉'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="KnowsUsHonor_box" v-for="(item, index) in dataFormList">
 			<image class="KnowsUsHonor_box_left" :src="item.imgUrl" mode=""></image>
 			<view class="KnowsUsHonor_box_right">
@@ -32,13 +35,21 @@
 					content: "Sanddorn 100%有機 沙棘原汁德國農業金牌獎"
 				}]
 			};
+		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="less">
 .KnowsUsHonor {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.KnowsUsHonor_box:last-child {
 		border-bottom: none;
 	}

@@ -1,6 +1,7 @@
 {
-  "navigationBarTitleText": "课程详情",
+  "navigationStyle": "custom",
   "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation",
     "txv-video": "plugin://tencentvideo/video"
   }
 }

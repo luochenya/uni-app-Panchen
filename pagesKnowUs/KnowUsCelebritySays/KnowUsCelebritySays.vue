@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsCelebritySays">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'名人说'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="KnowUsCelebritySays_box" v-for="(item, index) in dataFormList" :key="index">
 			<image class="KnowUsCelebritySays_box_left" :src="imgUrl + item.imgs" mode=""></image>
 			<view class="KnowUsCelebritySays_box_right">
@@ -35,25 +38,31 @@
 			this.getWisdom()
 		},
 		methods:{
-				getWisdom () {
-					 // 加载动画
-					 uni.showLoading({
-						 title: '加载中'
-					 });
-					this.$http.post('Visitor/get_wisdom').then(res => {
-						// 关闭加载动画
-						uni.hideLoading();
-						if (res.data.code == 200) {
-							this.dataFormList = res.data.data
-						} else {
-							 uni.showToast({
-								icon: 'none',
-								title: res.data.msg,
-								duration: 2000
-							 })
-						}
-					})
-				},
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
+			getWisdom () {
+				 // 加载动画
+				 uni.showLoading({
+					 title: '加载中'
+				 });
+				this.$http.post('Visitor/get_wisdom').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataFormList = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
 		}
 	}
 </script>

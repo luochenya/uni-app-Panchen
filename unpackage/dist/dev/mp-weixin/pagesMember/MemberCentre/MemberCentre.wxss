@@ -37,6 +37,7 @@
   top: -100rpx;
   width: 151rpx;
   height: 375rpx;
+  z-index: 1000;
 }
 .MemberCentre .MemberCentre_name.data-v-59d778e0 {
   font-size: 36rpx;

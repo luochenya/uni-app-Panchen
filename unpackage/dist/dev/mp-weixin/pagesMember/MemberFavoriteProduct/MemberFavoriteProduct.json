@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "收藏商品",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation"
+  }
 }

@@ -92,7 +92,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
-var components
+var components = {
+  topNavigation: function() {
+    return __webpack_require__.e(/*! import() | components/top-navigation/top-navigation */ "components/top-navigation/top-navigation").then(__webpack_require__.bind(null, /*! @/components/top-navigation/top-navigation.vue */ 368))
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -136,6 +140,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -147,6 +154,12 @@ var _default =
     this.url = this.$imgUrl + option.edm;
   },
   methods: {
+    // 返回上一页
+    returnClick: function returnClick() {
+      uni.navigateBack({
+        delta: 1 });
+
+    },
     toSave: function toSave() {var _this = this;
       uni.showModal({
         title: '图片保存',

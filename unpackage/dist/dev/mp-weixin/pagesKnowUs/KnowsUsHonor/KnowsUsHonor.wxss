@@ -1,5 +1,5 @@
 .KnowsUsHonor {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .KnowsUsHonor .KnowsUsHonor_box:last-child {
   border-bottom: none;

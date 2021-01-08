@@ -1,5 +1,5 @@
 .consultingFeedback {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .consultingFeedback .consultingFeedback_textarea {
   padding: 24rpx 32rpx;

@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsInternationalNewss">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'健康报'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="KnowUsInternationalNewss_image" :src="imgUrl + dataFormList.imgs" mode=""></image>
 		<text class="KnowUsInternationalNewss_title">{{dataFormList.title}}</text>
 		<text class="KnowUsInternationalNewss_content">
@@ -18,13 +21,21 @@
 		},
 		onLoad:function(option){
 			this.dataFormList = JSON.parse(option.item)
+		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="less">
 .KnowUsInternationalNewss {
-	padding: 0 4.27%;
+	padding: 20px 4.27% 0;
 	.KnowUsInternationalNewss_image {
 		width: 100%;
 		height: 350rpx;

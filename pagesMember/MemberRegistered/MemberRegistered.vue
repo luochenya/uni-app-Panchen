@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberRegistered">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'会员注册'" @returnClick="returnClick"></top-navigation>
+		
 		<text class="MemberRegistered_h1">请填写以下注册信息</text>
 		<text class="MemberRegistered_h2">欢迎来到泛宸小程序</text>
 		<!-- 姓名 -->
@@ -96,6 +99,12 @@
 			}
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			toSkip () {
 				this.popupStatus = false
 				uni.redirectTo({

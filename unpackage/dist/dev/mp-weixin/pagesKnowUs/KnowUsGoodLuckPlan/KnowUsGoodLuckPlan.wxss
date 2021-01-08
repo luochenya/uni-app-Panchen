@@ -1,5 +1,5 @@
 .KnowUsGoodLuckPlan .KnowUsGoodLuckPlan_top {
-  padding: 30rpx 4.27% 0;
+  padding: 20rpx 4.27% 0;
 }
 .KnowUsGoodLuckPlan .KnowUsGoodLuckPlan_top .KnowUsGoodLuckPlan_top_image {
   width: 100%;

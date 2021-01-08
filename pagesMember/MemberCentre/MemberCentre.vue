@@ -1,5 +1,8 @@
 <template>
 	<view class="">
+		<!-- 顶部导航 -->
+		<top-navigation :type="1" :backgroundColor="'#3F3A39'" :title="'会员中心'" :titleColor="'#FFFFFF'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="MemberCentre">
 			<image class="MemberCentre_rightImg" src="../static/image/MemberCentre3.png" mode=""></image>
 			<text class="MemberCentre_name">王大宝</text>
@@ -48,6 +51,12 @@
 			}
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			ToMemberOrderManagement() {
 				uni.navigateTo({
 					url: "../MemberOrderManagement/MemberOrderManagement"
@@ -79,6 +88,7 @@
 		top: -100rpx;
 		width: 151rpx;
 		height: 375rpx;
+		z-index: 1000;
 	}
 	.MemberCentre_name {
 		font-size:36rpx;

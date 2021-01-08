@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberOrderManagement">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'订单管理'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="MemberOrderManagement_top">
 			<view :class="active == 0 ? 'active' : ''" @click="activeCLick(0)">
 				处理中
@@ -175,6 +178,12 @@
 			})
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			activeCLick(value) {
 				if (value == this.active) {
 					return false;

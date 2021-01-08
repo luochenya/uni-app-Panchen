@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberLatestNews">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'最新消息'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="member">
 			<!-- 轮播图 -->
 			<uni-swiper-dot :info="info" :current="current" field="content">
@@ -34,6 +37,12 @@
 			this._getMembersNewsList()
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			change (e) {
 				this.current = e.detail.current;
 			},
@@ -93,7 +102,7 @@
 
 <style lang="scss">
 .MemberLatestNews {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	// 轮播图
 	.memberImgStyle {
 		height: 344rpx;

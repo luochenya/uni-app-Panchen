@@ -1,27 +1,33 @@
 <template>
-	<view class="MemberFavoriteProduct">
-		<view class="MemberFavoriteProduct_box" v-for="(item, index) in dataList" :key="index" @click="toDetails(item)">
-			<view class="MemberFavoriteProduct_img">
-				<image :src="item.imgUrl" mode="aspectFill"></image>
+	<view class="">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'收藏商品'" @returnClick="returnClick"></top-navigation>
+		
+		<view class="MemberFavoriteProduct">
+			<view class="MemberFavoriteProduct_box" v-for="(item, index) in dataList" :key="index" @click="toDetails(item)">
+				<view class="MemberFavoriteProduct_img">
+					<image :src="item.imgUrl" mode="aspectFill"></image>
+				</view>
+				<view class="MemberFavoriteProduct_price">
+					<text>￥{{item.price}}</text>
+					<image src="../static/image/Favorites.png" mode=""></image>
+				</view>
+				<text class="MemberFavoriteProduct_title">
+					{{item.title}}
+				</text>
+				<view class="MemberFavoriteProduct_shoppingCart">
+					<image src="../static/image/shoppingCart.png" mode=""></image>
+					加入购物车
+				</view>
 			</view>
-			<view class="MemberFavoriteProduct_price">
-				<text>￥{{item.price}}</text>
-				<image src="../static/image/Favorites.png" mode=""></image>
-			</view>
-			<text class="MemberFavoriteProduct_title">
-				{{item.title}}
-			</text>
-			<view class="MemberFavoriteProduct_shoppingCart">
-				<image src="../static/image/shoppingCart.png" mode=""></image>
-				加入购物车
+			
+			<!-- 空数据组件 -->
+			<view class="MemberFavoriteProduct_null" v-if="dataList == [] || dataList.length < 1">
+				<image src="../static/image/MemberFavoriteProductNull.png" mode=""></image>
+				<text>尚无任何收藏</text>
 			</view>
 		</view>
 		
-		<!-- 空数据组件 -->
-		<view class="MemberFavoriteProduct_null" v-if="dataList == [] || dataList.length < 1">
-			<image src="../static/image/MemberFavoriteProductNull.png" mode=""></image>
-			<text>尚无任何收藏</text>
-		</view>
 	</view>
 </template>
 
@@ -61,6 +67,12 @@
 			};
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 商品详情
 			toDetails(item) {
 				console.log(item)

@@ -30,11 +30,11 @@
         "MemberGuardianCard/MemberGuardianCard",
         "MemberGuardianCardsDetails/MemberGuardianCardsDetails",
         "MemberNutritiousFood/MemberNutritiousFood",
+        "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
         "MemberCommonProblem/MemberCommonProblem",
         "MemberGoodLuckPlan/MemberGoodLuckPlan",
         "MemberDeepButler/MemberDeepButler",
         "MemberCreateManager/MemberCreateManager",
-        "MemberNutritiousFoodDetails/MemberNutritiousFoodDetails",
         "MemberRegistered/MemberRegistered",
         "MemberTicketBox/MemberTicketBox",
         "MemberFavoriteProduct/MemberFavoriteProduct",
@@ -58,7 +58,11 @@
       "root": "pagesMall",
       "pages": [
         "Search/Search",
-        "ProductDetails/ProductDetails"
+        "ProductDetails/ProductDetails",
+        "ShoppingCart/ShoppingCart",
+        "AddressList/AddressList",
+        "AddAddress/AddAddress",
+        "OrderDetails/OrderDetails"
       ]
     }
   ],
@@ -126,10 +130,16 @@
       "provider": "wxa75efa648b60994b"
     }
   },
-  "permission": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于收货地址"
+    }
+  },
   "usingComponents": {
     "mpopup": "/components/xuan-popup/xuan-popup",
     "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot",
-    "input-box": "/components/input-box/input-box"
-  }
+    "input-box": "/components/input-box/input-box",
+    "top-navigation": "/components/top-navigation/top-navigation"
+  },
+  "sitemapLocation": "sitemap0.json"
 }

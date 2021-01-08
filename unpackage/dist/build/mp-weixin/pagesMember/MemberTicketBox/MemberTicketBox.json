@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "票卷匣",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation"
+  }
 }

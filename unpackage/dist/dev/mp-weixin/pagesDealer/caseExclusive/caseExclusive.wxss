@@ -1,5 +1,5 @@
 .caseExclusive .spotNewsImg.data-v-94f764c6 {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
   width: 100%;
   height: 262rpx;
 }

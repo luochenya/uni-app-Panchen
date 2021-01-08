@@ -1,5 +1,8 @@
 <template>
 	<view class="spotNews">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'最新消息'" @returnClick="returnClick"></top-navigation>
+		
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="info" :current="current" field="content">
 			<swiper @change="change" autoplay="true" circular="true">
@@ -35,6 +38,12 @@
 			this._getNewsBannerList()
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取banner图
 			_getNewsBannerList () {
 				 // 加载动画
@@ -87,7 +96,7 @@
 
 <style lang="less" scoped>
 .spotNews {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.spotNewsImg {
 		width: 100%;
 		height: 262rpx;

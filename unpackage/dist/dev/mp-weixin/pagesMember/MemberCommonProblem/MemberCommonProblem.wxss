@@ -1,5 +1,5 @@
 .KnowUsCommonProblem {
-  padding: 28rpx 4.27% 0;
+  padding: 20rpx 4.27% 0;
 }
 .KnowUsCommonProblem .KnowUsCommonProblem_image {
   width: 100%;

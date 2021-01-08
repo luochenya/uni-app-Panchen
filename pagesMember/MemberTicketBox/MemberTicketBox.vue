@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberTicketBox">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'票卷匣'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="MemberTicketBox_top">
 			<view :class="active == 0 ? 'active' : ''" @click="activeCLick(0)">
 				未使用
@@ -111,6 +114,12 @@
 			})
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			activeCLick(value) {
 				if (value == this.active) {
 					return false;

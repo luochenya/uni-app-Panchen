@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsCommonProblem">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'常见问题'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="KnowUsCommonProblem_image" src="../static/image/MemberLatestNewsBanner.png" mode=""></image>
 		<view class="KnowUsCommonProblem_nav">
 			<view v-for="(item, index) in faqsClass" :key="index" :class="activeNum == index ? 'active' : ''" @click="activeClick(index)">{{item.class_name}}</view>
@@ -25,6 +28,12 @@
 			this._getFaqsClass()
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取问答分类
 			_getFaqsClass () {
 				 // 加载动画
@@ -90,7 +99,7 @@
 
 <style lang="less">
 .KnowUsCommonProblem {
-	padding: 28rpx 4.27% 0;
+	padding: 20rpx 4.27% 0;
 	.KnowUsCommonProblem_image {
 		width: 100%;
 		height: 262rpx;

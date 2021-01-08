@@ -1,5 +1,8 @@
 <template>
 	<view class="ShoppingMall">
+		<!-- 顶部导航 -->
+		<top-navigation :type="1" :backgroundColor="'#68B74D'" :title="'购物商城'" :titleColor="'#FFFFFF'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="ShoppingMall_search">
 			<view class="ShoppingMall_input">
 				<image src="../../static/mallImg/search.png" mode="" @click="toSearch()"></image>
@@ -128,6 +131,12 @@
 			};
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.switchTab({
+					url: '../member/index'
+				})
+			},
 			change (e) {
 				this.current = e.detail.current;
 			},

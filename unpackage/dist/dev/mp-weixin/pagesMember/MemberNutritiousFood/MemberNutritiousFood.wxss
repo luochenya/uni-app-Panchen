@@ -1,5 +1,5 @@
 .MemberNutritiousFood {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .MemberNutritiousFood .MemberNutritiousFood_box {
   padding: 40rpx 0;

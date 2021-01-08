@@ -1,5 +1,5 @@
 .courseDetails.data-v-265c4d8f {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .courseDetails .courseDetails_image.data-v-265c4d8f {
   width: 100%;

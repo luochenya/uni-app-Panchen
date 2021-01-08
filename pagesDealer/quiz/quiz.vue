@@ -1,5 +1,8 @@
 <template>
 	<view class="quiz">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="title" @returnClick="returnClick"></top-navigation>
+		
 		<view class="quiz_top">
 			<view class="quiz_top_num">
 				<text class="quiz_top_num_left">{{num  < 10 ? '0' + num  : num }}</text>
@@ -47,16 +50,24 @@
 			return {
 				num: 1,
 				quizList: [],
-				activeList: []
+				activeList: [],
+				title: ""
 			}
 		},
 		onLoad:function(option){
-			uni.setNavigationBarTitle({
-				title: option.title
-			})
+			// uni.setNavigationBarTitle({
+			// 	title: option.title
+			// })
+			this.title = option.title
 			this.gettingData(option.id)
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取数据
 			gettingData(id) {
 				 // 加载动画
@@ -126,7 +137,7 @@
 
 <style lang="less" scoped>
 .quiz {
-	padding: 0 8%;
+	padding: 20rpx 8% 0;
 	.quiz_top {
 		width: 100%;
 		height: 35vh;

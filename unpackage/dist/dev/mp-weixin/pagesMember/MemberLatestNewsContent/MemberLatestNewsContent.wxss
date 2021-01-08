@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .MemberLatestNewsContent.data-v-6dffff4c {
-  padding: 0 4.27%;
+  padding: 20px 4.27% 0;
 }
 .MemberLatestNewsContent .MemberLatestNewsContent_image.data-v-6dffff4c {
   width: 100%;

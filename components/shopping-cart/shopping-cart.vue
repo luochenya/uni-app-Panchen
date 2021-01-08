@@ -1,5 +1,5 @@
 <template>
-	<view class="shoppingCart">
+	<view class="shoppingCart" @click="toShoppingCart()">
 		<image src="../../static/mallImg/shoppingCarts.png" mode=""></image>
 		<view v-if="cartCount > 0">{{cartCount > 99 ? '99+' : cartCount}}</view>
 	</view>
@@ -17,6 +17,13 @@
 			    return this.$store.state.cart.cartCount;
 			}
 	    },
+		methods: {
+			toShoppingCart() {
+				uni.navigateTo({
+					url: '../../pagesMall/ShoppingCart/ShoppingCart'
+				})
+			}
+		}
 	}
 </script>
 

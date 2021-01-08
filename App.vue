@@ -1,7 +1,15 @@
 <script>
+	import Vue from 'vue'
 	export default {
 		onLaunch: function() {
-			
+			uni.getSystemInfo({//获取手机的状态栏高度单位px
+				success: function(e) {
+					Vue.prototype.$statusHeight = e.statusBarHeight;
+					let menu = wx.getMenuButtonBoundingClientRect();//获取获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点。（top表示上边框到手机顶部的距离 bottom是下边框到手机顶部的距离）
+					Vue.prototype.$menu = menu;
+					Vue.prototype.$barHeight = menu.bottom + menu.top - e.statusBarHeight;
+				}
+			})
 		},
 		onShow: function() {
 			

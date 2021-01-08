@@ -1,5 +1,8 @@
 <template>
 	<view class="consultingFeedback">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'资讯反馈'" @returnClick="returnClick"></top-navigation>
+		
 		<form @submit="submit()">
 			<textarea class="consultingFeedback_textarea" @input='bindTextAreaBlur' show-confirm-bar="false" :value="consultingFeedbackContent" maxlength="500" placeholder="请输入您的问题"/>
 		</form>
@@ -19,6 +22,12 @@
 			
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			bindTextAreaBlur:function(e){
 				this.consultingFeedbackContent = e.detail.value
 			},
@@ -73,7 +82,7 @@
 
 <style lang="less">
 .consultingFeedback {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.consultingFeedback_textarea {
 		padding: 24rpx 32rpx;
 		width: 100%;

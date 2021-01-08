@@ -1,5 +1,5 @@
 .KnowUsInternationalNews {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .KnowUsInternationalNews .KnowUsInternationalNews_image {
   width: 100%;

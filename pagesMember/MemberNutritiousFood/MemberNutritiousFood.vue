@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberNutritiousFood">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'营养食品'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="MemberNutritiousFood_box" v-for="(item, index) in dataFormList" :key="index" @click="toDetails(item.edm)">
 			<image class="MemberNutritiousFood_box_image" :src="imgUrl + item.imgs" mode=""></image>
 			<view class="MemberNutritiousFood_box_view">
@@ -28,6 +31,12 @@
 			this._getNutritionFoodsList()
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取列表
 			_getNutritionFoodsList () {
 				 // 加载动画
@@ -61,7 +70,7 @@
 
 <style lang="less">
 .MemberNutritiousFood {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.MemberNutritiousFood_box {
 		padding: 40rpx 0;
 		display: flex;

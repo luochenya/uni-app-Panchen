@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberCreateManager">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#F8F8FA'" :title="'建立个人健康管理师'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="MemberCreateManager_image" src="../static/image/MemberCreateManager.png" mode=""></image>
 		<!-- 姓名  电话 -->
 		<view class="MemberCreateManager_box">
@@ -124,6 +127,12 @@
 			this.dataTime = this.getNowFormatDate()
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 获取当前时间
 			getNowFormatDate() {
 				var date = new Date();
@@ -262,7 +271,7 @@
 
 <style lang="less">
 .MemberCreateManager {
-	padding: 0 4.27% 78rpx;
+	padding: 20rpx 4.27% 78rpx;
 	background:rgba(248,248,250,1);
 	.MemberCreateManager_popup {
 		width: 100vw;

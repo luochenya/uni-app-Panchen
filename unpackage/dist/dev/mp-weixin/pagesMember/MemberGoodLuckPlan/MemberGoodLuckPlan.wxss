@@ -1,5 +1,5 @@
 .MemberGoodLuckPlan .MemberGoodLuckPlan_top {
-  padding: 30rpx 4.27% 0;
+  padding: 20rpx 4.27% 0;
 }
 .MemberGoodLuckPlan .MemberGoodLuckPlan_top .MemberGoodLuckPlan_top_image {
   width: 100%;

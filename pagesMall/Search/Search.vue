@@ -1,5 +1,8 @@
 <template>
 	<view class="Search">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'搜寻'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="Search_input">
 			<image src="../../static/mallImg/search.png" mode="" @click="toSearch()"></image>
 			<input type="text" value="" v-model="searchValue" confirm-type="搜寻" @confirm="toSearch()" placeholder="搜寻您需要的商品" />
@@ -82,6 +85,12 @@
 			this.searchValue = option.value
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 加入购物车
 			addCart() {
 				this.$store.commit("cart/setCartCount", 99);

@@ -1,5 +1,8 @@
 <template>
 	<view class="w-100">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'守护卡介绍'" @returnClick="returnClick"></top-navigation>
+		
 		<view class="page-section swiper">
 			<view class="page-section-spacing">
 				<swiper class="swiper card_swiper" @change="is_active" active-class="selected" indicator-active-color="#000" :indicator-dots="false" :autoplay="autoplay" :interval="interval" :duration="duration" circular="ture" current="1" previous-margin="30px"  next-margin="30px">
@@ -48,6 +51,12 @@
 			this._getLuckCardList()
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			is_active(e){
 				this.active_index = e.detail.current;
 			},

@@ -1,15 +1,18 @@
 <template>
 	<view class="collegeOfEducation">
-			<!-- 轮播图 -->
-			<uni-swiper-dot :info="novelty" :current="current" field="content">
-					<swiper @change="change" autoplay="true" circular="true">
-							<swiper-item v-for="(item ,index) in novelty" :key="index">
-									<view>
-										<image :src="imgUrl + item.imgs" mode="" class="collegeOfEducation_image"></image>
-									</view>
-							</swiper-item>
-					</swiper>
-			</uni-swiper-dot>
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'教育学院'" @returnClick="returnClick"></top-navigation>
+		
+		<!-- 轮播图 -->
+		<uni-swiper-dot :info="novelty" :current="current" field="content">
+			<swiper @change="change" autoplay="true" circular="true">
+				<swiper-item v-for="(item ,index) in novelty" :key="index">
+					<view>
+						<image :src="imgUrl + item.imgs" mode="" class="collegeOfEducation_image"></image>
+					</view>
+				</swiper-item>
+			</swiper>
+		</uni-swiper-dot>
 		<view class="collegeOfEducation_title">推荐课程</view>
 		<view class="collegeOfEducation_box" @click="skipCourseDetails(item.id)" v-for="(item, index) in recommendedCourse" :key="index">
 			<view class="collegeOfEducation_box_content">
@@ -39,6 +42,12 @@
 			this._getCoursesBannerList()
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			change (e) {
 				this.current = e.detail.current;
 			},
@@ -97,7 +106,7 @@
 
 <style lang="less" scoped>
 .collegeOfEducation {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.collegeOfEducation_image {
 		width: 100%;
 		height: 262rpx;

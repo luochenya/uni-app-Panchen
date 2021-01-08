@@ -1,5 +1,5 @@
 .MemberCreateManager {
-  padding: 0 4.27% 78rpx;
+  padding: 20rpx 4.27% 78rpx;
   background: #f8f8fa;
 }
 .MemberCreateManager .MemberCreateManager_popup {

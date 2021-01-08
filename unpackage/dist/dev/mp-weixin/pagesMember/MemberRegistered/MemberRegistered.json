@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "会员注册",
-  "usingComponents": {}
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation"
+  }
 }

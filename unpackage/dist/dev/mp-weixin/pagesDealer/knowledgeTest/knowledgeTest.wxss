@@ -1,5 +1,5 @@
 .knowledgeTest {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .knowledgeTest .knowledgeTest_box {
   width: 100%;

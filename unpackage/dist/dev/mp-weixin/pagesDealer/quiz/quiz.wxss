@@ -1,5 +1,5 @@
 .quiz.data-v-2454821f {
-  padding: 0 8%;
+  padding: 20rpx 8% 0;
 }
 .quiz .quiz_top.data-v-2454821f {
   width: 100%;

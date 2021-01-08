@@ -1,8 +1,7 @@
 {
-  "navigationBarTitleText": "",
-  "navigationBarBackgroundColor": "#F6F6F6",
-  "backgroundColor": "#F6F6F6",
+  "navigationStyle": "custom",
   "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation",
     "uni-swiper-dot": "/components/uni-swiper-dot/uni-swiper-dot"
   }
 }

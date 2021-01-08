@@ -1,5 +1,8 @@
 <template>
 	<view class="MemberNutritiousFoodDetails">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'营养食品介绍EDM'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="MemberNutritiousFoodDetails_image" :src="url" @longpress="toSave()" mode=""></image>
 	</view>
 </template>
@@ -15,6 +18,12 @@
 			this.url = this.$imgUrl + option.edm
 		},
 		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			toSave() {
 				uni.showModal({
 					title: '图片保存',

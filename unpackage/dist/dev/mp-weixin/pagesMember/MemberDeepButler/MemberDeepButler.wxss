@@ -1,5 +1,5 @@
 .MemberDeepButler {
-  padding: 0 4.27% 140rpx;
+  padding: 20rpx 4.27% 140rpx;
 }
 .MemberDeepButler .MemberDeepButler_image {
   width: 100%;

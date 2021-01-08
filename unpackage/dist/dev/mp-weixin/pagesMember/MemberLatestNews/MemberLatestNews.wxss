@@ -25,7 +25,7 @@
 /* 透明度 */
 /* 文章场景相关 */
 .MemberLatestNews {
-  padding: 0 4.27%;
+  padding: 20rpx 4.27% 0;
 }
 .MemberLatestNews .memberImgStyle {
   height: 344rpx;

@@ -1,5 +1,8 @@
 <template>
 	<view class="KnowUsCompany">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'咱们'" @returnClick="returnClick"></top-navigation>
+		
 		<image class="KnowUsCompany_image" src="../static/image/KnowUsCompany.png" mode=""></image>
 		<text class="KnowUsCompany_title">移动养生有限公司</text>
 		<text class="KnowUsCompany_content">
@@ -16,13 +19,21 @@
 			return {
 				
 			};
+		},
+		methods:{
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 		}
 	}
 </script>
 
 <style lang="less">
 .KnowUsCompany {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.KnowUsCompany_image {
 		width: 100%;
 		height: 350rpx;

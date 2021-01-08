@@ -93,8 +93,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components = {
+  topNavigation: function() {
+    return __webpack_require__.e(/*! import() | components/top-navigation/top-navigation */ "components/top-navigation/top-navigation").then(__webpack_require__.bind(null, /*! @/components/top-navigation/top-navigation.vue */ 368))
+  },
   shoppingCart: function() {
-    return __webpack_require__.e(/*! import() | components/shopping-cart/shopping-cart */ "components/shopping-cart/shopping-cart").then(__webpack_require__.bind(null, /*! @/components/shopping-cart/shopping-cart.vue */ 365))
+    return __webpack_require__.e(/*! import() | components/shopping-cart/shopping-cart */ "components/shopping-cart/shopping-cart").then(__webpack_require__.bind(null, /*! @/components/shopping-cart/shopping-cart.vue */ 404))
   }
 }
 var render = function() {
@@ -134,7 +137,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shoppingCart = function shoppingCart() {__webpack_require__.e(/*! require.ensure | components/shopping-cart/shopping-cart */ "components/shopping-cart/shopping-cart").then((function () {return resolve(__webpack_require__(/*! ../../components/shopping-cart/shopping-cart.vue */ 365));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var shoppingCart = function shoppingCart() {__webpack_require__.e(/*! require.ensure | components/shopping-cart/shopping-cart */ "components/shopping-cart/shopping-cart").then((function () {return resolve(__webpack_require__(/*! ../../components/shopping-cart/shopping-cart.vue */ 404));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
 
 
 
@@ -218,6 +224,12 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
     this.searchValue = option.value;
   },
   methods: {
+    // 返回上一页
+    returnClick: function returnClick() {
+      uni.navigateBack({
+        delta: 1 });
+
+    },
     // 加入购物车
     addCart: function addCart() {
       this.$store.commit("cart/setCartCount", 99);
@@ -264,6 +276,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
       }
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

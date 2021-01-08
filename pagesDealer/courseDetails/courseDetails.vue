@@ -1,5 +1,8 @@
 <template>
 	<view class="courseDetails">
+		<!-- 顶部导航 -->
+		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'课程详情'" @returnClick="returnClick"></top-navigation>
+		
 		<!-- <video class="courseDetails_image" v-if="courseList.type == 2" :src="courseList.url" @error="videoErrorCallback" controls></video> -->
 		<txv-video class="courseDetails_image" v-if="courseList.type == 2" :vid="courseList.url" :playerid="courseList.url"></txv-video>
 		<image class="courseDetails_image" v-if="courseList.type == 1" :src="imgUrl + courseList.imgs" mode=""></image>
@@ -20,6 +23,12 @@
 			this.gettingData(option.id)
 		},
 		methods: {
+			// 返回上一页
+			returnClick() {
+				uni.navigateBack({
+					delta:1
+				})
+			},
 			// 视频播放报错
 			videoErrorCallback: function(e) {
 				// uni.showModal({
@@ -69,7 +78,7 @@
 
 <style lang="less" scoped>
 .courseDetails {
-	padding: 0 4.27%;
+	padding: 20rpx 4.27% 0;
 	.courseDetails_image {
 		width: 100%;
 		height: 352rpx;
