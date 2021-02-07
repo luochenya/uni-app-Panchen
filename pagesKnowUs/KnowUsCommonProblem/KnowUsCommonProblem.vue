@@ -63,14 +63,7 @@
 				 uni.showLoading({
 					 title: '加载中'
 				 });
-				this.$http.post(
-				'Visitor/get_faqs',
-					'\r\n--XXX' +
-					'\r\nContent-Disposition: form-data; name="class_id"' +
-					'\r\n' +
-					'\r\n' + id +
-					'\r\n--XXX--'
-					).then(res => {
+				this.$http.post('Visitor/get_faqs', { class_id: id }).then(res => {
 					// 关闭加载动画
 					uni.hideLoading();
 					if (res.data.code == 200) {

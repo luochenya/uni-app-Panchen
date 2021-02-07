@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
   "usingComponents": {
     "top-navigation": "/components/top-navigation/top-navigation",
+    "uni-load-more": "/components/uni-load-more/uni-load-more",
     "shopping-cart": "/components/shopping-cart/shopping-cart"
   }
 }

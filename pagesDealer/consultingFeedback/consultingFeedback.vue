@@ -46,12 +46,10 @@
 				 });
 				this.$http.post(
 					'System/sub_information',
-					'\r\n--XXX' +
-					'\r\nContent-Disposition: form-data; name="question"' +
-					'\r\n' +
-					'\r\n' + this.consultingFeedbackContent +
-					'\r\n--XXX--'
-					).then(res => {
+					{
+						question: this.consultingFeedbackContent
+					}
+				).then(res => {
 					// 关闭加载动画
 					uni.hideLoading();
 					if (res.data.code == 200) {

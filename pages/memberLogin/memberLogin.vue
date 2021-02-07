@@ -72,15 +72,11 @@
 					});
 					this.$member.post(
 						'Store/login',
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="username"' +
-						'\r\n' +
-						'\r\n' + this.userName +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="password"' +
-						'\r\n' +
-						'\r\n' + this.passWord +
-						'\r\n--XXX--').then(res => {
+						{
+							username: this.userName,
+							password: this.passWord,
+						},
+					).then(res => {
 						// 关闭加载动画
 						uni.hideLoading();
 						if (res.data.code == 200) {

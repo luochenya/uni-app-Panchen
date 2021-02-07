@@ -17,12 +17,36 @@
 			    return this.$store.state.cart.cartCount;
 			}
 	    },
+		created() {
+			this._getCart()
+		},
 		methods: {
 			toShoppingCart() {
 				uni.navigateTo({
 					url: '../../pagesMall/ShoppingCart/ShoppingCart'
 				})
-			}
+			},
+			// 获取购物车
+			_getCart() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_cart', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.$store.commit("cart/setCartCount", res.data.data.sum);
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
 		}
 	}
 </script>

@@ -223,35 +223,16 @@
 					});
 					this.$member.post(
 						'Store/insert_steward_material',
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="name"' +
-						'\r\n' +
-						'\r\n' + this.name +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="phone"' +
-						'\r\n' +
-						'\r\n' + this.phone +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="sex"' +
-						'\r\n' +
-						'\r\n' + this.sex +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="birthday"' +
-						'\r\n' +
-						'\r\n' + this.birthday +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="stature"' +
-						'\r\n' +
-						'\r\n' + this.stature +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="weight"' +
-						'\r\n' +
-						'\r\n' + this.weight +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="remark"' +
-						'\r\n' +
-						'\r\n' + this.remark +
-						'\r\n--XXX--').then(res => {
+						{
+							name: this.name,
+							phone: this.phone,
+							sex: this.sex,
+							birthday: this.birthday,
+							stature: this.stature,
+							weight: this.weight,
+							remark: this.remark,
+						},
+					).then(res => {
 						// 关闭加载动画
 						uni.hideLoading();
 						if (res.data.code == 200) {

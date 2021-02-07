@@ -176,6 +176,7 @@
 }
 .ProductDetails .ProductDetails_box .ProductDetails_box_details image.data-v-7812facc {
   width: 100%;
+  height: auto;
 }
 .ProductDetails .ProductDetails_operating.data-v-7812facc {
   padding: 26rpx 4.27%;

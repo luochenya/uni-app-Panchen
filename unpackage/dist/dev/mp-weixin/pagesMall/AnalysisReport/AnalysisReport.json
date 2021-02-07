@@ -1,0 +1,6 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "top-navigation": "/components/top-navigation/top-navigation"
+  }
+}

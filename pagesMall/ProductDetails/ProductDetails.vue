@@ -6,10 +6,9 @@
 		<!-- 轮播图 -->
 		<uni-swiper-dot :info="info" :current="current" field="content">
 			<swiper @change="change" style="height: 580rpx;background: #F6F6F6;" autoplay="true" circular="true">
-				<swiper-item v-for="(item ,index) in info" :key="index">
+				<swiper-item v-for="(item ,index) in dataForm.imgs" :key="index">
 					<view class="ShoppingMall_swiper">
-						<!-- <image :src="imgUrl + item.imgs" mode=""></image> -->
-						<image :src="item" mode="aspectFit"></image>
+						<image :src="imgUrl + item" mode=""></image>
 					</view>
 				</swiper-item>
 			</swiper>
@@ -17,21 +16,21 @@
 		
 		<view class="ProductDetails_box">
 			<view class="ProductDetails_box_title">
-				<text>{{dataForm.title}}</text>
-				<image v-if="dataForm.type == 0" src="../../static/mallImg/Collet.png" mode=""></image>
-				<image v-if="dataForm.type == 1" src="../../static/mallImg/NotCollet.png" mode=""></image>
+				<text>{{dataForm.goods_name}}</text>
+				<image v-if="dataForm.is_collect == 1" @click="addWishlist(dataForm.id, 2)" src="../../static/mallImg/Collet.png" mode=""></image>
+				<image v-if="dataForm.is_collect == 0" @click="addWishlist(dataForm.id, 1)" src="../../static/mallImg/NotCollet.png" mode=""></image>
 			</view>
 			<view class="ProductDetails_box_price">
 				<text>￥</text>
-				{{dataForm.price}}
+				{{dataForm.preferential_price}}
 			</view>
 			<view class="ProductDetails_box_sales">
 				<view>
 					原价：
-					<text>￥{{dataForm.OriginalPrice}}</text>
+					<text>￥{{dataForm.original_cost}}</text>
 				</view>
 				<view>
-					月销 {{dataForm.Sales}}
+					月销 {{dataForm.sales}}
 				</view>
 			</view>
 			<view class="ProductDetails_box_num">
@@ -48,27 +47,27 @@
 			</view>
 			<view class="ProductDetails_box_details">
 				<text>商品详情</text>
-				<image src="../../static/mallImg/ProductDetails1.png" mode="widthFix"></image>
+				<image :src="imgUrl + dataForm.details_imgs" mode="widthFix"></image>
 			</view>
 		</view>
 		
 		<view class="ProductDetails_operating">
-			<view class="ProductDetails_operating_shoppingCart">
+			<view class="ProductDetails_operating_shoppingCart" @click="toShoppingCart()">
 				<view class="shoppingCartLeft">
 					<view v-if="cartCount > 0">{{cartCount > 99 ? '99+' : cartCount}}</view>
 					<image src="../../static/mallImg/shoppingCartss.png" mode=""></image>
 				</view>
 				<text class="shoppingCartRight">购物车</text>
 			</view>
-			<view class="ProductDetails_operating_operating" v-if="dataForm.inStock > 0">
-				<view class="ProductDetails_operating_join">
+			<view class="ProductDetails_operating_operating" v-if="!stockStatus">
+				<view class="ProductDetails_operating_join" @click="addCart(dataForm.id)">
 					加入购物车
 				</view>
-				<view class="ProductDetails_operating_buy">
+				<view class="ProductDetails_operating_buy" @click="addCart(dataForm.id, 1)">
 					立即购买
 				</view>
 			</view>
-			<view class="ProductDetails_operating_outOfStock" v-if="dataForm.inStock <= 0">
+			<view class="ProductDetails_operating_outOfStock" v-if="stockStatus">
 				缺货中
 			</view>
 		</view>
@@ -82,23 +81,124 @@
 				num: 1,
 				imgUrl: this.$imgUrl,
 				current: 0,
-				info: [
-					require("../../static/mallImg/ProductDetails.png"),
-					require("../../static/mallImg/ProductDetails.png")
-				],
-				dataForm: {}
+				goods_id: "",
+				dataForm: {},
+				stockStatus: false
 			};
 		},
 		onLoad:function(option){
-			this.dataForm = JSON.parse(option.item)
-			console.log(this.dataForm)
+			this.goods_id = option.id
+			this._getGoodsRead()
 		},
 	    computed: {
 			cartCount() {
 			    return this.$store.state.cart.cartCount;
 			}
 	    },
+		watch: {
+			num: function() {
+				if (this.num > this.dataForm.stock) {
+					this.stockStatus = true
+				} else {
+					this.stockStatus = false
+				}
+			}
+		},
 		methods:{
+			// 获取商品详情
+			_getGoodsRead () {
+				 // 加载动画
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_goods_read', { goods_id: this.goods_id }).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataForm = res.data.data
+						if (res.data.stock <= 1) {
+							this.stockStatus = true
+						} else {
+							this.stockStatus = false
+						}
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
+			// 加入购物车
+			addCart(goods_id, type) {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				 const form = {
+					 goods_id: goods_id,
+					 quantity: this.num
+				 }
+				this.$member.post('Order/add_cart', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.$store.commit("cart/setCartCount", res.data.data.sum);
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+						 if (type == 1) {
+							 uni.redirectTo({
+							 	url: "../ShoppingCart/ShoppingCart"
+							 })
+						 }
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
+			// 收藏商品
+			addWishlist(goods_id, type) {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				 const form = {
+					 goods_id: goods_id,
+					 type: type
+				 }
+				this.$member.post('Order/add_to_wishlist', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+					if (res.data.code == 200) {
+						if (type == 2) {
+							this.dataForm.is_collect = 0
+						} else {
+							this.dataForm.is_collect = 1
+						}
+					}
+				})
+			},
+			// 跳转到购物车
+			toShoppingCart() {
+				uni.redirectTo({
+					url: "../ShoppingCart/ShoppingCart"
+				})
+			},
 			// 返回上一页
 			returnClick() {
 				uni.navigateBack({
@@ -242,6 +342,7 @@
 			}
 			image {
 				width: 100%;
+				height: auto;
 			}
 		}
 	}

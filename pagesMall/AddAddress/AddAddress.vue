@@ -39,7 +39,7 @@
 			设为默认地址
 		</view>
 		<view class="AddAddress_button">
-			<view>
+			<view @click="addRegion()">
 				确认添加地址
 			</view>
 		</view>
@@ -82,8 +82,8 @@
 			// 确定放弃编辑
 			deleteClick() {
 				this.deteleStatus = false
-				uni.redirectTo({
-					url: "../AddressList/AddressList"
+				uni.navigateBack({
+					delta:1
 				})
 			},
 			// 选择地址
@@ -103,6 +103,33 @@
 						});
 					}
 				});
+			},
+			// 新增地址
+			addRegion() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				 const form = {
+					 is_default: this.status ? 1 : 0,
+					 receiver_name: this.userName,
+					 receiver_phone: this.phone,
+					 receiver_provinces: this.region,
+					 receiver_address: this.addr,
+				 }
+				this.$member.post('Order/add_shipping', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+					if (res.data.code == 200) {
+						uni.redirectTo({
+							url: '../AddressList/AddressList'
+						})
+					}
+				})
 			}
 		}
 	}

@@ -374,19 +374,18 @@
   overflow-y: scroll;
 }
 .ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVcAAABkCAMAAAAFdoOdAAAAOVBMVEUAAAD/gCD////6hRv/////iRz////8hh3////8hR7////8hh3////7hh7////7hh7////7hh7///94EmXKAAAAEXRSTlMACAgwMDY2Tk6SkuPj5+f4+ByQZAUAAAEISURBVHja7d1bDoJQEETBC/JWVO7+F2tMFDbAmJips4RK/3cZ1y20puy1NUv3qQSzbv3hOtQ8sCWYdZsP1yWPaw13fVy+rN2T64ldP7DdrXI9dbFz37TDkmmtP3F9V7PFlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrly5cuXKlStXrn55/9XVj3TMWv2ehzSXvSWT6xrs2h+uQx7WexmDYZvDtc3DOr0A1Ck8ZL+XkHcAAAAASUVORK5CYII=);
   margin-bottom: 24rpx;
   width: 100%;
   height: 200rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  background: #FFFFFF;
   box-shadow: 0px 10rpx 40rpx -2rpx #EFEFEF;
 }
 .ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .left {
   width: 204rpx;
   height: 100%;
-  background: #FB861E;
   font-size: 28rpx;
   font-weight: 400;
   color: #FFFFFF;
@@ -409,24 +408,6 @@
   color: #FFFFFF;
   line-height: 140rpx;
 }
-.ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .left .left_radialGradient1 {
-  background: -webkit-radial-gradient(right top, 20rpx, #fff 40rpx, #FB861E 50%);
-  background: radial-gradient(20rpx at right top, #fff 40rpx, #FB861E 50%);
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 20rpx;
-  height: 20rpx;
-}
-.ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .left .left_radialGradient2 {
-  background: -webkit-radial-gradient(right bottom, 20rpx, #fff 40rpx, #FB861E 50%);
-  background: radial-gradient(20rpx at right bottom, #fff 40rpx, #FB861E 50%);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 20rpx;
-  height: 20rpx;
-}
 .ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .right {
   padding: 40rpx;
   width: calc(100% - 204rpx);
@@ -441,24 +422,6 @@
   -webkit-justify-content: space-between;
           justify-content: space-between;
   position: relative;
-}
-.ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .right .right_radialGradient1 {
-  background: -webkit-radial-gradient(left top, 20rpx, #fff 40rpx, #fff 50%);
-  background: radial-gradient(20rpx at left top, #fff 40rpx, #fff 50%);
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 20rpx;
-  height: 20rpx;
-}
-.ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .right .right_radialGradient2 {
-  background: -webkit-radial-gradient(left bottom, 20rpx, #fff 40rpx, #fff 50%);
-  background: radial-gradient(20rpx at left bottom, #fff 40rpx, #fff 50%);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 20rpx;
-  height: 20rpx;
 }
 .ShoppingCart .ShoppingCart_coupon .ShoppingCart_coupon_box .ShoppingCart_coupon_box_content .ShoppingCart_coupon_box_content_list .right .text {
   width: calc(100% - 60rpx);

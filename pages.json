@@ -306,6 +306,12 @@
 						// "backgroundColor": "#F8F8FA"
 					}
                 }
+                ,{
+                    "path" : "AnalysisReport/AnalysisReport",
+                    "style" : {
+						"navigationStyle":"custom"
+					}
+                }
             ]
 		}
 	],

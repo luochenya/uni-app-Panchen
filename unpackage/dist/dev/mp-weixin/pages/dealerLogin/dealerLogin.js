@@ -197,15 +197,11 @@ var _default =
 
         this.$http.post(
         'Account/login',
-        '\r\n--XXX' +
-        '\r\nContent-Disposition: form-data; name="username"' +
-        '\r\n' +
-        '\r\n' + this.userName +
-        '\r\n--XXX' +
-        '\r\nContent-Disposition: form-data; name="password"' +
-        '\r\n' +
-        '\r\n' + this.passWord +
-        '\r\n--XXX--').then(function (res) {
+        {
+          username: this.userName,
+          password: this.passWord }).
+
+        then(function (res) {
           // 关闭加载动画
           uni.hideLoading();
           if (res.data.code == 200) {

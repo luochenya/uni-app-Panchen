@@ -144,19 +144,12 @@
 					});
 					this.$member.post(
 						'Store/register',
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="name"' +
-						'\r\n' +
-						'\r\n' + this.name +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="password"' +
-						'\r\n' +
-						'\r\n' + this.passWord +
-						'\r\n--XXX' +
-						'\r\nContent-Disposition: form-data; name="phone"' +
-						'\r\n' +
-						'\r\n' + this.phone +
-						'\r\n--XXX--').then(res => {
+						{
+							name: this.name,
+							password: this.passWord,
+							phone: this.phone
+						},
+					).then(res => {
 						// 关闭加载动画
 						uni.hideLoading();
 						if (res.data.code == 200) {

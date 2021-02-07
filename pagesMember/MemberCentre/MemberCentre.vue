@@ -5,13 +5,13 @@
 		
 		<view class="MemberCentre">
 			<image class="MemberCentre_rightImg" src="../static/image/MemberCentre3.png" mode=""></image>
-			<text class="MemberCentre_name">王大宝</text>
-			<text class="MemberCentre_phone">0912-234-567</text>
+			<text class="MemberCentre_name">{{dataForm.name}}</text>
+			<text class="MemberCentre_phone">{{dataForm.phone}}</text>
 			<view class="MemberCentre_box">
 				<view class="MemberCentre_box_left">
 					<text class="MemberCentre_box_left_title">当前点数</text>
 					<view class="MemberCentre_box_left_content">
-						<text class="MemberCentre_box_left_content_num">500</text>
+						<text class="MemberCentre_box_left_content_num">{{dataForm.points}}</text>
 						<text class="MemberCentre_box_left_content_text">点</text>
 					</view>
 				</view>
@@ -39,6 +39,12 @@
 				</view>
 				<text>收藏商品</text>
 			</view>
+			<view class="MemberCentre_content_view" @click="ToAnalysisReport()">
+				<view class="">
+					<image src="../static/image/MemberCentre8.png" mode=""></image>
+				</view>
+				<text>分析报告</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -47,10 +53,28 @@
 	export default {
 		data () {
 			return {
-				
+				dataForm: {}
 			}
 		},
+		onLoad() {
+			this._getMemberInfo()
+		},
 		methods: {
+			// 获取会员信息
+			_getMemberInfo () {
+				 // 加载动画
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Store/get_member_info').then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					this.dataForm = res.data.data
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
+			
 			// 返回上一页
 			returnClick() {
 				uni.navigateBack({
@@ -71,7 +95,12 @@
 				uni.navigateTo({
 					url: "../MemberFavoriteProduct/MemberFavoriteProduct"
 				})
-			}
+			},
+			ToAnalysisReport() {
+				uni.navigateTo({
+					url: "../../pagesMall/AnalysisReport/AnalysisReport"
+				})
+			},
 		}
 	}
 </script>
@@ -154,9 +183,11 @@
 	width: 100%;
 	padding: 0 4.27%;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
+	flex-wrap: wrap;
 	.MemberCentre_content_view {
+		margin-bottom: 50rpx;
 		width: 33.33%;
 		display: flex;
 		justify-content: center;

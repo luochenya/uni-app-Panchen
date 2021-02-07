@@ -4,48 +4,48 @@
 		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'订单管理'" @returnClick="returnClick"></top-navigation>
 		
 		<view class="MemberOrderManagement_top">
-			<view :class="active == 0 ? 'active' : ''" @click="activeCLick(0)">
+			<view :class="form.state == 1 ? 'active' : ''" @click="activeCLick(1)">
 				处理中
 			</view>
-			<view :class="active == 1 ? 'active' : ''" @click="activeCLick(1)">
+			<view :class="form.state == 2 ? 'active' : ''" @click="activeCLick(2)">
 				已发货
 			</view>
 		</view>
 		
 		<!-- 空数据组件 -->
-		<view class="MemberOrderManagement_null" v-if="dataLists == [] || dataLists.length < 1">
+		<view class="MemberOrderManagement_null" v-if="dataList.length == 0">
 			<image src="../static/image/MemberOrderManagementNull.png" mode=""></image>
-			<text v-if="active == 0">尚无处理中之订单</text>
-			<text v-if="active == 1">尚无已发货之订单</text>
+			<text v-if="form.state == 1">尚无处理中之订单</text>
+			<text v-if="form.state == 2">尚无已发货之订单</text>
 		</view>
 		
-		<view class="MemberOrderManagement_box" v-for="(item, index) in dataLists" :key="index">
+		<view class="MemberOrderManagement_box" v-for="(item, index) in dataList" :key="index">
 			<view class="MemberOrderManagement_box_title" @click="statusClick(index)">
 				<view class="titleLeft">
-					<image v-if="item.type == 0" src="../static/image/MemberOrderManagement1.png" mode=""></image>
-					<image v-if="item.type == 1" src="../static/image/MemberOrderManagement2.png" mode=""></image>
-					<text>訂單編號：{{item.orderNo}}</text>
+					<image v-if="form.state == 1" src="../static/image/MemberOrderManagement1.png" mode=""></image>
+					<image v-if="form.state == 2" src="../static/image/MemberOrderManagement2.png" mode=""></image>
+					<text>訂單編號：{{item.order_no}}</text>
 				</view>
 				<view class="titleRight">
-					<text v-if="!statusList[index]">{{item.price}}</text>
+					<text v-if="!statusList[index]">{{item.payment}}</text>
 					<image :class="statusList[index] ? 'active' : ''" src="../static/image/MemberOrderManagement3.png" mode=""></image>
 				</view>
 			</view>
 			
 			<view class="MemberOrderManagement_box_content" v-if="statusList[index]">
-				<view class="MemberOrderManagement_box_content_box" v-for="(items, indexs) in item.productList" :key="indexs">
+				<view class="MemberOrderManagement_box_content_box" v-for="(items, indexs) in item.goods_item" :key="indexs">
 					<view class="contentLeft">
-						<image :src="items.imgUrl" mode=""></image>
+						<image :src="imgUrl + items.imgs" mode=""></image>
 					</view>
 					<view class="contentRight">
 						<text class="title1">
-							{{items.title}}
+							{{items.goods_name}}
 						</text>
 						<text class="title2">
 							单价：{{items.price}}    X {{items.num}}
 						</text>
 						<text class="title3">
-							小计：{{items.Total}}
+							小计：{{items.total_fee}}
 						</text>
 					</view>
 				</view>
@@ -53,131 +53,97 @@
 			
 			<view class="MemberOrderManagement_box_bottom" :class="item.type == 1 ? 'MemberOrderManagement_box_bottom_active' : ''" v-if="statusList[index]">
 				<text class="textLeft">合計</text>
-				<text class="textRight">{{item.price}}</text>
+				<text class="textRight">{{item.total}}</text>
 			</view>
 		</view>
+		
+		<uni-load-more :status="status" :icon-size="14" :content-text="contentText" v-if="dataList.length > 0" />
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue"
 	export default {
+		components:{
+			uniLoadMore
+		},
 		data() {
 			return {
-				active: 0,
+				imgUrl: this.$imgUrl,
+				reload: false,
+				status: 'more',
+				contentText: {
+					contentdown: '上拉加载更多~',
+					contentrefresh: '加载中',
+					contentnomore: '已经没有更多啦~'
+				},
+				total: 0,
+				form: {
+					offset: 1,
+					limit: 10,
+					state: 1
+				},
 				statusList: [],
-				dataLists: [],
-				dataList: [
-					{
-						orderNo: "1022233343453",
-						price: "￥930.00",
-						type: 0,
-						productList: [
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 1,
-								Total: "￥310.00"
-							},
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 2,
-								Total: "￥620.00"
-							}
-						]
-					},
-					{
-						orderNo: "1022233343453",
-						price: "￥930.00",
-						type: 0,
-						productList: [
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 1,
-								Total: "￥310.00"
-							},
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 2,
-								Total: "￥620.00"
-							}
-						]
-					},
-					{
-						orderNo: "3332323343453",
-						price: "￥935.00",
-						type: 1,
-						productList: [
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥315.00",
-								num: 1,
-								Total: "￥315.00"
-							},
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 2,
-								Total: "￥620.00"
-							}
-						]
-					},
-					{
-						orderNo: "3332323343453",
-						price: "￥931.00",
-						type: 1,
-						productList: [
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥311.00",
-								num: 1,
-								Total: "￥311.00"
-							},
-							{
-								imgUrl: require("../static/image/MemberFavoriteProduct2.png"),
-								title: "成年搭长高神器钙片青少年学生个子高钙",
-								price: "￥310.00",
-								num: 2,
-								Total: "￥620.00"
-							}
-						]
-					}
-				]
+				dataList: []
 			};
 		},
-		watch:{
-			active:function() {
-				this.statusList = []
-				this.dataLists = []
-				this.dataList.forEach((item, index) => {
-					if (item.type == 0 && this.active == 0) {
-						this.statusList.push(false)
-						this.dataLists.push(item)
-					} else if (item.type == 1 && this.active == 1) {
-						this.statusList.push(false)
-						this.dataLists.push(item)
-					}
-				})
+		onLoad() {
+			this._getOrdersList(1)
+		},
+		// 监听下拉事件
+		onReachBottom() {
+			if (this.totalCount > this.dataList.length) {
+				this.status = 'loading';
+				setTimeout(() => {
+					this.form.offset++
+					this._getOrdersList(2);//执行的方法
+				}, 1000)//这里我是延迟一秒在加载方法有个loading效果，如果接口请求慢的话可以去掉
+			} else { //停止加载
+				this.status = 'noMore'
 			}
 		},
-		onLoad() {
-			this.dataList.forEach((item, index) => {
-				if (item.type == 0) {
-					this.statusList.push(false)
-					this.dataLists.push(item)
-				}
-			})
-		},
 		methods: {
+			// 获取订单列表
+			_getOrdersList (num) {
+				 // 加载动画
+				 if (num == 1) {
+					 uni.showLoading({
+					 	title: '加载中',
+					 });
+				 }
+				this.$member.post('Order/get_orders_list', this.form).then(res => {
+					// 关闭加载动画
+					 if (num == 1) {
+						uni.hideLoading();
+					}
+					if (res.data.code == 200) {
+						this.total = res.data.data.total
+						this.totalCount = res.data.data.total
+						if (res.data.data.total > 0) {
+							const dataMap = res.data.data.rows
+							this.dataList = this.reload ? dataMap : this.dataList.concat(dataMap);
+							this.reload = false;
+							this.dataList.forEach(item => {
+								this.statusList.push(false)
+							})
+						} else {
+							this.dataList = [];
+						}
+						if (this.totalCount == this.dataList.length) {
+							this.reload = false;
+							this.status = 'noMore'
+						}
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
 			// 返回上一页
 			returnClick() {
 				uni.navigateBack({
@@ -185,10 +151,13 @@
 				})
 			},
 			activeCLick(value) {
-				if (value == this.active) {
-					return false;
-				}
-				this.active = value
+				this.form.state = value
+				this.reload = true
+				this._getOrdersList(1)
+				// if (value == this.active) {
+				// 	return false;
+				// }
+				// this.active = value
 			},
 			statusClick(index) {
 				this.statusList.splice(index, 1, !this.statusList[index])

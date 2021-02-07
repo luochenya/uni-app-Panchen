@@ -28,7 +28,10 @@
 				{{item}}
 			</view>
 			<view class="quiz_bottom_switch">
-				<view @click="PreviousQuestion()">
+				<view  v-if="num == 1">
+					
+				</view>
+				<view @click="PreviousQuestion()" v-if="num != 1">
 					<image src="../static/image/left.png" mode=""></image>
 					<text>上一题</text>
 				</view>
@@ -74,13 +77,7 @@
 				 uni.showLoading({
 					 title: '加载中'
 				 });
-				this.$http.post(
-					'System/get_exam_question_details',
-					'\r\n--XXX' +
-					'\r\nContent-Disposition: form-data; name="id"' +
-					'\r\n' +
-					'\r\n' + id +
-					'\r\n--XXX--').then(res => {
+				this.$http.post('System/get_exam_question_details', {id: id}).then(res => {
 					// 关闭加载动画
 					uni.hideLoading();
 					if (res.data.code == 200) {
@@ -191,8 +188,10 @@
 			align-items: center;
 			justify-content: space-around;
 			view {
+				width: 50%;
 				display: flex;
 				align-items: center;
+				justify-content: center;
 				font-size: 30rpx;
 				font-weight: 400;
 				color: #68B74D;

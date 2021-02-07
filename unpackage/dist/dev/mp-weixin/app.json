@@ -62,7 +62,8 @@
         "ShoppingCart/ShoppingCart",
         "AddressList/AddressList",
         "AddAddress/AddAddress",
-        "OrderDetails/OrderDetails"
+        "OrderDetails/OrderDetails",
+        "AnalysisReport/AnalysisReport"
       ]
     }
   ],
@@ -141,5 +142,5 @@
     "input-box": "/components/input-box/input-box",
     "top-navigation": "/components/top-navigation/top-navigation"
   },
-  "sitemapLocation": "sitemap0.json"
+  "sitemapLocation": "sitemap26.json"
 }

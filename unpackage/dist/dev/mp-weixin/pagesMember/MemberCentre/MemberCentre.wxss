@@ -107,13 +107,17 @@
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  -webkit-justify-content: space-around;
-          justify-content: space-around;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
   -webkit-box-align: center;
   -webkit-align-items: center;
           align-items: center;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
 }
 .MemberCentre_content .MemberCentre_content_view.data-v-59d778e0 {
+  margin-bottom: 50rpx;
   width: 33.33%;
   display: -webkit-box;
   display: -webkit-flex;

@@ -18,23 +18,23 @@
 				</view>
 				<view class="ShoppingCart_list_content">
 					<view class="ShoppingCart_list_content_box" v-for="(item, index) in dataList" :key="index">
-						<image class="ShoppingCart_list_content_close" @click="openDetele(item)" src="../../static/mallImg/close.png" mode=""></image>
+						<image class="ShoppingCart_list_content_close" @click="openDetele(item.id)" src="../../static/mallImg/close.png" mode=""></image>
 						<view class="ShoppingCart_list_content_img">
-							<image :src="item.imgUrl" mode=""></image>
+							<image :src="imgUrl + item.details_imgs" mode=""></image>
 						</view>
 						<view class="ShoppingCart_list_content_price">
 							<view class="ShoppingCart_list_content_price_title">
-								{{item.title}}
+								{{item.goods_name}}
 							</view>
 							<view class="ShoppingCart_list_content_price_operating">
 								<view class="price">
 									<text class="subtotal">小计：￥{{item.subtotal}}</text>
-									<text class="unitPrice">单价：￥{{item.price}}</text>
+									<text class="unitPrice">单价：￥{{item.preferential_price}}</text>
 								</view>
 								<view class="operating">
-									<image class="less" src="../../static/mallImg/less.png" mode=""></image>
-									<text class="num">{{item.num}}</text>
-									<image class="add" src="../../static/mallImg/add.png" mode=""></image>
+									<image class="less" @click="_updateCart(item.id, index, 0)" src="../../static/mallImg/less.png" mode=""></image>
+									<text class="num">{{item.quantity}}</text>
+									<image class="add" @click="_updateCart(item.id, index, 1)" src="../../static/mallImg/add.png" mode=""></image>
 								</view>
 							</view>
 						</view>
@@ -67,7 +67,7 @@
 					总金额
 					<text class="ShoppingCart_Settlement_left_text">
 						<text>￥</text>
-						1240.00
+						{{total_prices}}
 					</text>
 				</view>
 				<view class="ShoppingCart_Settlement_right" @click="nextClick()">
@@ -98,7 +98,7 @@
 							<view class="left_radialGradient1"></view>
 							<view class="left_radialGradient2"></view>
 							<view class="">
-								<text>{{item.couponNum}}</text>
+								<text>{{item.discount}}</text>
 								折
 							</view>
 						</view>
@@ -106,7 +106,7 @@
 							<view class="right_radialGradient1"></view>
 							<view class="right_radialGradient2"></view>
 							<view class="text">
-								{{item.title}}
+								{{item.coupon_name}}
 							</view>
 							<image v-if="couponActive != index" src="../../static/mallImg/couponDefault.png" mode=""></image>
 							<image v-if="couponActive == index" src="../../static/mallImg/couponSelect.png" mode=""></image>
@@ -131,7 +131,7 @@
 					<view class="view_left" @click="deteleStatus = false">
 						取消
 					</view>
-					<view class="view_right" @click="deleteClick()">
+					<view class="view_right" @click="delCart()">
 						确定
 					</view>
 				</view>
@@ -144,48 +144,130 @@
 	export default {
 		data() {
 			return {
-				leavemessage: "",
-				dataList: [
-					{
-						imgUrl: require("../../static/mallImg/ShoppingMall.png"),
-						title: "成年搭长高神器钙片青少年学生个子高钙",
-						subtotal: "310.00",
-						price: "310.00",
-						num: 1
-					},
-					{
-						imgUrl: require("../../static/mallImg/ShoppingMall.png"),
-						title: "成年搭长高神器钙片青少年学生个子高钙11111",
-						subtotal: "660.00",
-						price: "330.00",
-						num: 2
-					}
-				],
+				imgUrl: this.$imgUrl,
+				dataList: [],
 				couponActive: 0,
 				couponStatus: false,
 				couponTitle: "",
-				couponList: [
-					{
-						couponNum: 9,
-						title: "VIP客户9折券"
-					},
-					{
-						couponNum: 7,
-						title: "全部商品七折"
-					},
-					{
-						couponNum: 9,
-						title: "VIP客户9折券"
-					},
-					{
-						couponNum: 7,
-						title: "全部商品七折"
-					}
-				],
-				deteleStatus: false
+				couponList: [],
+				deteleStatus: false,
+				deteleCart_id: "",
+				dataForm: {},
+				total_prices: 0,
+				total_pricess: 0,
+				
+				couponDiscount: 10,
+				couponId: "",
+				leavemessage: "",
 			}
 		},
-		methods: {
+		onLoad(option) {
+			if (option.data) {
+				this.dataForm = JSON.parse(option.data)
+				this.couponDiscount = JSON.parse(option.form).couponDiscount
+				this.couponId = JSON.parse(option.form).couponId
+				this.leavemessage = JSON.parse(option.form).leavemessage
+				this.couponTitle = JSON.parse(option.form).couponTitle
+			}
+			this._getCart()
+			this._getMembersCoupon()
+		},
+		methods: { 
+			// 获取购物车
+			_getCart() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_cart', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataList = res.data.data.rows
+						this.total_prices = Number(res.data.data.total_prices) * (Number(this.couponDiscount ) / 10)
+						this.total_prices = this.total_prices.toFixed(2)
+						this.total_pricess = res.data.data.total_prices
+						this.$store.commit("cart/setCartCount", res.data.data.sum);
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
+			// 获取会员优惠卷
+			_getMembersCoupon() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_members_coupon', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.couponList = res.data.data
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
+			// 修改购物车
+			_updateCart(id, index, type) {
+				if (type == 0) {
+					this.dataList[index].quantity--
+				} else {
+					this.dataList[index].quantity++
+				}
+				const form = {
+					cart_id: id,
+					quantity: this.dataList[index].quantity
+				}
+				uni.showLoading({
+					title: '加载中',
+				});
+				this.$member.post('Order/update_cart', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+						this._getCart()
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
+			
+			// 删除购物车
+			delCart() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/del_cart', {cart_id: this.deteleCart_id}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					 uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					 })
+					if (res.data.code == 200) {
+						this.deteleStatus = false
+						this._getCart()
+					}
+				})
+			},
 			// 返回上一页
 			returnClick() {
 				uni.redirectTo({
@@ -194,15 +276,42 @@
 			},
 			// 选择地址
 			addressClcik() {
+				const form = {
+					// 折扣
+					couponDiscount: this.couponDiscount,
+					// 折扣ID
+					couponId: this.couponId,
+					// 买家留言
+					leavemessage: this.leavemessage,
+					couponTitle: this.couponTitle
+				}
+				const forms = JSON.stringify(form)
 				uni.navigateTo({
-					url: '../AddressList/AddressList'
+					url: '../AddressList/AddressList?data=' + JSON.stringify(this.dataForm) + '&form=' + forms 
 				})
 			},
 			// 下一步
 			nextClick() {
-				uni.navigateTo({
-					url: '../OrderDetails/OrderDetails'
-				})
+				const form = {
+					// 折扣
+					couponDiscount: this.couponDiscount,
+					// 折扣ID
+					couponId: this.couponId,
+					// 买家留言
+					leavemessage: this.leavemessage
+				}
+				const forms = JSON.stringify(form)
+				// 地址存在时
+				if (this.dataForm) {
+					const addrs = JSON.stringify(this.dataForm)
+					uni.navigateTo({
+						url: '../OrderDetails/OrderDetails?form=' + forms + '&addrs=' + addrs
+					})
+				} else {
+					uni.navigateTo({
+						url: '../OrderDetails/OrderDetails?form=' + form
+					})
+				}
 			},
 			// 备注清空
 			EmptyInputClick() {
@@ -218,17 +327,17 @@
 					return false
 				}
 				this.couponStatus = false
-				this.couponTitle = this.couponList[this.couponActive].title
+				this.couponTitle = this.couponList[this.couponActive].coupon_name
+				this.couponDiscount = this.couponList[this.couponActive].discount
+				this.couponId = this.couponList[this.couponActive].id
+				this.total_prices = Number(this.total_pricess) * (Number(this.couponList[this.couponActive].discount) / 10)
+				this.total_prices = this.total_prices.toFixed(2)
 			},
 			// 打开删除弹窗
-			openDetele(item) {
-				console.log(item)
+			openDetele(id) {
+				this.deteleCart_id = id
 				this.deteleStatus = true
 			},
-			// 确定删除商品
-			deleteClick() {
-				this.deteleStatus = false
-			}
 		}
 	}
 </script>
@@ -534,16 +643,17 @@
 				height: calc(100% - 200rpx);
 				overflow-y: scroll;
 				.ShoppingCart_coupon_box_content_list {
+					background: url(../../static/mallImg/couponBg.png);
 					margin-bottom: 24rpx;
 					width: 100%;
 					height: 200rpx;
 					display: flex;
-					background: #FFFFFF;
+					// background: #FFFFFF;
 					box-shadow: 0px 10rpx 40rpx -2rpx #EFEFEF;
 					.left {
 						width: 204rpx;
 						height: 100%;
-						background: #FB861E;
+						// background: #FB861E;
 						font-size: 28rpx;
 						font-weight: 400;
 						color: #FFFFFF;
@@ -559,22 +669,22 @@
 							color: #FFFFFF;
 							line-height: 140rpx;
 						}
-						.left_radialGradient1 {
-							background:radial-gradient(20rpx at right top, #fff 40rpx, #FB861E 50%);
-							position: absolute;
-							right: 0;
-							top: 0;
-							width: 20rpx;
-							height: 20rpx;
-						}
-						.left_radialGradient2 {
-							background:radial-gradient(20rpx at right bottom, #fff 40rpx, #FB861E 50%);
-							position: absolute;
-							right: 0;
-							bottom: 0;
-							width: 20rpx;
-							height: 20rpx;
-						}
+						// .left_radialGradient1 {
+						// 	background:radial-gradient(20rpx at right top, #fff 40rpx, #FB861E 50%);
+						// 	position: absolute;
+						// 	right: 0;
+						// 	top: 0;
+						// 	width: 20rpx;
+						// 	height: 20rpx;
+						// }
+						// .left_radialGradient2 {
+						// 	background:radial-gradient(20rpx at right bottom, #fff 40rpx, #FB861E 50%);
+						// 	position: absolute;
+						// 	right: 0;
+						// 	bottom: 0;
+						// 	width: 20rpx;
+						// 	height: 20rpx;
+						// }
 					}
 					.right {
 						padding: 40rpx;
@@ -584,22 +694,22 @@
 						align-items: center;
 						justify-content: space-between;
 						position: relative;
-						.right_radialGradient1 {
-							background:radial-gradient(20rpx at left top, #fff 40rpx, #fff 50%);
-							position: absolute;
-							left: 0;
-							top: 0;
-							width: 20rpx;
-							height: 20rpx;
-						}
-						.right_radialGradient2 {
-							background:radial-gradient(20rpx at left bottom, #fff 40rpx, #fff 50%);
-							position: absolute;
-							left: 0;
-							bottom: 0;
-							width: 20rpx;
-							height: 20rpx;
-						}
+						// .right_radialGradient1 {
+						// 	background:radial-gradient(20rpx at left top, #fff 40rpx, #fff 50%);
+						// 	position: absolute;
+						// 	left: 0;
+						// 	top: 0;
+						// 	width: 20rpx;
+						// 	height: 20rpx;
+						// }
+						// .right_radialGradient2 {
+						// 	background:radial-gradient(20rpx at left bottom, #fff 40rpx, #fff 50%);
+						// 	position: absolute;
+						// 	left: 0;
+						// 	bottom: 0;
+						// 	width: 20rpx;
+						// 	height: 20rpx;
+						// }
 						.text {
 							width: calc(100% - 60rpx);
 							height: 120rpx;

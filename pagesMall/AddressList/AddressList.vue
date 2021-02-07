@@ -13,16 +13,16 @@
 		<!-- 地址列表 -->
 		<view class="AddressList_list" v-for="(item, index) in dataList" :key="index" :class="selectAddrStatus == index ? 'AddressList_listActive' : ''" @click="selectAddrClick(index)">
 			<view class="AddressList_list_top">
-				<text>{{item.name}}</text>
-				<text>{{item.phone}}</text>
+				<text>{{item.receiver_name}}</text>
+				<text>{{item.receiver_phone}}</text>
 			</view>
 			<view class="AddressList_list_addr">
-				{{item.addr}}
+				{{item.receiver_provinces + item.receiver_address}}
 			</view>
 			<view class="AddressList_list_bottom">
-				<view class="left" @click.stop="defaultAddrClick(index)">
-					<image v-if="item.type == 0" src="../../static/mallImg/couponDefault.png" mode=""></image>
-					<image v-if="item.type == 1" src="../../static/mallImg/couponSelect.png" mode=""></image>
+				<view class="left" @click.stop="defaultAddrClick(item.id, item.is_default)">
+					<image v-if="item.is_default == 0" src="../../static/mallImg/couponDefault.png" mode=""></image>
+					<image v-if="item.is_default == 1" src="../../static/mallImg/couponSelect.png" mode=""></image>
 					默认地址
 				</view>
 				<view class="right" @click.stop="deleteAddrClick(item)">
@@ -65,66 +65,117 @@
 			return {
 				deteleStatus: false,
 				selectAddrStatus: 0,
-				dataList: [
-					{
-						name: "赵霞霞",
-						phone: "19983238887",
-						addr: "北京市朝阳区奥运村街道洛克时代B座1705",
-						type: 1
-					},
-					{
-						name: "赵霞霞",
-						phone: "19983238887",
-						addr: "北京市朝阳区奥运村街道洛克时代B座1705",
-						type: 0
-					},
-					{
-						name: "赵霞霞",
-						phone: "19983238887",
-						addr: "北京市朝阳区奥运村街道洛克时代B座1705",
-						type: 0
-					}
-				],
+				dataList: [],
 				dataForm: {
 					name: "",
 					phone: "",
 					addr: ""
-				}
+				},
+				form: "",
+				shipping_id: ""
 			};
 		},
+		onLoad(option) {
+			if (option.data) {
+				this.dataForm = JSON.parse(option.data)
+				this.form = option.form
+			}
+			this._getOrdersShipping()
+		},
 		methods: {
+			// 获取会员收货地址
+			_getOrdersShipping() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_orders_shipping', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataList = res.data.data
+						let n = 0
+						this.dataList.forEach((item, index) => {
+							if (this.dataForm.is_default == item.is_default) {
+								this.selectAddrStatus = index
+								n = 1
+							} else if (item.is_default == '1') {
+								if (n == 0) {
+									this.selectAddrStatus = index
+									n = 2
+								}
+							}
+						})
+						if (n == 0) {
+							this.selectAddrStatus = 0
+						}
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
 			// 返回上一页
 			returnClick() {
 				uni.redirectTo({
-					url: '../ShoppingCart/ShoppingCart'
+					url: '../ShoppingCart/ShoppingCart?data=' + JSON.stringify(this.dataForm) + '&form=' + this.form
 				})
 			},
 			// 选择地址
-			selectAddrClick(index) {
+			selectAddrClick(index) {	
 				this.selectAddrStatus = index
 				this.dataForm = this.dataList[index]
 				uni.redirectTo({
-					url: '../ShoppingCart/ShoppingCart?data=' + JSON.stringify(this.dataForm)
+					url: '../ShoppingCart/ShoppingCart?data=' + JSON.stringify(this.dataForm) + '&form=' + this.form
 				})
 			},
 			// 设置默认地址
-			defaultAddrClick(index) {
-				if (this.dataList[index].type == 1) {
+			defaultAddrClick(id, type) {
+				if (type == 1) {
 					return false
 				}
-				this.dataList.forEach((item, indexs) => {
-					this.dataList[indexs].type = 0
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/set_default_shipping', {shipping_id: id}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+					if (res.data.code == 200) {
+						this._getOrdersShipping()
+					}
 				})
-				this.dataList[index].type = 1
 			},
+			
 			// 打开删除弹窗
 			deleteAddrClick(item) {
-				console.log(item)
+				this.shipping_id = item.id
 				this.deteleStatus = true
 			},
 			// 确定删除地址
 			deleteClick() {
-				this.deteleStatus = false
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/del_shipping', {shipping_id: this.shipping_id}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+					if (res.data.code == 200) {
+						this.deteleStatus = false
+						this._getOrdersShipping()
+					}
+				})
 			},
 			// 新增地址
 			addAddress() {
@@ -137,13 +188,41 @@
 				let that = this
 				uni.chooseAddress({
 				  success(res) {
-					that.dataForm.name = res.userName
-					that.dataForm.phone = res.telNumber
-					that.dataForm.addr = res.provinceName + res.cityName + res.countyName + res.detailInfo
-					uni.navigateTo({
-						url: '../ShoppingCart/ShoppingCart?data=' + JSON.stringify(that.dataForm)
-					})
+					that.addRegion(res)
+					// that.dataForm.name = res.userName
+					// that.dataForm.phone = res.telNumber
+					// that.dataForm.addr = res.provinceName + res.cityName + res.countyName + res.detailInfo
+					// uni.navigateTo({
+					// 	url: '../ShoppingCart/ShoppingCart?data=' + JSON.stringify(that.dataForm)
+					// })
 				  }
+				})
+			},
+			// 新增地址
+			addRegion(res) {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				 const form = {
+					 is_default: 1,
+					 receiver_name: res.userName,
+					 receiver_phone: res.telNumber,
+					 receiver_provinces: res.provinceName + res.cityName + res.countyName,
+					 receiver_address: res.detailInfo,
+				 }
+				this.$member.post('Order/add_shipping', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					})
+					if (res.data.code == 200) {
+						uni.redirectTo({
+							url: '../ShoppingCart/ShoppingCart'
+						})
+					}
 				})
 			}
 		}

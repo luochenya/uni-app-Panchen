@@ -9,30 +9,30 @@
 				收件人信息
 			</view>
 			<view class="OrderDetails_top_view2">
-				赵霞霞
-				<text>19983238887</text>
+				{{addrs.receiver_name}}
+				<text>{{addrs.receiver_phone}}</text>
 			</view>
 			<view class="OrderDetails_top_view3">
-				北京市朝阳区奥运村街道洛克时代B座1705
+				{{addrs.receiver_provinces + addrs.receiver_address}}
 			</view>
 		</view>
 		<view class="OrderDetails_content">
 			<view class="OrderDetails_content_top">
 				商品信息
 			</view>
-			<view class="OrderDetails_content_box" v-for="(item, index) in orderList" :key="index">
+			<view class="OrderDetails_content_box" v-for="(item, index) in dataList" :key="index">
 				<view class="left">
-					<image :src="item.imgUrl" mode=""></image>
+					<image :src="imgUrl+ item.details_imgs" mode=""></image>
 				</view>
 				<view class="right">
 					<view class="right_title">
-						{{item.title}}
+						{{item.goods_name}}
 					</view>
 					<view class="right_num">
-						X{{item.num}}
+						X{{item.quantity}}
 					</view>
 					<view class="right_price">
-						￥{{item.price}}
+						￥{{item.preferential_price}}
 					</view>
 				</view>
 			</view>
@@ -40,7 +40,7 @@
 				<text class="left">合計</text>
 				<view class="right">
 					￥
-					<text>930.00</text>
+					<text>{{total_prices}}</text>
 				</view>
 			</view>
 		</view>
@@ -70,24 +70,83 @@
 	export default {
 		data() {
 			return {
+				imgUrl: this.$imgUrl,
 				popupStatus: false,
-				orderList: [
-					{
-						imgUrl: require('../../static/mallImg/ShoppingMall.png'),
-						title: "成年搭长高神器钙片青少年学生个子高钙",
-						num: 1,
-						price: "310.00"
-					},
-					{
-						imgUrl: require('../../static/mallImg/ShoppingMall.png'),
-						title: "澳洲Swisse斯维诗高强度中老年保健品",
-						num: 2,
-						price: "620.00"
-					}
-				]
+				dataList: [],
+				form: {},
+				addrs: {},
+				total_prices: 0,
+				total_pricess: 0,
+				cart_ids: []
 			};
 		},
+		onLoad(option) {
+			if (option.form) {
+				this.form = JSON.parse(option.form)
+				console.log(this.form)
+			}
+			if (option.addrs) {
+				this.addrs = JSON.parse(option.addrs)
+			}
+			console.log(option)
+			console.log(111111)
+			this._getCart()
+			this._getOrdersShipping()
+		},
 		methods: {
+			// 获取购物车
+			_getCart() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_cart', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						this.dataList = res.data.data.rows
+						this.dataList.forEach(item => {
+							this.cart_ids.push(item.id)
+						})
+						this.total_prices = Number(res.data.data.total_prices) * (Number(this.form.couponDiscount ) / 10)
+						this.total_prices = this.total_prices.toFixed(2)
+						this.total_pricess = res.data.data.total_prices
+						this.$store.commit("cart/setCartCount", res.data.data.sum);
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
+			
+			// 获取会员收货地址
+			_getOrdersShipping() {
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/get_orders_shipping', {}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						res.data.data.forEach(item => {
+							if (!this.addrs.id) {
+								if (item.is_default == 1) {
+									this.addrs = item
+								}
+							}
+						})
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				})
+			},
+				
 			// 返回上一页
 			returnClick() {
 				uni.navigateBack({
@@ -96,17 +155,90 @@
 			},
 			// 上一步
 			PreviousClick() {
-				uni.navigateTo({
-					url: '../ShoppingCart/ShoppingCart'
+				uni.navigateBack({
+					delta:1
+				})
+			},
+			// 生成订单
+			createOrder(code) {
+				let form = {
+					cart_ids: JSON.stringify(this.cart_ids),
+					orders_shipping_id: this.addrs.id,
+					members_coupon_id: this.form.couponId
+				}
+				this.$member.post('/Order/create_order', form).then(res => {
+					if (res.data.code == 200) {
+						this.wapy(code, res.data.data)
+					} else {
+						// 关闭加载动画
+						uni.hideLoading();
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
+				})
+			},
+			// 提出支付
+			wapy(code, order_no) {
+				let form = {
+					code: code,
+					order_no: order_no
+				}
+				this.$member.post('Order/wxpay', form).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					if (res.data.code == 200) {
+						let that = this
+						uni.requestPayment({
+							provider: 'wxpay',
+							timeStamp: res.data.data.timeStamp,
+							nonceStr: res.data.data.nonceStr,
+							package: res.data.data.package,
+							signType: res.data.data.signType,
+							paySign: res.data.data.paySign,
+							success: function (res) {
+								// 关闭加载动画
+								uni.hideLoading();
+								that.popupStatus = true
+							},
+							fail: function (err) {
+								uni.showToast({
+									icon: 'none',
+									title: '支付失败，请重试',
+									duration: 2000
+								})
+							}
+						});
+					} else {
+						uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						})
+					}
 				})
 			},
 			// 微信支付
 			WeChatPay() {
-				this.popupStatus = true
+				uni.showLoading({
+					title: '生成订单中',
+				});
+				let that = this
+				uni.login({
+				  provider: 'weixin',
+				  success: function (loginRes) {
+					  that.createOrder(loginRes.code)
+				  }
+				});
 			},
 			// 订单成立弹窗确认
 			closePopup() {
 				this.popupStatus = false
+				uni.redirectTo({
+					url: "../../pages/ShoppingMall/ShoppingMall"
+				})
 			}
 		}
 	}

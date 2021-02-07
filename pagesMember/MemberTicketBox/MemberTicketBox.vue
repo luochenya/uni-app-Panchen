@@ -4,33 +4,33 @@
 		<top-navigation :type="2" :backgroundColor="'#FFFFFF'" :title="'票卷匣'" @returnClick="returnClick"></top-navigation>
 		
 		<view class="MemberTicketBox_top">
-			<view :class="active == 0 ? 'active' : ''" @click="activeCLick(0)">
+			<view :class="form.state ==1 ? 'active' : ''" @click="activeCLick(1)">
 				未使用
 			</view>
-			<view :class="active == 1 ? 'active' : ''" @click="activeCLick(1)">
+			<view :class="form.state == 2 ? 'active' : ''" @click="activeCLick(2)">
 				已失效
 			</view>
 		</view>
 		
 		<!-- 空数据组件 -->
-		<view class="MemberTicketBox_null" v-if="dataLists == [] || dataLists.length < 1">
+		<view class="MemberTicketBox_null" v-if="dataList.length == 0">
 			<image src="../static/image/MemberTicketBoxNull.png" mode=""></image>
-			<text v-if="active == 0">尚无未使用之票券</text>
-			<text v-if="active == 1">尚无已失效之票券</text>
+			<text v-if="form.state == 1">尚无未使用之票券</text>
+			<text v-if="form.state == 2">尚无已失效之票券</text>
 		</view>
 		
-		<view class="MemberTicketBox_content" v-for="(item, index) in dataLists" :key="index">
+		<view class="MemberTicketBox_content" v-for="(item, index) in dataList" :key="index">
 			<view class="MemberTicketBox_content_left">
-				<image :src="item.imgUrl" mode=""></image>
+				<image :src="imgUrl + item.experience_imgs" mode=""></image>
 			</view>
 			<view class="MemberTicketBox_content_center"></view>
 			<view class="MemberTicketBox_content_right">
-				<text class="textTitle">{{item.title}}</text>
-				<text class="textContent">有效期限：{{item.time}}</text>
-				<view class="button" v-if="item.type == 1" @click="openPopup(id)">
+				<text class="textTitle">{{item.experience_name}}</text>
+				<text class="textContent">有效期限：{{item.experience_indate}}</text>
+				<view class="button" v-if="form.state == 1" @click="openPopup(item.id)">
 					使用
 				</view>
-				<view class="buttons" v-if="item.type == 2">
+				<view class="buttons" v-if="form.state == 2">
 					失效
 				</view>
 			</view>
@@ -50,70 +50,110 @@
 				</view>
 			</view>
 		</view>
+		
+		<uni-load-more :status="status" :icon-size="14" :content-text="contentText" v-if="dataList.length > 0" />
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from "@/components/uni-load-more/uni-load-more.vue"
 	export default {
+		components:{
+			uniLoadMore
+		},
 		data() {
 			return {
+				imgUrl: this.$imgUrl,
+				reload: false,
+				status: 'more',
+				contentText: {
+					contentdown: '上拉加载更多~',
+					contentrefresh: '加载中',
+					contentnomore: '已经没有更多啦~'
+				},
+				total: 0,
+				form: {
+					offset: 1,
+					limit: 10,
+					state: 1
+				},
 				popupStatus: false,
 				active: 0,
-				dataList: [
-					{
-						id: 1,
-						type: 1,
-						imgUrl: require("../static/image/MemberTicketBox1.png"),
-						title: "身体年龄检测1",
-						time: "2021年12月31日"
-						
-					},
-					{
-						id: 2,
-						type: 1,
-						imgUrl: require("../static/image/MemberTicketBox1.png"),
-						title: "BMI检测1",
-						time: "2021年12月26日"
-					},
-					{
-						id: 3,
-						type: 2,
-						imgUrl: require("../static/image/MemberTicketBox1.png"),
-						title: "身体年龄检测",
-						time: "2021年12月31日"
-						
-					},
-					{
-						id: 4,
-						type: 2,
-						imgUrl: require("../static/image/MemberTicketBox1.png"),
-						title: "BMI检测",
-						time: "2021年12月26日"
-					}
-				],
-				dataLists: []
+				dataList: [],
+				experience_id: ""
 			}
 		},
-		watch:{
-			active:function() {
-				this.dataLists = []
-				this.dataList.forEach(item => {
-					if (item.type == 1 && this.active == 0) {
-						this.dataLists.push(item)
-					} else if (item.type == 2 && this.active == 1) {
-						this.dataLists.push(item)
-					}
-				})
-			}
-		},
+		// watch:{
+		// 	active:function() {
+		// 		this.dataLists = []
+		// 		this.dataList.forEach(item => {
+		// 			if (item.type == 1 && this.active == 0) {
+		// 				this.dataLists.push(item)
+		// 			} else if (item.type == 2 && this.active == 1) {
+		// 				this.dataLists.push(item)
+		// 			}
+		// 		})
+		// 	}
+		// },
 		onLoad() {
-			this.dataList.forEach(item => {
-				if (item.type == 1) {
-					this.dataLists.push(item)
-				}
-			})
+			// this.dataList.forEach(item => {
+			// 	if (item.type == 1) {
+			// 		this.dataLists.push(item)
+			// 	}
+			// })
+			this._getMembersExperienceList(1)
+		},
+		// 监听下拉事件
+		onReachBottom() {
+			if (this.totalCount > this.dataList.length) {
+				this.status = 'loading';
+				setTimeout(() => {
+					this.form.offset++
+					this._getMembersExperienceList(2);//执行的方法
+				}, 1000)//这里我是延迟一秒在加载方法有个loading效果，如果接口请求慢的话可以去掉
+			} else { //停止加载
+				this.status = 'noMore'
+			}
 		},
 		methods: {
+			// 获取票卷列表
+			_getMembersExperienceList (num) {
+				 // 加载动画
+				 if (num == 1) {
+					 uni.showLoading({
+					 	title: '加载中',
+					 });
+				 }
+				this.$member.post('Order/get_members_experience_list', this.form).then(res => {
+					// 关闭加载动画
+					 if (num == 1) {
+						uni.hideLoading();
+					}
+					if (res.data.code == 200) {
+						this.total = res.data.data.total
+						this.totalCount = res.data.data.total
+						if (res.data.data.total > 0) {
+							const dataMap = res.data.data.rows
+							this.dataList = this.reload ? dataMap : this.dataList.concat(dataMap);
+							this.reload = false;
+						} else {
+							this.dataList = [];
+						}
+						if (this.totalCount == this.dataList.length) {
+							this.reload = false;
+							this.status = 'noMore'
+						}
+					} else {
+						 uni.showToast({
+							icon: 'none',
+							title: res.data.msg,
+							duration: 2000
+						 })
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
+			},
 			// 返回上一页
 			returnClick() {
 				uni.navigateBack({
@@ -121,16 +161,36 @@
 				})
 			},
 			activeCLick(value) {
-				if (value == this.active) {
-					return false;
-				}
-				this.active = value
+				this.form.state = value
+				this.form.offset = 1
+				this.reload = true
+				this._getMembersExperienceList(1)
 			},
 			openPopup(id) {
 				this.popupStatus = true
+				this.experience_id = id
 			},
 			popupSubmit() {
-				this.popupStatus = false
+				 // 加载动画
+				 uni.showLoading({
+					title: '加载中',
+				 });
+				this.$member.post('Order/use_members_experience', {experience_id: this.experience_id}).then(res => {
+					// 关闭加载动画
+					uni.hideLoading();
+					 uni.showToast({
+						icon: 'none',
+						title: res.data.msg,
+						duration: 2000
+					 })
+					if (res.data.code == 200) {
+						this.popupStatus = false
+						this.reload = true
+						this._getMembersExperienceList(1)
+					}
+				}).catch(err => {
+					// console.log(err)
+				})
 			}
 		}
 	}

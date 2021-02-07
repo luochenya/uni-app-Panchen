@@ -62,7 +62,8 @@
         "ShoppingCart/ShoppingCart",
         "AddressList/AddressList",
         "AddAddress/AddAddress",
-        "OrderDetails/OrderDetails"
+        "OrderDetails/OrderDetails",
+        "AnalysisReport/AnalysisReport"
       ]
     }
   ],

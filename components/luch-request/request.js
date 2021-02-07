@@ -173,7 +173,7 @@ export default class Request {
         url,
         data,
         method: 'POST',
-		header: {"Content-type":"multipart/form-data; boundary=XXX"},
+		header: {"Content-type":"application/x-www-form-urlencoded"},
         ...options
       })
     }
